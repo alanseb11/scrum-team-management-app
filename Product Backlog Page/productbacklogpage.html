@@ -19,7 +19,7 @@
 <body>
     <h1>Product Backlog</h1>
     
-    <table>
+    <table id="productBacklogTable">
         <thead>
             <tr>
                 <th>User Story</th>
@@ -29,8 +29,11 @@
                 <th>Status</th>
                 <th>Technical Task Description</th>
                 <th>Allocated Task Member</th>
+                <th>Confirm</th>
+                <th>Delete</th>
             </tr>
         </thead>
+        
         <tbody>
             <tr>
                 <td>Example Story 1</td>
@@ -76,6 +79,9 @@
             </tr>
         </tbody>
     </table>
+    
+    <!-- Add a button to add a new row -->
+    <button id="addRowButton">Add New Row</button>
 
     <div>
         <footer>
@@ -88,5 +94,7 @@
         </footer>
     </div>
 
+    <!-- Link to the JavaScript file -->
+    <script src="../Product Backlog Page/productbacklogpage.js"></script>
 </body>
 </html>

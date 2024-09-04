@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Management Tool</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/alpinejs/2.3.0/alpine.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+    <script src="app.js" defer></script>
+</head>
+<body class="bg-gray-100" x-data="app()" x-init="initApp()">
+    <header class="bg-blue-600 text-white p-4">
+        <h1 class="text-2xl font-bold">Product Management Tool</h1>
+    </header>
+
+    <nav class="bg-blue-500 p-2">
+        <a @click.prevent="currentPage = 'dashboard'" href="#" class="text-white px-2 py-1 hover:bg-blue-700">Dashboard</a>
+        <a @click.prevent="currentPage = 'product-backlog'" href="#" class="text-white px-2 py-1 hover:bg-blue-700">Product Backlog</a>
+        <a @click.prevent="currentPage = 'sprint-planning'" href="#" class="text-white px-2 py-1 hover:bg-blue-700">Sprint Planning</a>
+    </nav>
+
+    <main class="container mx-auto mt-6 p-4">
+        <!-- Dashboard -->
+        <div x-show="currentPage === 'dashboard'">
+            <h2 class="text-2xl font-semibold mb-4">Dashboard</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <!-- Sprint Board -->
+                <div class="bg-white p-4 rounded shadow">
+                    <h3 class="text-xl font-semibold mb-2">Sprint Board</h3>
+                    <div class="flex space-x-4">
+                        <div class="flex-1 bg-gray-100 p-2 rounded">
+                            <h4 class="font-semibold">Not Started</h4>
+                            <template x-for="sprint in sprints.filter(s => s.status === 'not started')">
+                                <div x-text="sprint.name" class="bg-white p-2 rounded mt-2"></div>
+                            </template>
+                        </div>
+                        <div class="flex-1 bg-gray-100 p-2 rounded">
+                            <h4 class="font-semibold">Active</h4>
+                            <template x-for="sprint in sprints.filter(s => s.status === 'active')">
+                                <div x-text="sprint.name" class="bg-white p-2 rounded mt-2"></div>
+                            </template>
+                        </div>
+                        <div class="flex-1 bg-gray-100 p-2 rounded">
+                            <h4 class="font-semibold">Completed</h4>
+                            <template x-for="sprint in sprints.filter(s => s.status === 'completed')">
+                                <div x-text="sprint.name" class="bg-white p-2 rounded mt-2"></div>
+                            </template>
+                        </div>
+                    </div>
+                </div>
+                <!-- Burndown Chart -->
+                <div class="bg-white p-4 rounded shadow">
+                    <h3 class="text-xl font-semibold mb-2">Burndown Chart</h3>
+                    <canvas id="burndownChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Product Backlog -->
+        <div x-show="currentPage === 'product-backlog'">
+            <h2 class="text-2xl font-semibold mb-4">Product Backlog</h2>
+            <div class="bg-white p
+            <!-- Add your product backlog content here -->
+        </div>
+
+        <!-- Sprint Planning -->
+        <div x-show="currentPage === 'sprint-planning'">
+            <h2 class="text-2xl font-semibold mb-4">Sprint Planning</h2>
+            
+            <!-- Create New Sprint Form -->
+            <div class="bg-white p-4 rounded shadow mb-6">
+                <h3 class="text-xl font-semibold mb-2">Create New Sprint</h3>
+                <form @submit.prevent="createNewSprint">
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block mb-1">Sprint Name</label>
+                            <input type="text" x-model="newSprint.name" class="w-full p-2 border rounded" required>
+                        </div>
+                        <div>
+                            <label class="block mb-1">Start Date</label>
+                            <input type="date" x-model="newSprint.startDate" class="w-full p-2 border rounded" required>
+                        </div>
+                        <div>
+                            <label class="block mb-1">End Date</label>
+                            <input type="date" x-model="newSprint.endDate" class="w-full p-2 border rounded" required>
+                        </div>
+                    </div>
+                    <div class="mt-4">
+                        <h4 class="font-semibold mb-2">Add Tasks from Product Backlog</h4>
+                        <div class="max-h-40 overflow-y-auto">
+                            <template x-for="task in tasks" :key="task.id">
+                                <div class="flex items-center mb-2">
+                                    <input type="checkbox" :value="task.id" x-model="newSprint.taskIds" class="mr-2">
+                                    <span x-text="task.name"></span>
+                                </div>
+                            </template>
+                        </div>
+                    </div>
+                    <button type="submit" class="mt-4 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Create Sprint</button>
+                </form>
+            </div>
+
+            <!-- Sprint List -->
+            <div class="space-y-4">
+                <template x-for="sprint in sprints" :key="sprint.id">
+                    <div class="bg-white p-4 rounded shadow">
+                        <h3 x-text="sprint.name" class="text-xl font-semibold mb-2"></h3>
+                        <p x-text="'Date: ' + formatDate(sprint.startDate) + ' to ' + formatDate(sprint.endDate)" class="mb-2"></p>
+                        <p x-text="'Status: ' + sprint.status" class="mb-2"></p>
+                        
+                        <!-- Sprint Tasks -->
+                        <div class="mt-4">
+                            <h4 class="font-semibold mb-2">Tasks</h4>
+                            <div class="flex space-x-4">
+                                <div class="flex-1 bg-gray-100 p-2 rounded">
+                                    <h5 class="font-semibold">Not Started</h5>
+                                    <template x-for="task in getSprintTasks(sprint, 'not started')">
+                                        <div class="bg-white p-2 rounded mt-2">
+                                            <p x-text="task.name"></p>
+                                            <p x-text="'Points: ' + task.storyPoints" class="text-sm text-gray-600"></p>
+                                            <button @click="updateTaskStatus(task, 'in progress')" class="text-blue-500 text-sm">Start</button>
+                                        </div>
+                                    </template>
+                                </div>
+                                <div class="flex-1 bg-gray-100 p-2 rounded">
+                                    <h5 class="font-semibold">In Progress</h5>
+                                    <template x-for="task in getSprintTasks(sprint, 'in progress')">
+                                        <div class="bg-white p-2 rounded mt-2">
+                                            <p x-text="task.name"></p>
+                                            <p x-text="'Points: ' + task.storyPoints" class="text-sm text-gray-600"></p>
+                                            <button @click="updateTaskStatus(task, 'completed')" class="text-green-500 text-sm">Complete</button>
+                                        </div>
+                                    </template>
+                                </div>
+                                <div class="flex-1 bg-gray-100 p-2 rounded">
+                                    <h5 class="font-semibold">Completed</h5>
+                                    <template x-for="task in getSprintTasks(sprint, 'completed')">
+                                        <div class="bg-white p-2 rounded mt-2">
+                                            <p x-text="task.name"></p>
+                                            <p x-text="'Points: ' + task.storyPoints" class="text-sm text-gray-600"></p>
+                                        </div>
+                                    </template>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Log Time Form -->
+                        <div class="mt-4">
+                            <h4 class="font-semibold mb-2">Log Time</h4>
+                            <form @submit.prevent="logTime(sprint.id)">
+                                <div class="flex space-x-2">
+                                    <select x-model="timeLog.taskId" class="p-2 border rounded">
+                                        <option value="">Select Task</option>
+                                        <template x-for="task in getSprintTasks(sprint)">
+                                            <option :value="task.id" x-text="task.name"></option>
+                                        </template>
+                                    </select>
+                                    <input type="number" x-model="timeLog.hours" placeholder="Hours" class="p-2 border rounded" min="0" step="0.5">
+                                    <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Log Time</button>
+                                </div>
+                            </form>
+                        </div>
+
+                        <!-- Sprint Charts -->
+                        <div class="mt-4">
+                            <h4 class="font-semibold mb-2">Sprint Progress</h4>
+                            <canvas :id="'sprintChart' + sprint.id"></canvas>
+                        </div>
+                    </div>
+                </template>
+            </div>
+        </div>
+    </main>
+</body>
+</html>
