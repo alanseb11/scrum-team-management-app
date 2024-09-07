@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-    
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -29,6 +28,8 @@
                 <th>Status</th>
                 <th>Technical Task Description</th>
                 <th>Allocated Task Member</th>
+                <th>Confirm</th>
+                <th>Delete</th>
             </tr>
         </thead>
         
@@ -52,15 +53,7 @@
                     </select>
                 </td>
                 <td>Code HTML</td>
-                <td>
-                    <select>
-                        <option value = "None">None</option>
-                        <option value = "Sanjevan-Rajasegar">Sanjevan Rajasegar</option>
-                        <option value = "Lisa-Gorman">Lisa Gorman</option>
-                        <option value = "Amarprit-Singh">Amarprit Singh</option>
-                        <option value = "Micheal-Kaniadakis">Micheal Kaniadakis</option>
-                        <option value = "Alan-Sebastian">Alan Sebastian</option>
-                </td>
+                <td>Sanj</td>
             </tr>
             <tr>
                 <td>Example Story 2</td>
@@ -81,21 +74,72 @@
                     </select>
                 </td>
                 <td>Code CSS</td>
-                <td>
-                    <select>
-                        <option value = "None">None</option>
-                        <option value = "Sanjevan-Rajasegar">Sanjevan Rajasegar</option>
-                        <option value = "Lisa-Gorman">Lisa Gorman</option>
-                        <option value = "Amarprit-Singh">Amarprit Singh</option>
-                        <option value = "Micheal-Kaniadakis">Micheal Kaniadakis</option>
-                        <option value = "Alan-Sebastian">Alan Sebastian</option>
-                </td>
+                <td>Amar</td>
             </tr>
         </tbody>
     </table>
     
     <!-- Add a button to add a new row -->
-    <button id="addRowButton">Add New Row</button>
+    <button id="addRowButton">Add New Task</button>
+
+
+    
+<!-- The Modal -->
+<div id="taskModal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2 id="modalTitle">Add New Task</h2>
+        <form id="taskForm">
+            <div class="form-group">
+                <label for="userStory">User Story:</label>
+                <input type="text" id="userStory" name="userStory" required>
+            </div>
+
+            <div class="form-group">
+                <label for="priority">Priority:</label>
+                <select id="priority" name="priority">
+                    <option value="low">Low</option>
+                    <option value="medium">Medium</option>
+                    <option value="high">High</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="sprint">Sprint:</label>
+                <input type="text" id="sprint" name="sprint" required>
+            </div>
+
+            <div class="form-group">
+                <label for="startDate">Start Date:</label>
+                <input type="date" id="startDate" name="startDate" required>
+            </div>
+
+            <div class="form-group">
+                <label for="status">Status:</label>
+                <select id="status" name="status">
+                    <option value="in-progress">In Progress</option>
+                    <option value="not-started">Not Started</option>
+                    <option value="completed">Completed</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="technicalTask">Technical Task Description:</label>
+                <input type="text" id="technicalTask" name="technicalTask" required>
+            </div>
+
+            <div class="form-group">
+                <label for="taskMember">Allocated Task Member:</label>
+                <input type="text" id="taskMember" name="taskMember" required>
+            </div>
+
+            <div class="form-group">
+                <button type="submit">Save Task</button>
+            </div>
+        </form>
+    </div>
+</div>
+
 
     <div>
         <footer>
