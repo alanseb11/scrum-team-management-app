@@ -82,7 +82,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 cells[2].innerHTML = `<input type='text' value='${cells[2].innerText}'>`;
                 cells[3].innerHTML = `<input type='date' value='${cells[3].innerText}'>`;
                 cells[4].innerHTML = `<select><option value='in-progress' ${cells[4].innerText === 'In Progress' ? 'selected' : ''}>In Progress</option><option value='Not Started' ${cells[4].innerText === 'Not Started' ? 'selected' : ''}>Not Started</option><option value='Completed' ${cells[4].innerText === 'Completed' ? 'selected' : ''}>Completed</option></select>`;
-                cells[5].innerHTML = `<select><option value='Bug' ${cells[5].innerText === 'Bug' ? 'selected' : ''}>Bug</option><option value='Story' ${cells[5].innerText === 'Story' ? 'selected' : ''}>Story</option></select>`;
+                cells[5].innerHTML = `<select><option value='bug' ${cells[5].innerText === 'Bug' ? 'selected' : ''}>Bug</option><option value='s    tory' ${cells[5].innerText === 'Story' ? 'selected' : ''}>Story</option></select>`;
                 cells[6].innerHTML = `<input type='text' value='${cells[5].innerText}'>`;
                 cells[7].innerHTML = `<input type='text' value='${cells[6].innerText}'>`;
                 editButton.innerText = 'Save';
@@ -94,8 +94,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 cells[3].innerText = cells[3].querySelector('input').value;
                 cells[4].innerText = cells[4].querySelector('select').value;
                 cells[5].innerText = cells[5].querySelector('input').value;
-                cells[6].innerText = cells[5].querySelector('input').value;
-                cells[7].innerText = cells[6].querySelector('input').value;
+                cells[6].innerText = cells[6].querySelector('input').value;
+                cells[7].innerText = cells[7].querySelector('input').value;
                 editButton.innerText = 'Edit';
             }
         });
