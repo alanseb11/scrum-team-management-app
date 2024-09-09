@@ -27,11 +27,11 @@
             <tr>
                 <!-- table column headers  -->
                 <th>Task Name</th>
+                <th>Task Type</th>
                 <th>Priority</th>
                 <th>Allocated Sprint</th>
                 <th>Start Date</th>
                 <th>Status</th>
-                <th>Task Type</th>
                 <th>Technical Task Description</th>
                 <th>Allocated Task Member</th>
                 <th>Confirm</th>
@@ -44,11 +44,13 @@
             <tr>
                 <!-- Example task 1 -->
                 <td>Example Task 1</td>
+                <td>Story</td>
                 <td>
                     <select>
                         <option value="low">Low</option>
                         <option value="medium">Medium</option>
-                        <option value="high">High</option>
+                        <option value="important">Important</option>
+                        <option value="urgent">Urgent</option>
                     </select>
                 </td>
                 <td>Sprint 1</td>
@@ -60,18 +62,20 @@
                         <option value="completed">Completed</option>
                     </select>
                 </td>
-                <td>Story</td>
+                
                 <td>Code HTML</td>
                 <td>Sanj</td>
             </tr>
             <tr>
                 <!-- Example task 2 -->
                 <td>Example Task 2</td>
+                <td>Bug</td>
                 <td>
-                    <select>
+                    <select id="">
                         <option value="low">Low</option>
                         <option value="medium">Medium</option>
-                        <option value="high">High</option>
+                        <option value="important">Important</option>
+                        <option value="urgent">Urgent</option>
                     </select>
                 </td>
                 <td>Sprint 2</td>
@@ -83,7 +87,7 @@
                         <option value="completed">Completed</option>
                     </select>
                 </td>
-                <td>Bug</td>
+                
                 <td>Code CSS</td>
                 <td>Amar</td>
             </tr>
@@ -105,13 +109,23 @@
                 <input type="text" id="taskName" name="taskName" required>
             </div>
             
+            <!-- task type field -->
+            <div class="form-group">
+                <label for="taskType">Task Type:</label>
+                <select id="taskType" name="taskType">
+                    <option value="story">Story</option>
+                    <option value="bug">Bug</option>
+                </select>
+            </div>
+
             <!-- Priority field -->
             <div class="form-group">
                 <label for="priority">Priority:</label>
                 <select id="priority" name="priority">
                     <option value="low">Low</option>
                     <option value="medium">Medium</option>
-                    <option value="high">High</option>
+                    <option value="important">Important</option>
+                    <option value="urgent">Urgent</option>
                 </select>
             </div>
             
@@ -134,15 +148,6 @@
                     <option value="in-progress">In Progress</option>
                     <option value="not-started">Not Started</option>
                     <option value="completed">Completed</option>
-                </select>
-            </div>
-            
-            <!-- task type field -->
-            <div class="form-group">
-                <label for="taskType">Task Type:</label>
-                <select id="taskType" name="taskType">
-                    <option value="bug">Bug</option>
-                    <option value="story">Story</option>
                 </select>
             </div>
             

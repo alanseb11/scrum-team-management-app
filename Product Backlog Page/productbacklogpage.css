@@ -263,3 +263,20 @@ h2 {
 .form-group button:hover {
     background-color: #0056b3;
 }
+
+/* colour coding task priorities*/
+option[value = "low"] {
+    background-color: #27ae60;
+}
+
+option[value = "medium"] {
+    background-color: #f3f041;
+}
+
+option[value = "important"] {
+    background-color: #f3a641;
+}
+
+option[value = "urgent"] {
+    background-color: #e74c3c;
+}
