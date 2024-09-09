@@ -28,7 +28,7 @@ document.addEventListener('DOMContentLoaded', function() {
         event.preventDefault(); // Prevent the default form submission
 
         // Get form values
-        var userStory = document.getElementById('userStory').value;
+        var taskName = document.getElementById('taskName').value;
         var priority = document.getElementById('priority').value;
         var sprint = document.getElementById('sprint').value;
         var startDate = document.getElementById('startDate').value;
@@ -39,7 +39,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // Create a new row
         var newRow = table.insertRow();
-        newRow.insertCell(0).innerText = userStory;
+        newRow.insertCell(0).innerText = taskName;
         newRow.insertCell(1).innerText = priority;
         newRow.insertCell(2).innerText = sprint;
         newRow.insertCell(3).innerText = startDate;
@@ -50,7 +50,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // Actions cell with Edit and Delete buttons
         var actionsCell = newRow.insertCell(8);
-        var actionsCell2 = newRow.insertCell(9);
         actionsCell.innerHTML = "<button class='editButton'>Edit</button> <button class='deleteButton'>Delete</button>";
         
         // Attach event listeners for new row buttons
