@@ -74,12 +74,29 @@ document.addEventListener('DOMContentLoaded', function() {
             if (editButton.innerText === 'Edit') {
                 // Enter edit mode
                 cells[0].innerHTML = `<input type='text' value='${cells[0].innerText}'>`;
-                cells[1].innerHTML = `<select><option value='low' ${cells[1].innerText === 'Low' ? 'selected' : ''}>Low</option><option value='medium' ${cells[1].innerText === 'Medium' ? 'selected' : ''}>Medium</option><option value='high' ${cells[1].innerText === 'High' ? 'selected' : ''}>High</option></select>`;
+                cells[1].innerHTML = `<select>
+                                          <option value='low' ${cells[1].innerText === 'Low' ? 'selected' : ''}>Low</option>
+                                          <option value='medium' ${cells[1].innerText === 'Medium' ? 'selected' : ''}>Medium</option>
+                                          <option value='high' ${cells[1].innerText === 'High' ? 'selected' : ''}>High</option>
+                                      </select>`;
                 cells[2].innerHTML = `<input type='text' value='${cells[2].innerText}'>`;
                 cells[3].innerHTML = `<input type='date' value='${cells[3].innerText}'>`;
-                cells[4].innerHTML = `<select><option value='in-progress' ${cells[4].innerText === 'In Progress' ? 'selected' : ''}>In Progress</option><option value='not-started' ${cells[4].innerText === 'Not Started' ? 'selected' : ''}>Not Started</option><option value='completed' ${cells[4].innerText === 'Completed' ? 'selected' : ''}>Completed</option></select>`;
+                cells[4].innerHTML = `<select>
+                                          <option value='in-progress' ${cells[4].innerText === 'In Progress' ? 'selected' : ''}>In Progress</option>
+                                          <option value='not-started' ${cells[4].innerText === 'Not Started' ? 'selected' : ''}>Not Started</option>
+                                          <option value='completed' ${cells[4].innerText === 'Completed' ? 'selected' : ''}>Completed</option>
+                                      </select>`;
                 cells[5].innerHTML = `<input type='text' value='${cells[5].innerText}'>`;
-                cells[6].innerHTML = `<input type='text' value='${cells[6].innerText}'>`;
+        
+                // Task member select
+                const taskMemberOptions = ['None', 'Lisa', 'Amar', 'Alan', 'Sanjevan', 'Han', 'Michael'];
+                let taskMemberSelect = `<select>`;
+                taskMemberOptions.forEach(member => {
+                    taskMemberSelect += `<option value="${member}" ${cells[6].innerText === member ? 'selected' : ''}>${member}</option>`;
+                });
+                taskMemberSelect += `</select>`;
+                cells[6].innerHTML = taskMemberSelect;
+        
                 editButton.innerText = 'Save';
             } else {
                 // Save changes
@@ -89,9 +106,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 cells[3].innerText = cells[3].querySelector('input').value;
                 cells[4].innerText = cells[4].querySelector('select').value;
                 cells[5].innerText = cells[5].querySelector('input').value;
-                cells[6].innerText = cells[6].querySelector('input').value;
+                cells[6].innerText = cells[6].querySelector('select').value;
                 editButton.innerText = 'Edit';
             }
         });
+        
     }
 });
