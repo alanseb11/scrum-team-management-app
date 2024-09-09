@@ -29,22 +29,22 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // Get form values
         var taskName = document.getElementById('taskName').value;
+        var taskType = document.getElementById('taskType').value;
         var priority = document.getElementById('priority').value;
         var sprint = document.getElementById('sprint').value;
         var startDate = document.getElementById('startDate').value;
         var status = document.getElementById('status').value;
-        var taskType = document.getElementById('taskType').value;
         var technicalTask = document.getElementById('technicalTask').value;
         var taskMember = document.getElementById('taskMember').value;
 
         // Create a new row
         var newRow = table.insertRow();
         newRow.insertCell(0).innerText = taskName;
-        newRow.insertCell(1).innerText = priority;
-        newRow.insertCell(2).innerText = sprint;
-        newRow.insertCell(3).innerText = startDate;
-        newRow.insertCell(4).innerText = status;
-        newRow.insertCell(5).innerText = taskType;
+        newRow.insertCell(1).innerText = taskType;
+        newRow.insertCell(2).innerText = priority;
+        newRow.insertCell(3).innerText = sprint;
+        newRow.insertCell(4).innerText = startDate;
+        newRow.insertCell(5).innerText = status;
         newRow.insertCell(6).innerText = technicalTask;
         newRow.insertCell(7).innerText = taskMember;
 
@@ -77,22 +77,22 @@ document.addEventListener('DOMContentLoaded', function() {
             if (editButton.innerText === 'Edit') {
                 // Enter edit mode
                 cells[0].innerHTML = `<input type='text' value='${cells[0].innerText}'>`;
-                cells[1].innerHTML = `<select><option value='low' ${cells[1].innerText === 'Low' ? 'selected' : ''}>Low</option><option value='medium' ${cells[1].innerText === 'Medium' ? 'selected' : ''}>Medium</option><option value='high' ${cells[1].innerText === 'High' ? 'selected' : ''}>High</option></select>`;
-                cells[2].innerHTML = `<input type='text' value='${cells[2].innerText}'>`;
-                cells[3].innerHTML = `<input type='date' value='${cells[3].innerText}'>`;
-                cells[4].innerHTML = `<select><option value='in-progress' ${cells[4].innerText === 'In Progress' ? 'selected' : ''}>In Progress</option><option value='Not Started' ${cells[4].innerText === 'Not Started' ? 'selected' : ''}>Not Started</option><option value='Completed' ${cells[4].innerText === 'Completed' ? 'selected' : ''}>Completed</option></select>`;
-                cells[5].innerHTML = `<select><option value='bug' ${cells[5].innerText === 'Bug' ? 'selected' : ''}>Bug</option><option value='s    tory' ${cells[5].innerText === 'Story' ? 'selected' : ''}>Story</option></select>`;
+                cells[1].innerHTML = `<select><option value='bug' ${cells[5].innerText === 'Bug' ? 'selected' : ''}>Bug</option><option value='s    tory' ${cells[5].innerText === 'Story' ? 'selected' : ''}>Story</option></select>`;
+                cells[2].innerHTML = `<select><option value='low' ${cells[1].innerText === 'Low' ? 'selected' : ''}>Low</option><option value='medium' ${cells[1].innerText === 'Medium' ? 'selected' : ''}>Medium</option><option value='high' ${cells[1].innerText === 'High' ? 'selected' : ''}>High</option></select>`;
+                cells[3].innerHTML = `<input type='text' value='${cells[2].innerText}'>`;
+                cells[4].innerHTML = `<input type='date' value='${cells[3].innerText}'>`;
+                cells[5].innerHTML = `<select><option value='in-progress' ${cells[4].innerText === 'In Progress' ? 'selected' : ''}>In Progress</option><option value='Not Started' ${cells[4].innerText === 'Not Started' ? 'selected' : ''}>Not Started</option><option value='Completed' ${cells[4].innerText === 'Completed' ? 'selected' : ''}>Completed</option></select>`;
                 cells[6].innerHTML = `<input type='text' value='${cells[5].innerText}'>`;
                 cells[7].innerHTML = `<input type='text' value='${cells[6].innerText}'>`;
                 editButton.innerText = 'Save';
             } else {
                 // Save changes
                 cells[0].innerText = cells[0].querySelector('input').value;
-                cells[1].innerText = cells[1].querySelector('select').value;
-                cells[2].innerText = cells[2].querySelector('input').value;
-                cells[3].innerText = cells[3].querySelector('input').value;
-                cells[4].innerText = cells[4].querySelector('select').value;
-                cells[5].innerText = cells[5].querySelector('input').value;
+                cells[1].innerText = cells[5].querySelector('input').value;
+                cells[2].innerText = cells[1].querySelector('select').value;
+                cells[3].innerText = cells[2].querySelector('input').value;
+                cells[4].innerText = cells[3].querySelector('input').value;
+                cells[5].innerText = cells[4].querySelector('select').value;
                 cells[6].innerText = cells[6].querySelector('input').value;
                 cells[7].innerText = cells[7].querySelector('input').value;
                 editButton.innerText = 'Edit';
