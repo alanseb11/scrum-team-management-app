@@ -1,5 +1,5 @@
 body {
-    font-family: "Poppins", 'Gill Sans', 'Gill Sans MT', 'Trebuchet MS', sans-serif;
+    font-family: "Roboto", "Poppins", 'Gill Sans', 'Gill Sans MT', 'Trebuchet MS', sans-serif;
     background-color: #ffffff;
     color: #333333;
     margin: 0;
@@ -75,7 +75,7 @@ table {
     width: 100%;
     border-collapse: collapse;
     margin: 20px 0;
-    font-family: "Poppins", 'Gill Sans', 'Gill Sans MT', 'Trebuchet MS', sans-serif;
+    font-family: "Roboto", "Poppins", 'Gill Sans', 'Gill Sans MT', 'Trebuchet MS', sans-serif;
 }
 
 th, td {
@@ -136,7 +136,7 @@ button {
     border-radius: 5px; /* Rounded corners */
     padding: 10px 20px; /* Adequate padding for better click area */
     font-size: 14px; /* Consistent font size */
-    font-family: "Poppins", 'Gill Sans', 'Gill Sans MT', 'Trebuchet MS', sans-serif;
+    font-family: "Roboto", "Poppins", 'Gill Sans', 'Gill Sans MT', 'Trebuchet MS', sans-serif;
     cursor: pointer;
     transition: background-color 0.3s, transform 0.2s; /* Smooth transition for background color and hover effect */
 }
