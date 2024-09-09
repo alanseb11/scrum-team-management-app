@@ -25,20 +25,24 @@
     <table id="productBacklogTable">
         <thead>
             <tr>
+                <!-- table column headers  -->
                 <th>User Story</th>
                 <th>Priority</th>
                 <th>Allocated Sprint</th>
                 <th>Start Date</th>
                 <th>Status</th>
+                <th>Task Type</th>
                 <th>Technical Task Description</th>
                 <th>Allocated Task Member</th>
                 <th>Confirm</th>
                 <th>Delete</th>
+                
             </tr>
         </thead>
         
         <tbody>
             <tr>
+                <!-- Example user story 1 -->
                 <td>Example Story 1</td>
                 <td>
                     <select>
@@ -56,10 +60,12 @@
                         <option value="completed">Completed</option>
                     </select>
                 </td>
+                <td>Story</td>
                 <td>Code HTML</td>
                 <td>Sanj</td>
             </tr>
             <tr>
+                <!-- Example user story 2 -->
                 <td>Example Story 2</td>
                 <td>
                     <select>
@@ -77,6 +83,7 @@
                         <option value="completed">Completed</option>
                     </select>
                 </td>
+                <td>Bug</td>
                 <td>Code CSS</td>
                 <td>Amar</td>
             </tr>
@@ -92,11 +99,13 @@
         <span class="close">&times;</span>
         <h2 id="modalTitle">Add New Task</h2>
         <form id="taskForm">
+            <!-- User story field -->
             <div class="form-group">
                 <label for="userStory">User Story:</label>
                 <input type="text" id="userStory" name="userStory" required>
             </div>
-
+            
+            <!-- Priority field -->
             <div class="form-group">
                 <label for="priority">Priority:</label>
                 <select id="priority" name="priority">
@@ -105,17 +114,20 @@
                     <option value="high">High</option>
                 </select>
             </div>
-
+            
+            <!-- Sprint field -->
             <div class="form-group">
                 <label for="sprint">Sprint:</label>
                 <input type="text" id="sprint" name="sprint" required>
             </div>
-
+            
+            <!-- Start date field -->
             <div class="form-group">
                 <label for="startDate">Start Date:</label>
                 <input type="date" id="startDate" name="startDate" required>
             </div>
 
+            <!-- status field -->
             <div class="form-group">
                 <label for="status">Status:</label>
                 <select id="status" name="status">
@@ -124,17 +136,29 @@
                     <option value="completed">Completed</option>
                 </select>
             </div>
-
+            
+            <!-- task type field -->
             <div class="form-group">
-                <label for="technicalTask">Technical Task Description:</label>
+                <label for="taskType">Task Type:</label>
+                <select id="taskType" name="taskType">
+                    <option value="bug">Bug</option>
+                    <option value="story">Story</option>
+                </select>
+            </div>
+            
+            <!-- task description field -->
+            <div class="form-group">
+                <label for="technicalTask">Task Description:</label>
                 <input type="text" id="technicalTask" name="technicalTask" required>
             </div>
-
+            
+            <!-- allocated task member -->
             <div class="form-group">
                 <label for="taskMember">Allocated Task Member:</label>
                 <input type="text" id="taskMember" name="taskMember" required>
             </div>
-
+            
+            <!-- save task button -->
             <div class="form-group">
                 <button type="submit">Save Task</button>
             </div>
@@ -142,7 +166,7 @@
     </div>
 </div>
 
-
+    <!-- footer -->
     <div>
         <footer>
             <div class="footer-content">
