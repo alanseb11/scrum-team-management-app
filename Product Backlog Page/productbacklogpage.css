@@ -1,9 +1,22 @@
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+}
+
 body {
     font-family: "Roboto", "Poppins", 'Gill Sans', 'Gill Sans MT', 'Trebuchet MS', sans-serif;
     background-color: #ffffff;
     color: #333333;
-    margin: 0;
-    padding: 0;
+}
+
+/* Main container should grow to fill the remaining space */
+.main-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
 }
 
 /* Welcome message styling */
@@ -42,10 +55,6 @@ nav a:hover {
 
 /* Footer */
 footer {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
     background-color: white;
     color: black;
     padding: 10px;
@@ -53,6 +62,8 @@ footer {
     display: flex;
     align-items: center;
     justify-content: flex-start;
+    width: 100%;
+    margin-top: auto;
 }
 
 .footer-content {
@@ -140,6 +151,8 @@ button {
     cursor: pointer;
     transition: background-color 0.3s, transform 0.2s; /* Smooth transition for background color and hover effect */
     
+    flex-shrink: 0; /* Prevent shrinking */
+    width: auto; /* Set to auto or a specific width if needed */
 }
 
 /* Button Hover Effects */
@@ -349,58 +362,4 @@ option[value = "urgent"] {
     background-color: #ff91c9;
 }
 
-.custom-multiselect {
-    position: relative;
-    width: 100%;
-}
-
-.select-box {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    background-color: #fff;
-    cursor: pointer;
-}
-
-.selected-items {
-    font-size: 14px;
-    color: #333;
-}
-
-.caret-down {
-    border-top: 6px solid #333;
-    border-left: 6px solid transparent;
-    border-right: 6px solid transparent;
-    margin-left: 10px;
-}
-
-.options-container {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    width: 100%;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    background-color: #fff;
-    display: none;
-    z-index: 1000;
-}
-
-.options-container label {
-    display: block;
-    padding: 10px;
-    font-size: 14px;
-    cursor: pointer;
-}
-
-.options-container label:hover {
-    background-color: #f1f1f1;
-}
-
-.options-container input {
-    margin-right: 10px;
-}
 

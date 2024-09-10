@@ -38,6 +38,7 @@ document.addEventListener('DOMContentLoaded', function() {
         var storyPoints = document.getElementById('storyPoints').value;
         var weightage = document.getElementById('weightage').value;
         var taskMember = document.getElementById('taskMember').value;
+    
 
         // Create a new row in the table
         var newRow = table.insertRow();
@@ -51,7 +52,6 @@ document.addEventListener('DOMContentLoaded', function() {
         newRow.insertCell(7).innerText = storyPoints;
         newRow.insertCell(8).innerText = weightage;
         newRow.insertCell(9).innerText = taskMember;
-
         var actionsCell = newRow.insertCell(10);
         actionsCell.innerHTML = "<button class='editButton'>Edit</button> <button class='deleteButton'>Delete</button>";
 
