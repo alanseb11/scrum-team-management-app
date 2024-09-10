@@ -77,22 +77,24 @@ document.addEventListener('DOMContentLoaded', function() {
             if (editButton.innerText === 'Edit') {
                 // Enter edit mode
                 cells[0].innerHTML = `<input type='text' value='${cells[0].innerText}'>`;
-                cells[1].innerHTML = `<select><option value='low' ${cells[1].innerText === 'Low' ? 'selected' : ''}>Low</option><option value='medium' ${cells[1].innerText === 'Medium' ? 'selected' : ''}>Medium</option><option value='high' ${cells[1].innerText === 'High' ? 'selected' : ''}>High</option></select>`;
-                cells[2].innerHTML = `<input type='text' value='${cells[2].innerText}'>`;
-                cells[3].innerHTML = `<input type='date' value='${cells[3].innerText}'>`;
-                cells[4].innerHTML = `<select><option value='in-progress' ${cells[4].innerText === 'In Progress' ? 'selected' : ''}>In Progress</option><option value='not-started' ${cells[4].innerText === 'Not Started' ? 'selected' : ''}>Not Started</option><option value='completed' ${cells[4].innerText === 'Completed' ? 'selected' : ''}>Completed</option></select>`;
-                cells[5].innerHTML = `<input type='text' value='${cells[5].innerText}'>`;
+                cells[1].innerHTML = `<select><option value='story' ${cells[1].innerText === 'Story' ? 'selected' : ''}>Story</option><option value='bug' ${cells[1].innerText === 'Bug' ? 'selected' : ''}>Bug</option></select>`;
+                cells[2].innerHTML = `<select><option value='low' ${cells[2].innerText === 'Low' ? 'selected' : ''}>Low</option><option value='medium' ${cells[2].innerText === 'Medium' ? 'selected' : ''}>Medium</option><option value='important' ${cells[2].innerText === 'Important' ? 'selected' : ''}>Important</option><option value='urgent' ${cells[2].innerText === 'Urgent' ? 'selected' : ''}>Urgent</option></select>`;
+                cells[3].innerHTML = `<input type='text' value='${cells[3].innerText}'>`;
+                cells[4].innerHTML = `<input type='date' value='${cells[4].innerText}'>`;
+                cells[5].innerHTML = `<select><option value='in-progress' ${cells[5].innerText === 'In Progress' ? 'selected' : ''}>In Progress</option><option value='not-started' ${cells[5].innerText === 'Not Started' ? 'selected' : ''}>Not Started</option><option value='completed' ${cells[5].innerText === 'Completed' ? 'selected' : ''}>Completed</option></select>`;
                 cells[6].innerHTML = `<input type='text' value='${cells[6].innerText}'>`;
+                cells[7].innerHTML = `<input type='text' value='${cells[7].innerText}'>`;
                 editButton.innerText = 'Save';
             } else {
                 // Save changes
                 cells[0].innerText = cells[0].querySelector('input').value;
                 cells[1].innerText = cells[1].querySelector('select').value;
-                cells[2].innerText = cells[2].querySelector('input').value;
+                cells[2].innerText = cells[2].querySelector('select').value;
                 cells[3].innerText = cells[3].querySelector('input').value;
-                cells[4].innerText = cells[4].querySelector('select').value;
-                cells[5].innerText = cells[5].querySelector('input').value;
+                cells[4].innerText = cells[4].querySelector('input').value;
+                cells[5].innerText = cells[5].querySelector('select').value;
                 cells[6].innerText = cells[6].querySelector('input').value;
+                cells[7].innerText = cells[7].querySelector('input').value;
                 editButton.innerText = 'Edit';
             }
         });
