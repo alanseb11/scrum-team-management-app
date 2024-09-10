@@ -191,21 +191,23 @@ document.addEventListener('DOMContentLoaded', function() {
     };
 
     // Filtering tasks by selected tag
-    document.getElementById('tagFilter').addEventListener('change', function() {
-        var selectedTag = this.value;
-        var rows = document.querySelectorAll('#productBacklogTable tbody tr');
+    // Filtering tasks by selected tag
+document.getElementById('tagFilter').addEventListener('change', function() {
+    var selectedTag = this.value.toLowerCase();  // Convert selected tag to lowercase
+    var rows = document.querySelectorAll('#productBacklogTable tbody tr');
+    
+    rows.forEach(row => {
+        var tagsCell = row.cells[3].innerText.toLowerCase();  // Convert tags text to lowercase
+        var taskTags = tagsCell.split(', ').map(tag => tag.trim());  // Split and trim tags
         
-        rows.forEach(row => {
-            var tagsCell = row.cells[3].innerText;
-            var taskTags = tagsCell.split(', ');
-            
-            if (selectedTag === '' || taskTags.includes(selectedTag)) {
-                row.style.display = ''; // Show the row if it matches the selected tag or if no tag is selected
-            } else {
-                row.style.display = 'none'; // Hide the row if it doesn't match
-            }
-        });
+        if (selectedTag === '' || taskTags.includes(selectedTag)) {
+            row.style.display = '';  // Show the row if it matches the selected tag or no tag is selected
+        } else {
+            row.style.display = 'none';  // Hide the row if it doesn't match
+        }
     });
+});
+
 
     // Sorting tasks by priority
     document.getElementById('prioritySort').addEventListener('change', function() {
