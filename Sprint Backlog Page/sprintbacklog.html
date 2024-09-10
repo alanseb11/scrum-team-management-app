@@ -9,141 +9,191 @@
 </head>
 
 <body> 
-
-<div class="productbacklogscreen">
-    <h1>Your Sprint Backlog</h1>
-</div>
-
-<nav>
-    <a href="../Home Page/homepage.html">Home</a>
-    <a href="../Team Page/team.html">The Team</a>
-    <a href="../Product Backlog Page/productbacklogpage.html">Product Backlog</a>
-    <a href="../Contact Us Page/contactus.html">Contact Us</a> 
-    <a href="../Sprint Backlog Page/sprintbacklog.html">Sprint Backlog</a> 
-</nav>
-   
-    <table id="productBacklogTable">
-        <thead>
-            <tr>
-                <th>User Story</th>
-                <th>Priority</th>
-                <th>Allocated Sprint</th>
-                <th>Start Date</th>
-                <th>Status</th>
-                <th>Technical Task Description</th>
-                <th>Allocated Task Member</th>
-                <th>Confirm</th>
-                <th>Delete</th>
-            </tr>
-        </thead>
+    <div class="main-container">
+        <div class="productbacklogscreen">
+            <h1>Your Product Backlog</h1>
+        </div>
         
-        <tbody>
-            <tr>
-                <td>Example Story 1</td>
-                <td>
-                    <select>
-                        <option value="low">Low</option>
-                        <option value="medium">Medium</option>
-                        <option value="high">High</option>
-                    </select>
-                </td>
-                <td>Sprint 1</td>
-                <td>30/8/2024</td>
-                <td>
-                    <select>
-                        <option value="in-progress">In Progress</option>
-                        <option value="not-started">Not Started</option>
-                        <option value="completed">Completed</option>
-                    </select>
-                </td>
-                <td>Code HTML</td>
-                <td>Sanj</td>
-            </tr>
-            <tr>
-                <td>Example Story 2</td>
-                <td>
-                    <select>
-                        <option value="low">Low</option>
-                        <option value="medium">Medium</option>
-                        <option value="high">High</option>
-                    </select>
-                </td>
-                <td>Sprint 2</td>
-                <td>30/8/2024</td>
-                <td>
-                    <select>
-                        <option value="in-progress">In Progress</option>
-                        <option value="not-started">Not Started</option>
-                        <option value="completed">Completed</option>
-                    </select>
-                </td>
-                <td>Code CSS</td>
-                <td>Amar</td>
-            </tr>
-        </tbody>
-    </table>
-    
-    <!-- Add a button to add a new row -->
-    <button id="addRowButton">Add New Task</button>
-    
-<!-- The Modal -->
-<div id="taskModal" class="modal">
-    <div class="modal-content">
-        <span class="close">&times;</span>
-        <h2 id="modalTitle">Add New Task</h2>
-        <form id="taskForm">
-            <div class="form-group">
-                <label for="userStory">User Story:</label>
-                <input type="text" id="userStory" name="userStory" required>
+            <nav>
+                <a href="../Home Page/homepage.html">Home</a>
+                <a href="../Team Page/team.html">The Team</a>
+                <a href="../Product Backlog Page/productbacklogpage.html">Product Backlog</a>
+                <a href="../Contact Us Page/contactus.html">Contact Us</a>
+                <a href="../Sprint Backlog Page/sprintbacklog.html">Sprint Backlog</a>
+            </nav>
+        
+            <table id="productBacklogTable">
+                <thead>
+                    <tr>
+                        <!-- table column headers  -->
+                        <th>Task Name</th>
+                        <th>Task Type</th>
+                        <th>Priority</th>
+                        <th>Allocated Sprint</th>
+                        <th>Start Date</th>
+                        <th>Status</th>
+                        <th>Technical Task Description</th>
+                        <th>Allocated Task Member</th>
+                        <th>Stage</th>
+                        <th>Confirm</th>
+                        <th>Delete</th>
+        
+                    </tr>
+                </thead>
+        
+                <tbody>
+                    <tr>
+                        <!-- Example task 1 -->
+                        <td>Example Task 1</td>
+                        <td>Story</td>
+                        <td>
+                            <select>
+                                <option value="low">Low</option>
+                                <option value="medium">Medium</option>
+                                <option value="important">Important</option>
+                                <option value="urgent">Urgent</option>
+                            </select>
+                        </td>
+                        <td>Sprint 1</td>
+                        <td>30/8/2024</td>
+                        <td>
+                            <select>
+                                <option value="in-progress">In Progress</option>
+                                <option value="not-started">Not Started</option>
+                                <option value="completed">Completed</option>
+                            </select>
+                        </td>
+        
+                        <td>Code HTML</td>
+                        <td>Sanj</td>
+                        <td>Planning</td>
+                    </tr>
+                    <tr>
+                        <!-- Example task 2 -->
+                        <td>Example Task 2</td>
+                        <td>Bug</td>
+                        <td>
+                            <select id="">
+                                <option value="low">Low</option>
+                                <option value="medium">Medium</option>
+                                <option value="important">Important</option>
+                                <option value="urgent">Urgent</option>
+                            </select>
+                        </td>
+                        <td>Sprint 2</td>
+                        <td>30/8/2024</td>
+                        <td>
+                            <select>
+                                <option value="in-progress">In Progress</option>
+                                <option value="not-started">Not Started</option>
+                                <option value="completed">Completed</option>
+                            </select>
+                        </td>
+        
+                        <td>Code CSS</td>
+                        <td>Amar</td>
+                        <td>Testing</td>
+                    </tr>
+                </tbody>
+            </table>
+        
+        <!-- Add a button to add a new row -->
+        <div><button id="addRowButton">Add New Task</button></div>
+        
+        <!-- The Modal -->
+        <div id="taskModal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h2 id="modalTitle">Add New Task</h2>
+                <form id="taskForm">
+                    <!-- Task name field -->
+                    <div class="form-group">
+                        <label for="taskName">Task Name:</label>
+                        <input type="text" id="taskName" name="taskName" required>
+                    </div>
+        
+                    <!-- task type field -->
+                    <div class="form-group">
+                        <label for="taskType">Task Type:</label>
+                        <select id="taskType" name="taskType">
+                            <option value="story">Story</option>
+                            <option value="bug">Bug</option>
+                        </select>
+                    </div>
+        
+                    <!-- Priority field -->
+                    <div class="form-group">
+                        <label for="priority">Priority:</label>
+                        <select id="priority" name="priority">
+                            <option value="low">Low</option>
+                            <option value="medium">Medium</option>
+                            <option value="important">Important</option>
+                            <option value="urgent">Urgent</option>
+                        </select>
+                    </div>
+        
+                    <!-- Sprint field -->
+                    <div class="form-group">
+                        <label for="sprint">Sprint:</label>
+                        <input type="text" id="sprint" name="sprint" required>
+                    </div>
+        
+                    <!-- Start date field -->
+                    <div class="form-group">
+                        <label for="startDate">Start Date:</label>
+                        <input type="date" id="startDate" name="startDate" required>
+                    </div>
+        
+                    <!-- status field -->
+                    <div class="form-group">
+                        <label for="status">Status:</label>
+                        <select id="status" name="status">
+                            <option value="in-progress">In Progress</option>
+                            <option value="not-started">Not Started</option>
+                            <option value="completed">Completed</option>
+                        </select>
+                    </div>
+        
+                    <!-- task description field -->
+                    <div class="form-group">
+                        <label for="technicalTask">Task Description:</label>
+                        <input type="text" id="technicalTask" name="technicalTask" required>
+                    </div>
+        
+                    <!-- allocated task member -->
+                    <div class="form-group">
+                        <label for="taskMember">Allocated Task Member:</label>
+                        <select id="taskMember" name="taskMember">
+                            <option value="None">None </option>
+                            <option value="Lisa">Lisa </option>
+                            <option value="Amar">Amar </option>
+                            <option value="Alan">Alan </option>
+                            <option value="Sanjevan">Sanjevan </option>
+                            <option value="Han">Han </option>
+                            <option value="Michael">Michael </option>
+                        </select>
+                    </div>
+        
+                    <!-- current stage -->
+                    <div class="form-group">
+                        <label for="currentStage">Stage:</label>
+                        <select id="currentStage" name="currentStage">
+                            <option value="planning">Planning</option>
+                            <option value="development">Development</option>
+                            <option value="testing">Testing</option>
+                            <option value="integration">Integration</option>
+                        </select>
+                    </div>
+        
+                    <!-- save task button -->
+                    <div class="form-group">
+                        <button type="submit">Save Task</button>
+                    </div>
+                </form>
             </div>
-
-            <div class="form-group">
-                <label for="priority">Priority:</label>
-                <select id="priority" name="priority">
-                    <option value="low">Low</option>
-                    <option value="medium">Medium</option>
-                    <option value="high">High</option>
-                </select>
-            </div>
-
-            <div class="form-group">
-                <label for="sprint">Sprint:</label>
-                <input type="text" id="sprint" name="sprint" required>
-            </div>
-
-            <div class="form-group">
-                <label for="startDate">Start Date:</label>
-                <input type="date" id="startDate" name="startDate" required>
-            </div>
-
-            <div class="form-group">
-                <label for="status">Status:</label>
-                <select id="status" name="status">
-                    <option value="in-progress">In Progress</option>
-                    <option value="not-started">Not Started</option>
-                    <option value="completed">Completed</option>
-                </select>
-            </div>
-
-            <div class="form-group">
-                <label for="technicalTask">Technical Task Description:</label>
-                <input type="text" id="technicalTask" name="technicalTask" required>
-            </div>
-
-            <div class="form-group">
-                <label for="taskMember">Allocated Task Member:</label>
-                <input type="text" id="taskMember" name="taskMember" required>
-            </div>
-
-            <div class="form-group">
-                <button type="submit">Save Task</button>
-            </div>
-        </form>
-    </div>
-</div>
-
-
-    <div>
+        </div>
+        
+        <!-- footer -->
         <footer>
             <div class="footer-content">
                 <img src="../Photos/debugdivas.png" class="footer-logo">
