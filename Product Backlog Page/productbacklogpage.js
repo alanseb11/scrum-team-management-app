@@ -36,6 +36,7 @@ document.addEventListener('DOMContentLoaded', function() {
         var status = document.getElementById('status').value;
         var technicalTask = document.getElementById('technicalTask').value;
         var taskMember = document.getElementById('taskMember').value;
+        var currentStage = document.getElementById('currentStage').value;
 
         // Create a new row
         var newRow = table.insertRow();
@@ -47,9 +48,10 @@ document.addEventListener('DOMContentLoaded', function() {
         newRow.insertCell(5).innerText = status;
         newRow.insertCell(6).innerText = technicalTask;
         newRow.insertCell(7).innerText = taskMember;
+        newRow.insertCell(8).innerText = currentStage;
 
         // Actions cell with Edit and Delete buttons
-        var actionsCell = newRow.insertCell(8);
+        var actionsCell = newRow.insertCell(9);
         actionsCell.innerHTML = "<button class='editButton'>Edit</button> <button class='deleteButton'>Delete</button>";
         
         // Attach event listeners for new row buttons
@@ -84,6 +86,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 cells[5].innerHTML = `<select><option value='in-progress' ${cells[5].innerText === 'In Progress' ? 'selected' : ''}>In Progress</option><option value='not-started' ${cells[5].innerText === 'Not Started' ? 'selected' : ''}>Not Started</option><option value='completed' ${cells[5].innerText === 'Completed' ? 'selected' : ''}>Completed</option></select>`;
                 cells[6].innerHTML = `<input type='text' value='${cells[6].innerText}'>`;
                 cells[7].innerHTML = `<input type='text' value='${cells[7].innerText}'>`;
+                cells[8].innerHTML = `<select><option value='planning' ${cells[8].innerText === 'Planning' ? 'selected' : ''}>Planning</option><option value='development' ${cells[8].innerText === 'Development' ? 'selected' : ''}>Development</option><option value='testing' ${cells[8].innerText === 'Testing' ? 'selected' : ''}>Testing</option></option><option value='integration' ${cells[8].innerText === 'Integration' ? 'selected' : ''}>Integration</option></select>`;
                 editButton.innerText = 'Save';
             } else {
                 // Save changes
@@ -95,6 +98,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 cells[5].innerText = cells[5].querySelector('select').value;
                 cells[6].innerText = cells[6].querySelector('input').value;
                 cells[7].innerText = cells[7].querySelector('input').value;
+                cells[8].innerText = cells[8].querySelector('select').value;
                 editButton.innerText = 'Edit';
             }
         });
