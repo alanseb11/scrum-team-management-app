@@ -147,18 +147,20 @@
                         <div class="caret-down"></div>
                     </div>
                     <div class="options-container" id="optionsContainer">
-                        <label><input type="checkbox" value="frontend"> Frontend</label>
-                        <label><input type="checkbox" value="backend"> Backend</label>
-                        <label><input type="checkbox" value="api"> API</label>
-                        <label><input type="checkbox" value="database"> Database</label>
-                        <label><input type="checkbox" value="framework"> Framework</label>
-                        <label><input type="checkbox" value="testing"> Testing</label>
-                        <label><input type="checkbox" value="ui"> UI</label>
-                        <label><input type="checkbox" value="ux"> UX</label>
+                        <label><span>Frontend</span><input type="checkbox" value="frontend"></label>
+                        <label><span>Backend</span><input type="checkbox" value="backend"></label>
+                        <label><span>API</span><input type="checkbox" value="api"></label>
+                        <label><span>Database</span><input type="checkbox" value="database"></label>
+                        <label><span>Framework</span><input type="checkbox" value="framework"></label>
+                        <label><span>Testing</span><input type="checkbox" value="testing"></label>
+                        <label><span>UI</span><input type="checkbox" value="ui"></label>
+                        <label><span>UX</span><input type="checkbox" value="ux"></label>
                     </div>
                 </div>
                 <input type="hidden" id="tags" name="tags">
             </div>
+            
+            
             <div class="form-group">
                 <label for="storyPoints">Story Points:</label>
                 <input type="number" id="storyPoints" name="storyPoints" min="0" max="10" required>

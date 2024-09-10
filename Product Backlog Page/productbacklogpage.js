@@ -5,12 +5,40 @@ document.addEventListener('DOMContentLoaded', function() {
     var taskForm = document.getElementById('taskForm');
     var table = document.getElementById('productBacklogTable').getElementsByTagName('tbody')[0];
     var toggleViewButton = document.getElementById('toggleViewButton');
+    var customMultiselect = document.getElementById('customMultiselect');
+    var selectedItems = document.getElementById('selectedItems');
+    var optionsContainer = document.getElementById('optionsContainer');
+    var tagsInput = document.getElementById('tags');
     var isListView = true;
 
     // Show the modal
     addRowButton.onclick = function() {
         modal.style.display = 'block';
     };
+
+    customMultiselect.onclick = function() {
+        optionsContainer.style.display = optionsContainer.style.display === 'block' ? 'none' : 'block';
+    };
+
+    optionsContainer.querySelectorAll('input[type="checkbox"]').forEach(function(checkbox) {
+        checkbox.addEventListener('change', function() {
+            updateSelectedItems();
+        });
+    });
+
+    function updateSelectedItems() {
+        var selected = Array.from(optionsContainer.querySelectorAll('input[type="checkbox"]:checked')).map(function(checkbox) {
+            return checkbox.value;
+        });
+
+        if (selected.length > 0) {
+            selectedItems.textContent = selected.join(', ');
+        } else {
+            selectedItems.textContent = 'Select Tags';
+        }
+
+        tagsInput.value = selected.join(', '); // Store selected values in hidden input field
+    }
 
     // Close the modal
     closeButton.onclick = function() {

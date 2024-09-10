@@ -350,3 +350,64 @@ option[value = "urgent"] {
 }
 
 
+/* Styling for the custom multiselect options */
+.custom-multiselect {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+}
+
+.select-box {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background-color: #fff;
+    cursor: pointer;
+}
+
+.selected-items {
+    font-size: 14px;
+    color: #555;
+}
+
+.options-container {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    border: 1px solid #ddd;
+    background-color: white;
+    z-index: 1000;
+    max-height: 200px; /* Limit the height */
+    overflow-y: auto;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add some shadow */
+}
+
+/* Styling each option inside the dropdown */
+.options-container label {
+    display: flex;
+    justify-content: space-between; /* Aligns the text on the left and checkbox on the right */
+    padding: 8px 12px;
+    cursor: pointer;
+    font-size: 14px;
+    align-items: center;
+}
+
+.options-container label span {
+    flex-grow: 1; /* Makes the label take up available space on the left */
+}
+
+.options-container input[type="checkbox"] {
+    margin-left: 10px; /* Space between checkbox and the right edge */
+    accent-color: #3498db; /* Change checkbox color */
+    width: 16px; /* Adjust width of checkbox */
+    height: 16px; /* Adjust height of checkbox */
+}
+
+.options-container label:hover {
+    background-color: #f0f0f0;
+}
