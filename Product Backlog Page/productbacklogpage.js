@@ -31,14 +31,13 @@ document.addEventListener('DOMContentLoaded', function() {
         var taskName = document.getElementById('taskName').value;
         var taskType = document.getElementById('taskType').value;
         var priority = document.getElementById('priority').value;
-        var tags = Array.from(document.getElementById('tags').selectedOptions).map(option => option.value).join(', ');
+        var tags = document.getElementById('tags').value;  // Tags are stored in hidden input field
         var sprint = document.getElementById('sprint').value;
         var startDate = document.getElementById('startDate').value;
         var status = document.getElementById('status').value;
         var storyPoints = document.getElementById('storyPoints').value;
         var weightage = document.getElementById('weightage').value;
         var taskMember = document.getElementById('taskMember').value;
-    
 
         // Create a new row in the table
         var newRow = table.insertRow();
@@ -59,6 +58,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // Reset the form
         taskForm.reset();
+        document.getElementById('selectedItems').textContent = 'Select Tags'; // Reset multiselect label
 
         // Close the modal
         modal.style.display = 'none';
@@ -113,6 +113,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
+    // Attach event listeners to existing rows (Example Tasks)
     var rows = table.querySelectorAll('tr');
     rows.forEach(function(row) {
         attachRowEventListeners(row);
