@@ -155,13 +155,16 @@ document.addEventListener('DOMContentLoaded', function() {
     };
 
     // Attach event listeners to new rows
-    function attachRowEventListeners(row) {
+    function attachRowEventListeners(row, taskIndex) {
         var editButton = row.querySelector('.editButton');
         var deleteButton = row.querySelector('.deleteButton');
 
         deleteButton.addEventListener('click', function() {
-            row.remove();
+            tasks.splice(taskIndex, 1); 
+            renderListView();
+            renderCardView();
         });
+
 
         editButton.addEventListener('click', function() {
             var cells = row.querySelectorAll('td');
