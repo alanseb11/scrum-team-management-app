@@ -99,7 +99,6 @@ th {
     height: 100%; 
     overflow: auto; 
     background-color: rgba(0, 0, 0, 0.5); /* Darker overlay for better contrast */
-    padding-top: 100px; /* Increased space from the top */
 }
 
 .modal-content {

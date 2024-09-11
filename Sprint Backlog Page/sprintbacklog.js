@@ -36,7 +36,6 @@ document.addEventListener('DOMContentLoaded', function() {
         var startDate = document.getElementById('startDate').value;
         var status = document.getElementById('status').value;
         var storyPoints = document.getElementById('storyPoints').value;
-        var weightage = document.getElementById('weightage').value;
         var taskMember = document.getElementById('taskMember').value;
     
 
@@ -50,9 +49,8 @@ document.addEventListener('DOMContentLoaded', function() {
         newRow.insertCell(5).innerText = startDate;
         newRow.insertCell(6).innerText = status;
         newRow.insertCell(7).innerText = storyPoints;
-        newRow.insertCell(8).innerText = weightage;
-        newRow.insertCell(9).innerText = taskMember;
-        var actionsCell = newRow.insertCell(10);
+        newRow.insertCell(8).innerText = taskMember;
+        var actionsCell = newRow.insertCell(9);
         actionsCell.innerHTML = "<button class='editButton'>Edit</button> <button class='deleteButton'>Delete</button>";
 
         attachRowEventListeners(newRow);
@@ -86,8 +84,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 cells[6].innerHTML = `<select>
                                         <option value='not-started' ${cells[6].innerText === 'Not Started' ? 'selected' : ''}>Not Started</option><option value='in-progress' ${cells[6].innerText === 'In Progress' ? 'selected' : ''}>In Progress</option><option value='completed' ${cells[6].innerText === 'Completed' ? 'selected' : ''}>Completed</option></select>`;
                 cells[7].innerHTML = `<input type='number' value='${cells[7].innerText}' min='0' max='10'>`; // Story Points as number
-                cells[8].innerHTML = `<input type='number' value='${cells[8].innerText}' min='1' max='10'>`; // Weightage as number
-                cells[9].innerHTML = `<select>
+                cells[8].innerHTML = `<select>
                                         <option value='Lisa' ${cells[9].innerText === 'Lisa' ? 'selected' : ''}>Lisa</option>
                                         <option value='Amar' ${cells[9].innerText === 'Amar' ? 'selected' : ''}>Amar</option>
                                         <option value='Alan' ${cells[9].innerText === 'Alan' ? 'selected' : ''}>Alan</option>
@@ -106,8 +103,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 cells[5].innerText = cells[5].querySelector('input').value;
                 cells[6].innerText = cells[6].querySelector('select').value;
                 cells[7].innerText = cells[7].querySelector('input').value; // Save Story Points
-                cells[8].innerText = cells[8].querySelector('input').value; // Save Weightage
-                cells[9].innerText = cells[9].querySelector('select').value; // Save Assignee
+                cells[8].innerText = cells[9].querySelector('select').value; // Save Assignee
                 editButton.innerText = 'Edit';
             }
         });

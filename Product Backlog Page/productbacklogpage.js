@@ -58,6 +58,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Show the modal
     addRowButton.onclick = function() {
         modal.style.display = 'block';
+        taskForm.onsubmit = addTask;
     };
 
     // Close the modal
@@ -74,21 +75,16 @@ document.addEventListener('DOMContentLoaded', function() {
     // Function to render tasks in the table (list view)
     function renderListView() {
         table.innerHTML = ''; // Clear the table first
-        tasks.forEach(function(task) {
+        tasks.forEach(function(task, index) {
             var newRow = table.insertRow();
             newRow.insertCell(0).innerText = task.taskName;
-            newRow.insertCell(1).innerText = task.taskType;
-            newRow.insertCell(2).innerText = task.priority;
-            newRow.insertCell(3).innerText = task.tags;
-            newRow.insertCell(4).innerText = task.sprint;
-            newRow.insertCell(5).innerText = task.startDate;
-            newRow.insertCell(6).innerText = task.status;
-            newRow.insertCell(7).innerText = task.storyPoints;
-            newRow.insertCell(8).innerText = task.taskMember;
-            var actionsCell = newRow.insertCell(9);
+            newRow.insertCell(1).innerText = task.priority;
+            newRow.insertCell(2).innerText = task.tags;
+            newRow.insertCell(3).innerText = task.storyPoints;
+            var actionsCell = newRow.insertCell(4);
             actionsCell.innerHTML = "<button class='editButton'>Edit</button> <button class='deleteButton'>Delete</button>";
-
-            attachRowEventListeners(newRow);
+    
+            attachRowEventListeners(newRow, index);
         });
     }
 
@@ -162,40 +158,42 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
         editButton.addEventListener('click', function() {
-            var cells = row.querySelectorAll('td');
-            if (editButton.innerText === 'Edit') {
-                // Enable editing in the row
-                cells[0].innerHTML = `<input type='text' value='${cells[0].innerText}'>`;
-                cells[1].innerHTML = `<select><option value='story' ${cells[1].innerText === 'Story' ? 'selected' : ''}>Story</option><option value='bug' ${cells[1].innerText === 'Bug' ? 'selected' : ''}>Bug</option></select>`;
-                cells[2].innerHTML = `<select><option value='low' ${cells[2].innerText === 'Low' ? 'selected' : ''}>Low</option><option value='medium' ${cells[2].innerText === 'Medium' ? 'selected' : ''}>Medium</option><option value='important' ${cells[2].innerText === 'Important' ? 'selected' : ''}>Important</option><option value='urgent' ${cells[2].innerText === 'Urgent' ? 'selected' : ''}>Urgent</option></select>`;
-                cells[3].innerHTML = `<input type='text' value='${cells[3].innerText}'>`;
-                cells[4].innerHTML = `<input type='text' value='${cells[4].innerText}'>`;
-                cells[5].innerHTML = `<input type='date' value='${cells[5].innerText}'>`;
-                cells[6].innerHTML = `<select>
-                                        <option value='not-started' ${cells[6].innerText === 'Not Started' ? 'selected' : ''}>Not Started</option><option value='in-progress' ${cells[6].innerText === 'In Progress' ? 'selected' : ''}>In Progress</option><option value='completed' ${cells[6].innerText === 'Completed' ? 'selected' : ''}>Completed</option></select>`;
-                cells[7].innerHTML = `<input type='number' value='${cells[7].innerText}' min='0' max='10'>`; // Story Points as number
-                cells[8].innerHTML = `<select>
-                                        <option value='Lisa' ${cells[9].innerText === 'Lisa' ? 'selected' : ''}>Lisa</option>
-                                        <option value='Amar' ${cells[9].innerText === 'Amar' ? 'selected' : ''}>Amar</option>
-                                        <option value='Alan' ${cells[9].innerText === 'Alan' ? 'selected' : ''}>Alan</option>
-                                        <option value='Sanjevan' ${cells[9].innerText === 'Sanjevan' ? 'selected' : ''}>Sanjevan</option>
-                                        <option value='Han' ${cells[9].innerText === 'Han' ? 'selected' : ''}>Han</option>
-                                        <option value='Michael' ${cells[9].innerText === 'Michael' ? 'selected' : ''}>Michael</option>
-                                      </select>`;
-                editButton.innerText = 'Save';
-            } else {
-                // Save edited values
-                cells[0].innerText = cells[0].querySelector('input').value;
-                cells[1].innerText = cells[1].querySelector('select').value;
-                cells[2].innerText = cells[2].querySelector('select').value;
-                cells[3].innerText = cells[3].querySelector('input').value;
-                cells[4].innerText = cells[4].querySelector('input').value;
-                cells[5].innerText = cells[5].querySelector('input').value;
-                cells[6].innerText = cells[6].querySelector('select').value;
-                cells[7].innerText = cells[7].querySelector('input').value; // Save Story Points
-                cells[8].innerText = cells[8].querySelector('select').value; // Save Assignee
-                editButton.innerText = 'Edit';
-            }
+            // Open the modal and populate the form with the task details
+            modal.style.display = 'block';
+            document.getElementById('taskName').value = tasks[taskIndex].taskName;
+            document.getElementById('taskType').value = tasks[taskIndex].taskType;
+            document.getElementById('priority').value = tasks[taskIndex].priority;
+            document.getElementById('tags').value = tasks[taskIndex].tags;
+            document.getElementById('sprint').value = tasks[taskIndex].sprint;
+            document.getElementById('startDate').value = tasks[taskIndex].startDate;
+            document.getElementById('status').value = tasks[taskIndex].status;
+            document.getElementById('storyPoints').value = tasks[taskIndex].storyPoints;
+            document.getElementById('taskMember').value = tasks[taskIndex].taskMember;
+
+            // Update form submission to save changes
+            taskForm.onsubmit = function(event) {
+                event.preventDefault(); // Prevent default form submission
+
+                // Update task details in the tasks array
+                tasks[taskIndex] = {
+                    taskName: document.getElementById('taskName').value,
+                    taskType: document.getElementById('taskType').value,
+                    priority: document.getElementById('priority').value,
+                    tags: tagsInput.value,
+                    sprint: document.getElementById('sprint').value,
+                    startDate: document.getElementById('startDate').value,
+                    status: document.getElementById('status').value,
+                    storyPoints: document.getElementById('storyPoints').value,
+                    taskMember: document.getElementById('taskMember').value
+                };
+
+                // Re-render both views
+                renderListView();
+                renderCardView();
+
+                // Close the modal
+                modal.style.display = 'none';
+            };
         });
     }
 
