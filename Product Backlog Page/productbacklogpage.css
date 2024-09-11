@@ -122,6 +122,19 @@ tr:last-child {
     border-bottom: none; /* Remove bottom border for last row */
 }
 
+/* Adjust the width of the Actions column */
+th:last-child, td:last-child {
+    width: 180px; 
+    text-align: center; /* Center the content inside the column */
+}
+
+/* Alternatively, if you want to make the buttons in the Actions column smaller */
+.actions-column button {
+    padding: 5px 10px; /* Reduce padding for smaller buttons */
+    font-size: 12px;    /* Smaller font size */
+}
+
+
 /* Modal Styles */
 .modal {
     display: none; 
