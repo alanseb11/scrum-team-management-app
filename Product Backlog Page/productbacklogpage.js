@@ -40,10 +40,13 @@ document.addEventListener('DOMContentLoaded', function() {
     var optionsContainer = document.getElementById('optionsContainer');
     var tagsInput = document.getElementById('tags');
 
-    // Toggle options visibility
-    selectedItems.addEventListener('click', function() {
+    // Attach the event listener to the entire select-box
+    document.querySelector('.select-box').addEventListener('click', function() {
         optionsContainer.style.display = optionsContainer.style.display === 'none' || optionsContainer.style.display === '' ? 'block' : 'none';
+        // Rotate the caret when dropdown is opened
+        document.querySelector('.caret-down').style.transform = optionsContainer.style.display === 'block' ? 'rotate(180deg)' : 'rotate(0deg)';
     });
+
 
     // Update selected tags
     optionsContainer.querySelectorAll('input[type="checkbox"]').forEach(function(checkbox) {

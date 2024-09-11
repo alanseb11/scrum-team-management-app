@@ -405,6 +405,15 @@ option[value = "urgent"] {
     color: #555;
 }
 
+.caret-down {
+    width: 0; 
+    height: 0; 
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 6px solid #555; /* Color of the arrow */
+    margin-left: 10px;
+}
+
 .options-container {
     display: none;
     position: absolute;
