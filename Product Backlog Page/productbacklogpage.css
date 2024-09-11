@@ -69,23 +69,57 @@ footer {
     line-height: 1.5;
 }
 
+.table-container {
+    width: 90%; /* Shrink the table container to 90% of the screen width */
+    max-width: 2500px; /* Set a max width for larger screens */
+    margin: 0 auto; /* Center the table horizontally */
+    padding: 10px; /* Add some padding around the table */
+    box-sizing: border-box; /* Ensure padding is included in width calculation */
+}
 /* Table Styling */
 table {
     width: 100%;
     border-collapse: collapse;
     margin: 20px 0;
     font-family: "Roboto", "Poppins", 'Gill Sans', 'Gill Sans MT', 'Trebuchet MS', sans-serif;
+    background-color: #f9f9f9; /* Subtle background for the table */
+    border-radius: 8px; /* Rounded corners for table */
+    overflow: hidden; /* Clip overflow on rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Soft shadow */
 }
 
 th, td {
     border: 1px solid #bdc3c7; /* Lighter border for a cleaner look */
     text-align: left;
     padding: 12px; /* Increased padding for better readability */
+    font-size: 16px;
 }
 
 th {
     background-color: #34495e; /* Darker header background */
-    color: #ecf0f1; /* Lighter text color for contrast */
+    color: #ffffff; /* Lighter text color for contrast */
+    text-transform: uppercase; /* Capitalize header text */
+    letter-spacing: 0.05em; /
+}
+
+td {
+    color: #555; /* Slightly muted text color for readability */
+}
+
+tr:nth-child(even) {
+    background-color: #f3f3f3; /* Alternate row color for readability */
+}
+
+tr:hover {
+    background-color: #ffedf3; /* Light pink hover effect */
+}
+
+tr td:first-child {
+    font-weight: bold; /* Bold the first column (task name) for emphasis */
+}
+
+tr:last-child {
+    border-bottom: none; /* Remove bottom border for last row */
 }
 
 /* Modal Styles */

@@ -120,7 +120,7 @@ document.addEventListener('DOMContentLoaded', function() {
         var taskMember = document.getElementById('taskMember').value;
 
         // Store task in the centralized array
-        tasks.push({
+        var newTask = {
             taskName,
             taskType,
             priority,
@@ -130,7 +130,10 @@ document.addEventListener('DOMContentLoaded', function() {
             status,
             storyPoints,
             taskMember
-        });
+        };
+
+        tasks.push(newTask);
+        originalTasks.push(newTask); // Update the original task list
 
         // Re-render both views after adding the task
         renderListView();
@@ -149,9 +152,18 @@ document.addEventListener('DOMContentLoaded', function() {
     function attachRowEventListeners(row, taskIndex) {
         var editButton = row.querySelector('.editButton');
         var deleteButton = row.querySelector('.deleteButton');
-
+    
         deleteButton.addEventListener('click', function() {
-            tasks.splice(taskIndex, 1); 
+            var taskToDelete = tasks[taskIndex];
+    
+            // Remove the task from both tasks (filtered view) and originalTasks (full list)
+            tasks.splice(taskIndex, 1); // Remove from filtered/visible tasks
+            var originalIndex = originalTasks.findIndex(task => task.taskName === taskToDelete.taskName && task.startDate === taskToDelete.startDate);
+            if (originalIndex !== -1) {
+                originalTasks.splice(originalIndex, 1); // Remove from the full list
+            }
+    
+            // Re-render both views after deleting the task
             renderListView();
             renderCardView();
         });
@@ -186,6 +198,11 @@ document.addEventListener('DOMContentLoaded', function() {
                     storyPoints: document.getElementById('storyPoints').value,
                     taskMember: document.getElementById('taskMember').value
                 };
+
+                var originalIndex = originalTasks.findIndex(task => task.taskName === taskToDelete.taskName && task.startDate === taskToDelete.startDate);
+                if (originalIndex !== -1) {
+                    originalTasks[originalIndex] = { ...tasks[taskIndex] };
+                }
 
                 // Re-render both views
                 renderListView();
@@ -222,55 +239,50 @@ document.addEventListener('DOMContentLoaded', function() {
         isListView = !isListView;
     };
 
-    // Filtering tasks by selected tag
-    document.getElementById('tagFilter').addEventListener('change', function() {
-        var selectedTag = this.value.toLowerCase();
-        var rows = document.querySelectorAll('#productBacklogTable tbody tr');
-        
-        rows.forEach(row => {
-            var tagsCell = row.cells[3].innerText.toLowerCase();
-            var taskTags = tagsCell.split(', ').map(tag => tag.trim());
-            
-            if (selectedTag === '' || taskTags.includes(selectedTag)) {
-                row.style.display = ''; // Show the row if it matches the selected tag or no tag is selected
-            } else {
-                row.style.display = 'none'; // Hide the row if it doesn't match
-            }
+    var originalTasks = [...tasks]; // Keep a copy of the original task list
+
+// Filtering tasks by selected tag
+document.getElementById('tagFilter').addEventListener('change', function() {
+    var selectedTag = this.value.toLowerCase();
+    
+    if (selectedTag === '') {
+        // If 'All' is selected, restore the full task list
+        tasks = [...originalTasks];
+    } else {
+        // Otherwise, filter based on the selected tag
+        tasks = originalTasks.filter(task => {
+            var taskTags = task.tags.toLowerCase().split(', ');
+            return taskTags.includes(selectedTag);
         });
-    });
+    }
+
+    renderListView();
+    renderCardView();
+});
+
 
     // Sorting tasks by priority
     document.getElementById('prioritySort').addEventListener('change', function() {
         var sortDirection = this.value;
-        var rows = Array.from(document.querySelectorAll('#productBacklogTable tbody tr'));
-    
-        rows.sort(function(rowA, rowB) {
-            var priorityA = rowA.cells[2].innerText.toLowerCase();
-            var priorityB = rowB.cells[2].innerText.toLowerCase();
+        tasks.sort(function(a, b) {
             var priorities = ['low', 'medium', 'important', 'urgent'];
-
-            if (sortDirection === 'asc') {
-                return priorities.indexOf(priorityA) - priorities.indexOf(priorityB);
-            } else {
-                return priorities.indexOf(priorityB) - priorities.indexOf(priorityA);
-            }
+            return sortDirection === 'asc'
+                ? priorities.indexOf(a.priority.toLowerCase()) - priorities.indexOf(b.priority.toLowerCase())
+                : priorities.indexOf(b.priority.toLowerCase()) - priorities.indexOf(a.priority.toLowerCase());
         });
-
-        rows.forEach(row => row.parentNode.appendChild(row)); // Reorder rows in the table
+        renderListView();
+        renderCardView();
     });
 
     // Sorting tasks by date
     document.getElementById('dateSort').addEventListener('change', function() {
         var sortDirection = this.value;
-        var rows = Array.from(document.querySelectorAll('#productBacklogTable tbody tr'));
-    
-        rows.sort(function(rowA, rowB) {
-            var dateA = new Date(rowA.cells[5].innerText);
-            var dateB = new Date(rowB.cells[5].innerText);
-    
+        tasks.sort(function(a, b) {
+            var dateA = new Date(a.startDate);
+            var dateB = new Date(b.startDate);
             return sortDirection === 'recent' ? dateB - dateA : dateA - dateB;
         });
-
-        rows.forEach(row => row.parentNode.appendChild(row)); // Reorder rows in the table
+        renderListView();
+        renderCardView();
     });
 });
