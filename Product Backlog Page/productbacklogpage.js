@@ -5,40 +5,62 @@ document.addEventListener('DOMContentLoaded', function() {
     var taskForm = document.getElementById('taskForm');
     var table = document.getElementById('productBacklogTable').getElementsByTagName('tbody')[0];
     var toggleViewButton = document.getElementById('toggleViewButton');
-    var customMultiselect = document.getElementById('customMultiselect');
+    var isListView = true;
+    var tasks = [
+        {
+            taskName: 'Example Task 1',
+            taskType: 'Story',
+            priority: 'Medium',
+            tags: 'Frontend, API',
+            sprint: 'Sprint 1',
+            startDate: '2024-09-10',
+            status: 'In Progress',
+            storyPoints: '5',
+            weightage: '7',
+            taskMember: 'Lisa'
+        },
+        {
+            taskName: 'Example Task 2',
+            taskType: 'Bug',
+            priority: 'Urgent',
+            tags: 'Backend, Database',
+            sprint: 'Sprint 2',
+            startDate: '2024-09-11',
+            status: 'Not Started',
+            storyPoints: '8',
+            weightage: '10',
+            taskMember: 'Amar'
+        }
+    ];
+    var cardViewContainer = document.createElement('div');
+    cardViewContainer.classList.add('card-view');
+    cardViewContainer.style.display = 'none'; // Start with card view hidden
+    document.body.appendChild(cardViewContainer);
+
+    // Custom multiselect logic
     var selectedItems = document.getElementById('selectedItems');
     var optionsContainer = document.getElementById('optionsContainer');
     var tagsInput = document.getElementById('tags');
-    var isListView = true;
+
+    // Toggle options visibility
+    selectedItems.addEventListener('click', function() {
+        optionsContainer.style.display = optionsContainer.style.display === 'none' || optionsContainer.style.display === '' ? 'block' : 'none';
+    });
+
+    // Update selected tags
+    optionsContainer.querySelectorAll('input[type="checkbox"]').forEach(function(checkbox) {
+        checkbox.addEventListener('change', function() {
+            var selectedOptions = Array.from(optionsContainer.querySelectorAll('input[type="checkbox"]:checked'))
+                .map(option => option.value);
+            selectedItems.innerText = selectedOptions.length > 0 ? selectedOptions.join(', ') : 'Select Tags';
+            tagsInput.value = selectedOptions.join(', '); // Update the hidden input field for form submission
+        });
+    });
 
     // Show the modal
     addRowButton.onclick = function() {
         modal.style.display = 'block';
     };
-
-    customMultiselect.onclick = function() {
-        optionsContainer.style.display = optionsContainer.style.display === 'block' ? 'none' : 'block';
-    };
-
-    optionsContainer.querySelectorAll('input[type="checkbox"]').forEach(function(checkbox) {
-        checkbox.addEventListener('change', function() {
-            updateSelectedItems();
-        });
-    });
-
-    function updateSelectedItems() {
-        var selected = Array.from(optionsContainer.querySelectorAll('input[type="checkbox"]:checked')).map(function(checkbox) {
-            return checkbox.value;
-        });
-
-        if (selected.length > 0) {
-            selectedItems.textContent = selected.join(', ');
-        } else {
-            selectedItems.textContent = 'Select Tags';
-        }
-
-        tagsInput.value = selected.join(', '); // Store selected values in hidden input field
-    }
 
     // Close the modal
     closeButton.onclick = function() {
@@ -51,6 +73,44 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     };
 
+    // Function to render tasks in the table (list view)
+    function renderListView() {
+        table.innerHTML = ''; // Clear the table first
+        tasks.forEach(function(task) {
+            var newRow = table.insertRow();
+            newRow.insertCell(0).innerText = task.taskName;
+            newRow.insertCell(1).innerText = task.taskType;
+            newRow.insertCell(2).innerText = task.priority;
+            newRow.insertCell(3).innerText = task.tags;
+            newRow.insertCell(4).innerText = task.sprint;
+            newRow.insertCell(5).innerText = task.startDate;
+            newRow.insertCell(6).innerText = task.status;
+            newRow.insertCell(7).innerText = task.storyPoints;
+            newRow.insertCell(8).innerText = task.weightage;
+            newRow.insertCell(9).innerText = task.taskMember;
+            var actionsCell = newRow.insertCell(10);
+            actionsCell.innerHTML = "<button class='editButton'>Edit</button> <button class='deleteButton'>Delete</button>";
+
+            attachRowEventListeners(newRow);
+        });
+    }
+
+    // Function to render tasks in card view
+    function renderCardView() {
+        cardViewContainer.innerHTML = ''; // Clear existing cards
+        tasks.forEach(function(task) {
+            var card = document.createElement('div');
+            card.classList.add('card');
+            card.innerHTML = `
+                <h3>${task.taskName}</h3>
+                <p><strong>Priority:</strong> ${task.priority}</p>
+                <p><strong>Tags:</strong> ${task.tags}</p>
+                <p><strong>Story Points:</strong> ${task.storyPoints}</p>
+            `;
+            cardViewContainer.appendChild(card);
+        });
+    }
+
     // Handle form submission (Add new task)
     taskForm.onsubmit = function(event) {
         event.preventDefault(); // Prevent default form submission
@@ -59,7 +119,7 @@ document.addEventListener('DOMContentLoaded', function() {
         var taskName = document.getElementById('taskName').value;
         var taskType = document.getElementById('taskType').value;
         var priority = document.getElementById('priority').value;
-        var tags = document.getElementById('tags').value;  // Tags are stored in hidden input field
+        var tags = tagsInput.value; // Updated to get the correct tags
         var sprint = document.getElementById('sprint').value;
         var startDate = document.getElementById('startDate').value;
         var status = document.getElementById('status').value;
@@ -67,26 +127,28 @@ document.addEventListener('DOMContentLoaded', function() {
         var weightage = document.getElementById('weightage').value;
         var taskMember = document.getElementById('taskMember').value;
 
-        // Create a new row in the table
-        var newRow = table.insertRow();
-        newRow.insertCell(0).innerText = taskName;
-        newRow.insertCell(1).innerText = taskType;
-        newRow.insertCell(2).innerText = priority;
-        newRow.insertCell(3).innerText = tags;
-        newRow.insertCell(4).innerText = sprint;
-        newRow.insertCell(5).innerText = startDate;
-        newRow.insertCell(6).innerText = status;
-        newRow.insertCell(7).innerText = storyPoints;
-        newRow.insertCell(8).innerText = weightage;
-        newRow.insertCell(9).innerText = taskMember;
-        var actionsCell = newRow.insertCell(10);
-        actionsCell.innerHTML = "<button class='editButton'>Edit</button> <button class='deleteButton'>Delete</button>";
+        // Store task in the centralized array
+        tasks.push({
+            taskName,
+            taskType,
+            priority,
+            tags,
+            sprint,
+            startDate,
+            status,
+            storyPoints,
+            weightage,
+            taskMember
+        });
 
-        attachRowEventListeners(newRow);
+        // Re-render both views after adding the task
+        renderListView();
+        renderCardView();
 
         // Reset the form
         taskForm.reset();
-        document.getElementById('selectedItems').textContent = 'Select Tags'; // Reset multiselect label
+        selectedItems.innerText = 'Select Tags'; // Reset the custom multiselect text
+        tagsInput.value = ''; // Reset the hidden tags input
 
         // Close the modal
         modal.style.display = 'none';
@@ -141,17 +203,12 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Attach event listeners to existing rows (Example Tasks)
     var rows = table.querySelectorAll('tr');
     rows.forEach(function(row) {
         attachRowEventListeners(row);
     });
 
     // Toggle between list and card view
-    var cardViewContainer = document.createElement('div');
-    cardViewContainer.classList.add('card-view');
-    document.body.appendChild(cardViewContainer);
-
     toggleViewButton.onclick = function() {
         var tableView = document.getElementById('productBacklogTable');
 
@@ -159,26 +216,7 @@ document.addEventListener('DOMContentLoaded', function() {
             // Switch to card view
             tableView.style.display = 'none';
             cardViewContainer.style.display = 'flex';
-            cardViewContainer.innerHTML = ''; // Clear existing cards
-
-            var rows = document.querySelectorAll('#productBacklogTable tbody tr');
-            rows.forEach(row => {
-                var taskName = row.cells[0].innerText;
-                var priority = row.cells[2].innerText;
-                var tags = row.cells[3].innerText;
-                var storyPoints = row.cells[7].innerText;
-
-                var card = document.createElement('div');
-                card.classList.add('card');
-                card.innerHTML = `
-                    <h3>${taskName}</h3>
-                    <p><strong>Priority:</strong> ${priority}</p>
-                    <p><strong>Tags:</strong> ${tags}</p>
-                    <p><strong>Story Points:</strong> ${storyPoints}</p>
-                `;
-                cardViewContainer.appendChild(card);
-            });
-
+            renderCardView();
             toggleViewButton.innerText = 'Switch to List View';
         } else {
             // Switch to list view
@@ -191,23 +229,21 @@ document.addEventListener('DOMContentLoaded', function() {
     };
 
     // Filtering tasks by selected tag
-    // Filtering tasks by selected tag
-document.getElementById('tagFilter').addEventListener('change', function() {
-    var selectedTag = this.value.toLowerCase();  // Convert selected tag to lowercase
-    var rows = document.querySelectorAll('#productBacklogTable tbody tr');
-    
-    rows.forEach(row => {
-        var tagsCell = row.cells[3].innerText.toLowerCase();  // Convert tags text to lowercase
-        var taskTags = tagsCell.split(', ').map(tag => tag.trim());  // Split and trim tags
+    document.getElementById('tagFilter').addEventListener('change', function() {
+        var selectedTag = this.value.toLowerCase();
+        var rows = document.querySelectorAll('#productBacklogTable tbody tr');
         
-        if (selectedTag === '' || taskTags.includes(selectedTag)) {
-            row.style.display = '';  // Show the row if it matches the selected tag or no tag is selected
-        } else {
-            row.style.display = 'none';  // Hide the row if it doesn't match
-        }
+        rows.forEach(row => {
+            var tagsCell = row.cells[3].innerText.toLowerCase();
+            var taskTags = tagsCell.split(', ').map(tag => tag.trim());
+            
+            if (selectedTag === '' || taskTags.includes(selectedTag)) {
+                row.style.display = ''; // Show the row if it matches the selected tag or no tag is selected
+            } else {
+                row.style.display = 'none'; // Hide the row if it doesn't match
+            }
+        });
     });
-});
-
 
     // Sorting tasks by priority
     document.getElementById('prioritySort').addEventListener('change', function() {
@@ -243,5 +279,4 @@ document.getElementById('tagFilter').addEventListener('change', function() {
 
         rows.forEach(row => row.parentNode.appendChild(row)); // Reorder rows in the table
     });
-    
 });
