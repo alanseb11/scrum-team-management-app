@@ -1,22 +1,9 @@
-html, body {
-    height: 100%;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-}
-
 body {
     font-family: "Roboto", "Poppins", 'Gill Sans', 'Gill Sans MT', 'Trebuchet MS', sans-serif;
     background-color: #ffffff;
     color: #333333;
-}
-
-/* Main container should grow to fill the remaining space */
-.main-container {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
+    margin: 0;
+    padding: 0;
 }
 
 /* Welcome message styling */
@@ -25,7 +12,6 @@ body {
     padding: 50px;
     background-color: #ff4db8;
     color: white;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
 .welcome-message h1 {
@@ -55,6 +41,10 @@ nav a:hover {
 
 /* Footer */
 footer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
     background-color: white;
     color: black;
     padding: 10px;
@@ -62,8 +52,6 @@ footer {
     display: flex;
     align-items: center;
     justify-content: flex-start;
-    width: 100%;
-    margin-top: auto;
 }
 
 .footer-content {
@@ -81,24 +69,71 @@ footer {
     line-height: 1.5;
 }
 
+.table-container {
+    width: 90%; /* Shrink the table container to 90% of the screen width */
+    max-width: 2500px; /* Set a max width for larger screens */
+    margin: 0 auto; /* Center the table horizontally */
+    padding: 10px; /* Add some padding around the table */
+    box-sizing: border-box; /* Ensure padding is included in width calculation */
+}
 /* Table Styling */
 table {
     width: 100%;
     border-collapse: collapse;
     margin: 20px 0;
     font-family: "Roboto", "Poppins", 'Gill Sans', 'Gill Sans MT', 'Trebuchet MS', sans-serif;
+    background-color: #f9f9f9; /* Subtle background for the table */
+    border-radius: 8px; /* Rounded corners for table */
+    overflow: hidden; /* Clip overflow on rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Soft shadow */
 }
 
 th, td {
     border: 1px solid #bdc3c7; /* Lighter border for a cleaner look */
     text-align: left;
     padding: 12px; /* Increased padding for better readability */
+    font-size: 16px;
 }
 
 th {
     background-color: #34495e; /* Darker header background */
-    color: #ecf0f1; /* Lighter text color for contrast */
+    color: #ffffff; /* Lighter text color for contrast */
+    text-transform: uppercase; /* Capitalize header text */
+    letter-spacing: 0.05em; /
 }
+
+td {
+    color: #555; /* Slightly muted text color for readability */
+}
+
+tr:nth-child(even) {
+    background-color: #f3f3f3; /* Alternate row color for readability */
+}
+
+tr:hover {
+    background-color: #ffedf3; /* Light pink hover effect */
+}
+
+tr td:first-child {
+    font-weight: bold; /* Bold the first column (task name) for emphasis */
+}
+
+tr:last-child {
+    border-bottom: none; /* Remove bottom border for last row */
+}
+
+/* Adjust the width of the Actions column */
+th:last-child, td:last-child {
+    width: 180px; 
+    text-align: center; /* Center the content inside the column */
+}
+
+/* Alternatively, if you want to make the buttons in the Actions column smaller */
+.actions-column button {
+    padding: 5px 10px; /* Reduce padding for smaller buttons */
+    font-size: 12px;    /* Smaller font size */
+}
+
 
 /* Modal Styles */
 .modal {
@@ -111,7 +146,6 @@ th {
     height: 100%; 
     overflow: auto; 
     background-color: rgba(0, 0, 0, 0.5); /* Darker overlay for better contrast */
-    padding-top: 100px; /* Increased space from the top */
 }
 
 .modal-content {
@@ -150,8 +184,7 @@ button {
     font-family: "Roboto", "Poppins", 'Gill Sans', 'Gill Sans MT', 'Trebuchet MS', sans-serif;
     cursor: pointer;
     transition: background-color 0.3s, transform 0.2s; /* Smooth transition for background color and hover effect */
-    flex-shrink: 0; /* Prevent shrinking */
-    width: auto; /* Set to auto or a specific width if needed */
+    
 }
 
 /* Button Hover Effects */
@@ -194,46 +227,6 @@ button.deleteButton:focus {
 .close:hover,
 .close:focus {
     color: #2980b9; /* Darker blue on hover */
-}
-
-/* Modal Styles */
-.modal {
-    display: none; 
-    position: fixed; 
-    z-index: 1; 
-    left: 0;
-    top: 0;
-    width: 100%; 
-    height: 100%; 
-    overflow: auto; 
-    background-color: rgba(0,0,0,0.4); 
-    padding-top: 60px;
-}
-
-.modal-content {
-    background-color: #fefefe;
-    margin: 5% auto;
-    padding: 20px;
-    border: 1px solid #888;
-    width: 90%; /* Adjusted width for better responsiveness */
-    max-width: 600px; /* Maximum width to ensure it doesn't get too wide */
-    border-radius: 8px; /* Rounded corners for a modern look */
-    box-shadow: 0 4px 8px rgba(0,0,0,0.2); /* Shadow for depth */
-    box-sizing: border-box;
-}
-
-.close {
-    color: #aaa;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
-}
-
-.close:hover,
-.close:focus {
-    color: black;
-    text-decoration: none;
-    cursor: pointer;
 }
 
 h2 {
@@ -292,4 +285,183 @@ option[value = "important"] {
 
 option[value = "urgent"] {
     background-color: #e74c3c;
+}
+
+/* Card View Styles for Enhanced Attraction */
+.card-view {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    gap: 20px; /* Space between the cards */
+    margin: 20px 0;
+}
+
+.card {
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    width: 30%; /* Set width for each card */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Soft shadow for each card */
+    transition: transform 0.2s ease, box-shadow 0.2s ease; /* Smooth transition for hover effects */
+}
+
+.card:hover {
+    transform: translateY(-5px); /* Slight lift effect on hover */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Deepen shadow on hover */
+}
+
+.card h3 {
+    margin: 0 0 10px 0;
+    font-size: 20px;
+    color: #333;
+}
+
+.card p {
+    margin: 8px 0;
+    font-size: 14px;
+    color: #555;
+}
+
+/* Container for both the button and filters */
+.view-filter-container {
+    display: flex;
+    justify-content: space-between; /* Space between button and filters */
+    align-items: center; /* Vertically align the items */
+    margin: 20px 0;
+}
+
+/* Styling for the filter and sorting options */
+.filter-sort {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Space between filter options */
+}
+
+/* Add margin to the filter-sort container */
+.filter-sort {
+    margin-left: 20px; /* Adds space from the left edge */
+}
+
+.filter-sort select {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+    transition: box-shadow 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Soft shadow for the select */
+}
+
+.filter-sort select:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Slight shadow increase on hover */
+}
+
+.filter-sort label {
+    font-weight: bold;
+    color: #333;
+    font-size: 14px;
+}
+
+/* Flexbox to align the toggle button to the right */
+#toggleViewButton {
+    background-color: #3498db;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+    margin-right: 20px;
+}
+
+#toggleViewButton:hover {
+    background-color: #2980b9;
+}
+
+/* Add margin to the Add New Task button to create space from edges */
+#addRowButton {
+    background-color: #ff4db8; /* Same color as your other buttons */
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 20px; /* Adds space around the button */
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+#addRowButton:hover {
+    background-color: #ff91c9;
+}
+
+
+/* Styling for the custom multiselect options */
+.custom-multiselect {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+}
+
+.select-box {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background-color: #fff;
+    cursor: pointer;
+}
+
+.selected-items {
+    font-size: 14px;
+    color: #555;
+}
+
+.caret-down {
+    width: 0; 
+    height: 0; 
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 6px solid #555; /* Color of the arrow */
+    margin-left: 10px;
+}
+
+.options-container {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    border: 1px solid #ddd;
+    background-color: white;
+    z-index: 1000;
+    max-height: 200px; /* Limit the height */
+    overflow-y: auto;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add some shadow */
+}
+
+/* Styling each option inside the dropdown */
+.options-container label {
+    display: flex;
+    justify-content: space-between; /* Aligns the text on the left and checkbox on the right */
+    padding: 8px 12px;
+    cursor: pointer;
+    font-size: 14px;
+    align-items: center;
+}
+
+.options-container label span {
+    flex-grow: 1; /* Makes the label take up available space on the left */
+}
+
+.options-container input[type="checkbox"] {
+    margin-left: 10px; /* Space between checkbox and the right edge */
+    accent-color: #3498db; /* Change checkbox color */
+    width: 16px; /* Adjust width of checkbox */
+    height: 16px; /* Adjust height of checkbox */
+}
+
+.options-container label:hover {
+    background-color: #f0f0f0;
 }

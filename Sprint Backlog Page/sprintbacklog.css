@@ -55,6 +55,8 @@ nav a:hover {
 
 /* Footer */
 footer {
+    position: absolute;
+    bottom: 0;
     background-color: white;
     color: black;
     padding: 10px;
@@ -150,6 +152,7 @@ button {
     font-family: "Roboto", "Poppins", 'Gill Sans', 'Gill Sans MT', 'Trebuchet MS', sans-serif;
     cursor: pointer;
     transition: background-color 0.3s, transform 0.2s; /* Smooth transition for background color and hover effect */
+    
     flex-shrink: 0; /* Prevent shrinking */
     width: auto; /* Set to auto or a specific width if needed */
 }
@@ -194,46 +197,6 @@ button.deleteButton:focus {
 .close:hover,
 .close:focus {
     color: #2980b9; /* Darker blue on hover */
-}
-
-/* Modal Styles */
-.modal {
-    display: none; 
-    position: fixed; 
-    z-index: 1; 
-    left: 0;
-    top: 0;
-    width: 100%; 
-    height: 100%; 
-    overflow: auto; 
-    background-color: rgba(0,0,0,0.4); 
-    padding-top: 60px;
-}
-
-.modal-content {
-    background-color: #fefefe;
-    margin: 5% auto;
-    padding: 20px;
-    border: 1px solid #888;
-    width: 90%; /* Adjusted width for better responsiveness */
-    max-width: 600px; /* Maximum width to ensure it doesn't get too wide */
-    border-radius: 8px; /* Rounded corners for a modern look */
-    box-shadow: 0 4px 8px rgba(0,0,0,0.2); /* Shadow for depth */
-    box-sizing: border-box;
-}
-
-.close {
-    color: #aaa;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
-}
-
-.close:hover,
-.close:focus {
-    color: black;
-    text-decoration: none;
-    cursor: pointer;
 }
 
 h2 {
@@ -293,3 +256,112 @@ option[value = "important"] {
 option[value = "urgent"] {
     background-color: #e74c3c;
 }
+
+/* Card View Styles for Enhanced Attraction */
+.card-view {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    gap: 20px; /* Space between the cards */
+    margin: 20px 0;
+}
+
+.card {
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    width: 30%; /* Set width for each card */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Soft shadow for each card */
+    transition: transform 0.2s ease, box-shadow 0.2s ease; /* Smooth transition for hover effects */
+}
+
+.card:hover {
+    transform: translateY(-5px); /* Slight lift effect on hover */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Deepen shadow on hover */
+}
+
+.card h3 {
+    margin: 0 0 10px 0;
+    font-size: 20px;
+    color: #333;
+}
+
+.card p {
+    margin: 8px 0;
+    font-size: 14px;
+    color: #555;
+}
+
+/* Container for both the button and filters */
+.view-filter-container {
+    display: flex;
+    justify-content: space-between; /* Space between button and filters */
+    align-items: center; /* Vertically align the items */
+    margin: 20px 0;
+}
+
+/* Styling for the filter and sorting options */
+.filter-sort {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Space between filter options */
+}
+
+/* Add margin to the filter-sort container */
+.filter-sort {
+    margin-left: 20px; /* Adds space from the left edge */
+}
+
+.filter-sort select {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+    transition: box-shadow 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Soft shadow for the select */
+}
+
+.filter-sort select:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Slight shadow increase on hover */
+}
+
+.filter-sort label {
+    font-weight: bold;
+    color: #333;
+    font-size: 14px;
+}
+
+/* Flexbox to align the toggle button to the right */
+#toggleViewButton {
+    background-color: #3498db;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+    margin-right: 20px;
+}
+
+#toggleViewButton:hover {
+    background-color: #2980b9;
+}
+
+/* Add margin to the Add New Task button to create space from edges */
+#addRowButton {
+    background-color: #ff4db8; /* Same color as your other buttons */
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 20px; /* Adds space around the button */
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+#addRowButton:hover {
+    background-color: #ff91c9;
+}
+
+
