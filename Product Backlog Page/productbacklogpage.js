@@ -49,9 +49,14 @@ document.addEventListener('DOMContentLoaded', function() {
         newRow.insertCell(6).innerText = technicalTask;
         newRow.insertCell(7).innerText = taskMember;
         newRow.insertCell(8).innerText = currentStage;
+        newRow.insertCell(9).innerText = taskTags.join(", ");
+
+        // get selected tags
+        const taskTags = Array.from(document.getElementById('taskTags').selectedOptions).map(option => option.text);
+
 
         // Actions cell with Edit and Delete buttons
-        var actionsCell = newRow.insertCell(9);
+        var actionsCell = newRow.insertCell(10);
         actionsCell.innerHTML = "<button class='editButton'>Edit</button> <button class='deleteButton'>Delete</button>";
         
         // Attach event listeners for new row buttons
