@@ -21,80 +21,82 @@
     <a href="../Contact Us Page/contactus.html">Contact Us</a> 
 </nav>
 
-<!-- Combined View Toggle and Filters in One Line -->
-<div class="view-filter-container">
-    <div class="filter-sort">
-        <label for="tagFilter">Filter by Tag:</label>
-        <select id="tagFilter">
-            <option value="">All </option>
-            <option value="frontend">Frontend</option>
-            <option value="backend">Backend</option>
-            <option value="api">API</option>
-            <option value="database">Database</option>
-            <option value="framework">Framework</option>
-            <option value="testing">Testing</option>
-            <option value="ui">UI</option>
-            <option value="ux">UX</option>
-        </select>
-
-        <label for="prioritySort">Sort by Priority:</label>
-        <select id="prioritySort">
-            <option value="asc">Low to High</option>
-            <option value="desc">High to Low</option>
-        </select>
-
-        <label for="dateSort">Sort by Date:</label>
-        <select id="dateSort">
-            <option value="recent">Most Recent</option>
-            <option value="oldest">Oldest First</option>
-        </select>
+<main class="main-container">
+    <!-- Combined View Toggle and Filters in One Line -->
+    <div class="view-filter-container">
+        <div class="filter-sort">
+            <label for="tagFilter">Filter by Tag:</label>
+            <select id="tagFilter">
+                <option value="">All </option>
+                <option value="frontend">Frontend</option>
+                <option value="backend">Backend</option>
+                <option value="api">API</option>
+                <option value="database">Database</option>
+                <option value="framework">Framework</option>
+                <option value="testing">Testing</option>
+                <option value="ui">UI</option>
+                <option value="ux">UX</option>
+            </select>
+    
+            <label for="prioritySort">Sort by Priority:</label>
+            <select id="prioritySort">
+                <option value="asc">Low to High</option>
+                <option value="desc">High to Low</option>
+            </select>
+    
+            <label for="dateSort">Sort by Date:</label>
+            <select id="dateSort">
+                <option value="recent">Most Recent</option>
+                <option value="oldest">Oldest First</option>
+            </select>
+        </div>
+    
+        <!-- Toggle Views -->
+        <button id="toggleViewButton">Switch to Card View</button>
     </div>
-
-    <!-- Toggle Views -->
-    <button id="toggleViewButton">Switch to Card View</button>
-</div>
-
-
-<div class = "table-container">
-    <table id="productBacklogTable" class="list-view">
-        <thead>
-            <tr>
-                <th>Task Name</th>
-                <th>Priority</th>
-                <th>Tags</th>
-                <th>Story Points</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            <!-- Example Task 1 -->
-            <tr>
-                <td>Example Task 1</td>
-                <td>Medium</td>
-                <td>Frontend, API</td>
-                <td>7</td>
-                <td>
-                    <button class="editButton">Edit</button>
-                    <button class="deleteButton">Delete</button>
-                </td>
-            </tr>
-            <!-- Example Task 2 -->
-            <tr>
-                <td>Example Task 2</td>
-                <td>Urgent</td>
-                <td>Backend, Database</td>
-                <td>10</td>
-                <td>
-                    <button class="editButton">Edit</button>
-                    <button class="deleteButton">Delete</button>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-</div>
-
-
-<div><button id="addRowButton">Add New Task</button></div>
+    
+    
+    <div class = "table-container">
+        <table id="productBacklogTable" class="list-view">
+            <thead>
+                <tr>
+                    <th>Task Name</th>
+                    <th>Priority</th>
+                    <th>Tags</th>
+                    <th>Story Points</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Example Task 1 -->
+                <tr>
+                    <td>Example Task 1</td>
+                    <td>Medium</td>
+                    <td>Frontend, API</td>
+                    <td>7</td>
+                    <td>
+                        <button class="editButton">Edit</button>
+                        <button class="deleteButton">Delete</button>
+                    </td>
+                </tr>
+                <!-- Example Task 2 -->
+                <tr>
+                    <td>Example Task 2</td>
+                    <td>Urgent</td>
+                    <td>Backend, Database</td>
+                    <td>10</td>
+                    <td>
+                        <button class="editButton">Edit</button>
+                        <button class="deleteButton">Delete</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    
+    
+    <div><button id="addRowButton">Add New Task</button></div>
+</main>
 
 <!-- Modal for Adding/Editing Tasks -->
 <div id="taskModal" class="modal">

@@ -2,6 +2,9 @@ body {
     font-family: "Roboto", "Poppins", 'Gill Sans', 'Gill Sans MT', 'Trebuchet MS', sans-serif;
     background-color: #ffffff;
     color: #333333;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
     margin: 0;
     padding: 0;
 }
@@ -39,9 +42,16 @@ nav a:hover {
     color: #000000;
 }
 
+.main-container {
+    display: flex;
+    flex-grow: 1;
+    padding: 20px 0;
+    flex-direction: column;
+}
+
 /* Footer */
 footer {
-    position: absolute;
+    position: relative;
     bottom: 0;
     left: 0;
     width: 100%;
