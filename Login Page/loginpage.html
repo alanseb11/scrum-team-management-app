@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Motion™</title>
+    <link rel="icon" href="../Photos/Motion Logo.png" type="image/png">
+    <link rel="stylesheet" href="../Login Page/loginpage.css">
+</head>
+<body>
+    <div class="main-container">
+        <div class="welcome-message">
+            <h1>Motion™</h1>
+            <img src="../Photos/Motion logo.png" alt="Motion Logo" class="motion-logo"><br><br>
+        </div>
+        
+        <div class="about">
+            <h2>Login</h2>
+            <form id="loginForm" onsubmit="handleLogin(event)">
+                <label for="username">Username</label><br>
+                <input type="text" id="username" name="username" required><br><br>
+                <label for="password">Password</label><br>
+                <input type="password" id="password" name="password" required><br><br>
+                <button onclick = "handleLogin(event)" type="submit">Login</button>
+            </form>
+        </div>
+    </div>
+    <footer>
+        <div class="footer-content">
+            <img src="../Photos/debugdivas.png" class="footer-logo">
+            <div class="footer-text">
+                <p>&copy; Debug Divas™. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+    <script src = "loginpage.js" ></script>
+</body>
+</html>
