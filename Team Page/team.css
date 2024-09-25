@@ -2,8 +2,18 @@ body {
     font-family: "Roboto", "Poppins", 'Gill Sans', 'Gill Sans MT', 'Trebuchet MS', sans-serif;
     background-color: #ffffff;
     color: #333333;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
     margin: 0;
     padding: 0;
+}
+
+/* Main container should grow to fill the remaining space */
+.main-container {
+    display: flex;
+    padding: 20px 0;
+    flex-direction: column;
 }
 
 /* Welcome message styling */
@@ -47,6 +57,7 @@ nav a:hover {
     background-color: #f9f9f9;
     border-left: 5px solid #ff4db8;
     text-align: center;
+    border-radius: 2px;
 }
 
 .about .motion-logo {
@@ -56,10 +67,8 @@ nav a:hover {
 
 /* Footer */
 footer {
-    position: absolute;
+    position: relative;
     bottom: 0;
-    left: 0;
-    width: 100%;
     background-color: white;
     color: black;
     padding: 10px;
@@ -67,6 +76,8 @@ footer {
     display: flex;
     align-items: center;
     justify-content: flex-start;
+    width: 100%;
+    margin-top: auto;
 }
 
 .footer-content {
