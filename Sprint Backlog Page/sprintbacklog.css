@@ -1,36 +1,26 @@
-html, body {
-    height: 100%;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-}
-
+/* style.css */
 body {
     font-family: "Roboto", "Poppins", 'Gill Sans', 'Gill Sans MT', 'Trebuchet MS', sans-serif;
-    background-color: #ffffff;
-    color: #333333;
-}
-
-/* Main container should grow to fill the remaining space */
-.main-container {
-    flex: 1;
     display: flex;
     flex-direction: column;
+    height: 100vh;
+    margin: 0;
+    background-color: #ffffff;
+    color: #333333;
+    padding: 0;
+}
+
+.header-container {
+    display: grid;
+
 }
 
 /* Welcome message styling */
-.productbacklogscreen {
+.sprintbacklogscreen {
     text-align: center;
     padding: 50px;
     background-color: #ff4db8;
     color: white;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-}
-
-.welcome-message h1 {
-    margin: 0;
-    font-size: 36px;
 }
 
 /* Navigation bar */
@@ -53,19 +43,66 @@ nav a:hover {
     color: #000000;
 }
 
+.main-container {
+    display: flex;
+    flex-grow: 1;
+    gap: 100px;
+    justify-content: center;
+    align-items: center;
+    padding: 20px 0;
+}
+
+h2 {
+    color: pink;
+    text-align: center;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    width: 250px;
+    min-height: 200px;
+    background-color: #f1f1f1;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 10px;
+}
+
+li {
+    padding: 15px;
+    margin: 10px 0;
+    background-color: #ff4db8;
+    color: white;
+    cursor: grab;
+    border-radius: 4px;
+    text-align: center;
+    user-select: none;
+    transition: background-color 0.3s ease;
+}
+
+li.dragging {
+    opacity: 0.7;
+}
+
+li.over {
+    border: 2px dashed #ddd;
+}
+
+
 /* Footer */
 footer {
-    position: absolute;
+    position: relative;
     bottom: 0;
-    background-color: white;
+    left: 0;
+    width: 100%;
+    background-color: #ffffff;
     color: black;
     padding: 10px;
     box-sizing: border-box;
     display: flex;
     align-items: center;
     justify-content: flex-start;
-    width: 100%;
-    margin-top: auto;
 }
 
 .footer-content {
@@ -82,286 +119,3 @@ footer {
     font-size: 14px;
     line-height: 1.5;
 }
-
-/* Table Styling */
-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin: 20px 0;
-    font-family: "Roboto", "Poppins", 'Gill Sans', 'Gill Sans MT', 'Trebuchet MS', sans-serif;
-}
-
-th, td {
-    border: 1px solid #bdc3c7; /* Lighter border for a cleaner look */
-    text-align: left;
-    padding: 12px; /* Increased padding for better readability */
-}
-
-th {
-    background-color: #34495e; /* Darker header background */
-    color: #ecf0f1; /* Lighter text color for contrast */
-}
-
-/* Modal Styles */
-.modal {
-    display: none; 
-    position: fixed; 
-    z-index: 1000; /* Higher z-index for better stacking */
-    left: 0;
-    top: 0;
-    width: 100%; 
-    height: 100%; 
-    overflow: auto; 
-    background-color: rgba(0, 0, 0, 0.5); /* Darker overlay for better contrast */
-    padding-top: 100px; /* Increased space from the top */
-}
-
-.modal-content {
-    background-color: #ffffff; /* White background for content */
-    margin: 5% auto;
-    padding: 20px;
-    border-radius: 8px; /* Rounded corners for a softer look */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
-    width: 70%; /* Adjusted width for better fit */
-    max-width: 600px; /* Max width for large screens */
-}
-
-.close {
-    color: #888;
-    float: right;
-    font-size: 32px; /* Larger size for better visibility */
-    font-weight: bold;
-    cursor: pointer;
-    transition: color 0.3s; /* Smooth color transition */
-}
-
-.close:hover,
-.close:focus {
-    color: #2c3e50; /* Darker color on hover/focus */
-    text-decoration: none;
-}
-
-/* General Button Styling */
-button {
-    background-color: #ff4db8; /* Modern blue color */
-    color: #ffffff; /* White text for contrast */
-    border: none;
-    border-radius: 5px; /* Rounded corners */
-    padding: 10px 20px; /* Adequate padding for better click area */
-    font-size: 14px; /* Consistent font size */
-    font-family: "Roboto", "Poppins", 'Gill Sans', 'Gill Sans MT', 'Trebuchet MS', sans-serif;
-    cursor: pointer;
-    transition: background-color 0.3s, transform 0.2s; /* Smooth transition for background color and hover effect */
-    
-    flex-shrink: 0; /* Prevent shrinking */
-    width: auto; /* Set to auto or a specific width if needed */
-}
-
-/* Button Hover Effects */
-button:hover {
-    background-color: #ff91c9;
-    outline: none; /* Remove default focus outline */
-    box-shadow: 2px 2px 5px rgba(0, 0, 0, .15);
-}
-
-/* Button for Confirm Action */
-button.confirmButton {
-    background-color: #27ae60; /* Green color for confirmation */
-}
-
-button.confirmButton:hover,
-button.confirmButton:focus {
-    background-color: #1e8449; /* Darker green on hover */
-}
-
-/* Button for Delete Action */
-button.deleteButton {
-    background-color: #e74c3c; /* Red color for delete action */
-}
-
-button.deleteButton:hover,
-button.deleteButton:focus {
-    background-color: #c0392b; /* Darker red on hover */
-}
-
-/* Modal Close Button */
-.close {
-    color: #3498db; /* Blue color to match the primary button */
-    border: none;
-    background: none;
-    font-size: 32px; /* Larger size for better visibility */
-    cursor: pointer;
-    transition: color 0.3s; /* Smooth color transition */
-}
-
-.close:hover,
-.close:focus {
-    color: #2980b9; /* Darker blue on hover */
-}
-
-h2 {
-    margin-top: 0;
-    font-size: 24px;
-    color: #333;
-}
-
-/* Form Styles */
-.form-group {
-    margin-bottom: 15px;
-}
-
-.form-group label {
-    display: block;
-    font-weight: bold;
-    margin-bottom: 5px;
-    color: #333;
-}
-
-.form-group input, 
-.form-group select {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    box-sizing: border-box;
-}
-
-.form-group button {
-    background-color: #007bff;
-    color: white;
-    border: none;
-    padding: 10px 15px;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 16px;
-}
-
-.form-group button:hover {
-    background-color: #0056b3;
-}
-
-/* colour coding task priorities*/
-option[value = "low"] {
-    background-color: #27ae60;
-}
-
-option[value = "medium"] {
-    background-color: #f3f041;
-}
-
-option[value = "important"] {
-    background-color: #f3a641;
-}
-
-option[value = "urgent"] {
-    background-color: #e74c3c;
-}
-
-/* Card View Styles for Enhanced Attraction */
-.card-view {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
-    gap: 20px; /* Space between the cards */
-    margin: 20px 0;
-}
-
-.card {
-    background-color: #f9f9f9;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    padding: 20px;
-    width: 30%; /* Set width for each card */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Soft shadow for each card */
-    transition: transform 0.2s ease, box-shadow 0.2s ease; /* Smooth transition for hover effects */
-}
-
-.card:hover {
-    transform: translateY(-5px); /* Slight lift effect on hover */
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Deepen shadow on hover */
-}
-
-.card h3 {
-    margin: 0 0 10px 0;
-    font-size: 20px;
-    color: #333;
-}
-
-.card p {
-    margin: 8px 0;
-    font-size: 14px;
-    color: #555;
-}
-
-/* Container for both the button and filters */
-.view-filter-container {
-    display: flex;
-    justify-content: space-between; /* Space between button and filters */
-    align-items: center; /* Vertically align the items */
-    margin: 20px 0;
-}
-
-/* Styling for the filter and sorting options */
-.filter-sort {
-    display: flex;
-    align-items: center;
-    gap: 10px; /* Space between filter options */
-}
-
-/* Add margin to the filter-sort container */
-.filter-sort {
-    margin-left: 20px; /* Adds space from the left edge */
-}
-
-.filter-sort select {
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    font-size: 14px;
-    transition: box-shadow 0.3s ease;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Soft shadow for the select */
-}
-
-.filter-sort select:hover {
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Slight shadow increase on hover */
-}
-
-.filter-sort label {
-    font-weight: bold;
-    color: #333;
-    font-size: 14px;
-}
-
-/* Flexbox to align the toggle button to the right */
-#toggleViewButton {
-    background-color: #3498db;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    padding: 10px 20px;
-    cursor: pointer;
-    transition: background-color 0.3s, transform 0.2s;
-    margin-right: 20px;
-}
-
-#toggleViewButton:hover {
-    background-color: #2980b9;
-}
-
-/* Add margin to the Add New Task button to create space from edges */
-#addRowButton {
-    background-color: #ff4db8; /* Same color as your other buttons */
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    margin: 20px; /* Adds space around the button */
-    transition: background-color 0.3s, transform 0.2s;
-}
-
-#addRowButton:hover {
-    background-color: #ff91c9;
-}
-
-
