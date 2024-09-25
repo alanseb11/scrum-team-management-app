@@ -1,21 +1,20 @@
-html, body {
-    height: 100%;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-}
-
 body {
     font-family: "Roboto", "Poppins", 'Gill Sans', 'Gill Sans MT', 'Trebuchet MS', sans-serif;
     background-color: #ffffff;
     color: #333333;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    padding: 0;
 }
+
 
 /* Main container should grow to fill the remaining space */
 .main-container {
-    flex: 1;
     display: flex;
+    flex-grow: 1;
+    padding: 20px 0;
     flex-direction: column;
 }
 
@@ -70,7 +69,7 @@ nav a:hover {
 
 /* Footer */
 footer {
-    position: absolute;
+    position: relative;
     bottom: 0;
     background-color: white;
     color: black;
