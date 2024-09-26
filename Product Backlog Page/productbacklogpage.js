@@ -30,10 +30,12 @@ document.addEventListener('DOMContentLoaded', function() {
             taskMember: 'Amar'
         }
     ];
+
+    const mainContainer = document.querySelector('.main-container');
     var cardViewContainer = document.createElement('div');
     cardViewContainer.classList.add('card-view');
     cardViewContainer.style.display = 'none'; // Start with card view hidden
-    document.body.appendChild(cardViewContainer);
+    mainContainer.appendChild(cardViewContainer);
 
     // Custom multiselect logic
     var selectedItems = document.getElementById('selectedItems');
