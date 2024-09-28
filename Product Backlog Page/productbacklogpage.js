@@ -67,7 +67,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Show the modal
     addRowButton.onclick = function() {
         modal.style.display = 'block';
-        taskForm.onsubmit = addTask;
+        // taskForm.onsubmit = addTask;
     };
 
     // Close the modal
@@ -216,7 +216,8 @@ document.addEventListener('DOMContentLoaded', function() {
                     taskMember: document.getElementById('taskMember').value
                 };
 
-                var originalIndex = originalTasks.findIndex(task => task.taskName === taskToDelete.taskName && task.startDate === taskToDelete.startDate);
+                var taskToEdit = tasks[taskIndex]
+                var originalIndex = originalTasks.findIndex(task => task.taskName === taskToEdit.taskName && task.startDate === taskToEdit.startDate);
                 if (originalIndex !== -1) {
                     originalTasks[originalIndex] = { ...tasks[taskIndex] };
                 }
