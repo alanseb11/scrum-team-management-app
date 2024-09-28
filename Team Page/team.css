@@ -29,6 +29,28 @@ body {
     font-size: 36px;
 }
 
+/* Logout Button Styling */
+.logout-button {
+    background-color: #ff4db8;
+    color: white;
+    padding: 5px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    position: absolute;
+    right: 20px; /* Align the logout button to the right */
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+/* Logout button hover effect */
+.logout-button:hover {
+    background-color: #ff91c9;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
 /* Navigation bar */
 nav {
     display: flex;
