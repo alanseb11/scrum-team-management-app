@@ -103,10 +103,10 @@ button {
 button:hover {
     background-color: #e60073;
 }
+
 footer {
-    position: fixed;
+    position: relative;
     bottom: 0;
-    left: 0;
     background-color: white;
     color: black;
     padding: 10px;
@@ -115,19 +115,24 @@ footer {
     align-items: center;
     justify-content: flex-start;
     width: 100%;
+    margin-top: auto;
 }
+
 .footer-content {
     display: flex;
     align-items: center;
 }
+
 .footer-logo {
-    height: 50px;
+    height: 50px; 
     margin-right: 15px;
 }
+
 .footer-text {
     font-size: 14px;
     line-height: 1.5;
 }
+
 
 
 
