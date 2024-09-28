@@ -36,10 +36,11 @@
                 <button id="signUpButton">Register</button>
             </div>
         </div>
+
         <!-- Register Container (hidden initially) -->
         <div class="container" id="signup" style="display:none;">
             <h1 class="form-title">Register</h1>
-            <form method="post" action="">
+            <form id="registerForm">
                 <div class="input-group">
                     <i class="fas fa-user"></i>
                     <input type="text" name="fName" id="fName" placeholder="Full Name" required>
@@ -50,7 +51,7 @@
                 </div>
                 <div class="input-group">
                     <i class="fas fa-lock"></i>
-                    <input type="password" id="password" placeholder="Password" required>
+                    <input type="password" id="registerPassword" placeholder="Password" required>
                 </div>
                 <div>
                     <input type="submit" class="btn" value="Register" name="signUp">
@@ -62,6 +63,7 @@
                 <button id="signInButton">Sign In</button>
             </div>
         </div>
+
         <footer>
             <div class="footer-content">
                 <img src="../Photos/debugdivas.png" class="footer-logo">
@@ -71,6 +73,7 @@
             </div>
         </footer>
     </div>
+
     <!-- JavaScript to toggle visibility and handle login -->
     <script src="../Login Page/loginpage.js"></script>
 </body>

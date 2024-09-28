@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Menu - Motion™</title>
+    <link rel="stylesheet" href="../Admin Page/adminmenu.css">
+</head>
+<body>
+    <!-- Admin Header Section -->
+    <div class="admin-header">
+        <h1>Welcome to the Admin Menu</h1>
+    </div>
+
+    <!-- Navigation bar with conditional admin link -->
+    <nav>
+        <a href="../Home Page/homepage.html">Home</a>
+        <a href="../Product Backlog Page/productbacklogpage.html">Product Backlog</a>
+        <a href="../Sprint Backlog Page/sprintbacklog.html">Sprint Backlog</a>
+        <a href="../Contact Us Page/contactus.html">Contact Us</a>
+        <span id="adminLink" style="display: none;">
+            <a href="../Admin Page/adminmenu.html">Admin Menu</a>
+        </span>
+        <button class="logout-button" id="logoutButton">Logout</button>
+    </nav>
+
+    <!-- Main Container -->
+    <div class="main-container">
+        <div class="admin-content">
+            <!-- Create Team Member Form -->
+            <div class="feature-box create-member">
+                <h2>Create Team Member</h2>
+                <form id="createTeamMemberForm">
+                    <label for="memberName">Name:</label>
+                    <input type="text" id="memberName" name="memberName" required><br><br>
+                    <label for="memberEmail">Email:</label>
+                    <input type="email" id="memberEmail" name="memberEmail" required><br><br>
+                    <button class="admin-button" type="button" onclick="createTeamMember()">Add Member</button>
+                </form>
+            </div>
+
+            <!-- Team Members List -->
+            <div class="feature-box team-members">
+                <h2>Team Members</h2>
+                <ul id="teamMembersList">
+                    <!-- Team members will be listed here dynamically -->
+                </ul>
+            </div>
+
+            <!-- Team Dashboard Button -->
+            <div class="feature-box team-dashboard">
+                <h2>Team Dashboard</h2>
+                <p>View detailed progress of your team.</p>
+                <a href="../Admin Page/teamdashboard.html"><button class="admin-button">Go to Team Dashboard</button></a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer Section -->
+    <footer>
+        <div class="footer-content">
+            <img src="../Photos/debugdivas.png" class="footer-logo">
+            <div class="footer-text">
+                <p>&copy; Debug Divas™. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript for logout, showing the admin link, and managing team members -->
+    <script src="../Admin Page/adminmenu.js"></script>
+</body>
+</html>
