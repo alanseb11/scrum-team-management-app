@@ -1,71 +1,112 @@
 
-html, body {
-    height: 100%;
-    margin: 0;
-    padding: 0;
+.main-container {
     display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
     flex-direction: column;
-    background-color: #ffff; 
-}
-body {
-    font-family: "Roboto", "Poppins", 'Gill Sans', 'Gill Sans MT', 'Trebuchet MS', sans-serif;
-    color: #333333;
-}
-.welcome-message {
     text-align: center;
-    padding: 50px;
-    color: white;
 }
-.about {
-    margin: 50px auto;
-    padding: 40px; 
-    height: auto; 
-    max-width: 500px; 
-    background-color: #ffffff;
-    border-left: 5px solid #ffff;
-    text-align: center;
-    border-radius: 12px; 
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); 
-    font-size: 20px; 
-    line-height: 1.6; 
-}
-input[type="text"],
-input[type="password"] {
-    width: 90%; 
-    padding: 12px;
-    margin: 8px 0;
-    border: 2px solid #ff4db8;
-    border-radius: 8px; 
-    box-sizing: border-box;
-    font-size: 20px;
-    background-color: #f8f8f8; 
-}
-/* Button styling */
-button {
-    background-color: #ff4db8; /* Button color matches theme */
-    color: white;
-    padding: 12px 20px;
-    border: none;
-    border-radius: 8px; /* Rounded button */
-    cursor: pointer;
-    font-size: 25px;
-    transition: background-color 0.3s ease;
-}
-
-button:hover {
-    background-color: #e60073; /* Darker shade on hover */
-}
-
 .motion-logo {
     width: 120px;
     margin: 0 auto;
-    display: block; /* Center the logo */
+    display: block;
+    transform: translateX(10px); 
 }
-
-/* Footer */
-footer {
+body {
+    font-family: "Roboto", "Poppins", 'Gill Sans', 'Gill Sans MT', 'Trebuchet MS', sans-serif;
+    background-color: #ffffff;
+    color: #333333;
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.container {
+    background-color: #f8f8f8;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+    max-width: 400px;
+    width: 100%;
+    text-align: center;
+    margin: 20px auto;
+}
+.form-title {
+    font-size: 28px;
+    font-weight: bold;
+    color: #ff4db8;
+    margin-bottom: 20px;
+}
+.input-group {
     position: relative;
+    margin-bottom: 20px;
+}
+.input-group i {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #ff4db8;
+}
+input[type="email"],
+input[type="password"],
+input[type="text"] {
+    width: 100%;
+    padding: 12px 12px 12px 40px;
+    border: 2px solid #ff4db8;
+    border-radius: 8px;
+    box-sizing: border-box;
+    font-size: 16px;
+    background-color: #ffffff;
+    color: #333333;
+    transition: border-color 0.3s ease;
+}
+input[type="email"]:focus,
+input[type="password"]:focus,
+input[type="text"]:focus {
+    border-color: #e60073;
+    outline: none;
+}
+.btn {
+    background-color: #ff4db8;
+    color: white;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 18px;
+    width: 100%;
+    transition: background-color 0.3s ease;
+}
+.btn:hover {
+    background-color: #e60073;
+}
+.links {
+    margin-top: 20px;
+}
+.links p {
+    font-size: 14px;
+    color: #333333;
+}
+button {
+    background-color: #ff4db8;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+button:hover {
+    background-color: #e60073;
+}
+footer {
+    position: fixed;
     bottom: 0;
+    left: 0;
     background-color: white;
     color: black;
     padding: 10px;
@@ -74,21 +115,21 @@ footer {
     align-items: center;
     justify-content: flex-start;
     width: 100%;
-    margin-top: auto;
 }
-
 .footer-content {
     display: flex;
     align-items: center;
 }
-
 .footer-logo {
-    height: 50px; 
+    height: 50px;
     margin-right: 15px;
 }
-
 .footer-text {
     font-size: 14px;
     line-height: 1.5;
 }
+
+
+
+
 

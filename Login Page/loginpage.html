@@ -3,36 +3,75 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Motion™</title>
+    <title>Register and Login to Motion™</title>
     <link rel="icon" href="../Photos/Motion Logo.png" type="image/png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="../Login Page/loginpage.css">
 </head>
 <body>
     <div class="main-container">
         <div class="welcome-message">
-            <h1>Motion™</h1>
             <img src="../Photos/Motion logo.png" alt="Motion Logo" class="motion-logo"><br><br>
         </div>
         
-        <div class="about">
-            <h2>Login</h2>
-            <form id="loginForm" onsubmit="handleLogin(event)">
-                <label for="username">Username</label><br>
-                <input type="text" id="username" name="username" required><br><br>
-                <label for="password">Password</label><br>
-                <input type="password" id="password" name="password" required><br><br>
-                <button onclick = "handleLogin(event)" type="submit">Login</button>
+        <!-- Sign In Container -->
+        <div class="container" id="signIn">
+            <h1 class="form-title">Sign In</h1>
+            <form id="loginForm" method="post">
+                <div class="input-group">
+                    <i class="fas fa-envelope"></i>
+                    <input type="text" name="username" id="username" placeholder="Username" required>
+                </div>
+                <div class="input-group">
+                    <i class="fas fa-lock"></i>
+                    <input type="password" id="password" placeholder="Password" required>
+                </div>
+                <div>
+                    <input type="submit" class="btn" value="Sign In">
+                </div>
             </form>
-        </div>
-    </div>
-    <footer>
-        <div class="footer-content">
-            <img src="../Photos/debugdivas.png" class="footer-logo">
-            <div class="footer-text">
-                <p>&copy; Debug Divas™. All Rights Reserved.</p>
+            <p>or</p>
+            <div class="links">
+                <p>Aren't Registered?</p>
+                <button id="signUpButton">Register</button>
             </div>
         </div>
-    </footer>
-    <script src = "loginpage.js" ></script>
+        <!-- Register Container (hidden initially) -->
+        <div class="container" id="signup" style="display:none;">
+            <h1 class="form-title">Register</h1>
+            <form method="post" action="">
+                <div class="input-group">
+                    <i class="fas fa-user"></i>
+                    <input type="text" name="fName" id="fName" placeholder="Full Name" required>
+                </div>
+                <div class="input-group">
+                    <i class="fas fa-envelope"></i>
+                    <input type="email" name="email" id="email" placeholder="Email" required>
+                </div>
+                <div class="input-group">
+                    <i class="fas fa-lock"></i>
+                    <input type="password" id="password" placeholder="Password" required>
+                </div>
+                <div>
+                    <input type="submit" class="btn" value="Register" name="signUp">
+                </div>
+            </form>
+            <p>or</p>
+            <div class="links">
+                <p>Already Have An Account?</p>
+                <button id="signInButton">Sign In</button>
+            </div>
+        </div>
+        <footer>
+            <div class="footer-content">
+                <img src="../Photos/debugdivas.png" class="footer-logo">
+                <div class="footer-text">
+                    <p>&copy; Debug Divas™. All Rights Reserved.</p>
+                </div>
+            </div>
+        </footer>
+    </div>
+    <!-- JavaScript to toggle visibility and handle login -->
+    <script src="../Login Page/loginpage.js"></script>
 </body>
 </html>
