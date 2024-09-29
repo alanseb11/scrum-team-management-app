@@ -32,7 +32,9 @@ document.addEventListener('DOMContentLoaded', function() {
             tags: 'Frontend, API',
             sprint: 'Sprint 1',
             startDate: '2024-09-10',
+            taskDescription: 'This is an example task',
             status: 'In Progress',
+            stage: 'Planning', 
             storyPoints: '5',
             taskMember: 'Lisa'
         },
@@ -43,7 +45,9 @@ document.addEventListener('DOMContentLoaded', function() {
             tags: 'Backend, Database',
             sprint: 'Sprint 2',
             startDate: '2024-09-11',
+            taskDescription: 'This is another example task',
             status: 'Not Started',
+            stage: 'Integration',
             storyPoints: '8',
             taskMember: 'Amar'
         }
@@ -81,7 +85,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Show the modal
     addRowButton.onclick = function() {
         modal.style.display = 'block';
-        taskForm.onsubmit = addTask;
+        // taskForm.onsubmit = addTask;
     };
 
     // Close the modal
@@ -138,7 +142,9 @@ document.addEventListener('DOMContentLoaded', function() {
         var tags = tagsInput.value; // Updated to get the correct tags
         var sprint = document.getElementById('sprint').value;
         var startDate = document.getElementById('startDate').value;
+        var taskDescription = document.getElementById('taskDescription').value;
         var status = document.getElementById('status').value;
+        var stage = document.getElementById('stage').value;
         var storyPoints = document.getElementById('storyPoints').value;
         var taskMember = document.getElementById('taskMember').value;
 
@@ -150,7 +156,9 @@ document.addEventListener('DOMContentLoaded', function() {
             tags,
             sprint,
             startDate,
+            taskDescription,
             status,
+            stage,
             storyPoints,
             taskMember
         };
@@ -201,7 +209,9 @@ document.addEventListener('DOMContentLoaded', function() {
             document.getElementById('tags').value = tasks[taskIndex].tags;
             document.getElementById('sprint').value = tasks[taskIndex].sprint;
             document.getElementById('startDate').value = tasks[taskIndex].startDate;
+            document.getElementById('taskDescription').value = tasks[taskIndex].taskDescription;
             document.getElementById('status').value = tasks[taskIndex].status;
+            document.getElementById('stage').value = tasks[taskIndex].stage;
             document.getElementById('storyPoints').value = tasks[taskIndex].storyPoints;
             document.getElementById('taskMember').value = tasks[taskIndex].taskMember;
 
@@ -217,12 +227,15 @@ document.addEventListener('DOMContentLoaded', function() {
                     tags: tagsInput.value,
                     sprint: document.getElementById('sprint').value,
                     startDate: document.getElementById('startDate').value,
+                    taskDescription: document.getElementById('taskDescription').value,
                     status: document.getElementById('status').value,
+                    stage: document.getElementById('stage').value,
                     storyPoints: document.getElementById('storyPoints').value,
                     taskMember: document.getElementById('taskMember').value
                 };
 
-                var originalIndex = originalTasks.findIndex(task => task.taskName === taskToDelete.taskName && task.startDate === taskToDelete.startDate);
+                var taskToEdit = tasks[taskIndex]
+                var originalIndex = originalTasks.findIndex(task => task.taskName === taskToEdit.taskName && task.startDate === taskToEdit.startDate);
                 if (originalIndex !== -1) {
                     originalTasks[originalIndex] = { ...tasks[taskIndex] };
                 }
@@ -308,4 +321,7 @@ document.getElementById('tagFilter').addEventListener('change', function() {
         renderListView();
         renderCardView();
     });
+
+    // store tasks list in local storage to be used in sprint backlog 
+    localStorage.setItem('tasks', JSON.stringify(tasks))
 });
