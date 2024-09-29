@@ -303,4 +303,7 @@ document.getElementById('tagFilter').addEventListener('change', function() {
         renderListView();
         renderCardView();
     });
+
+    // store tasks list in local storage to be used in sprint backlog 
+    localStorage.setItem('tasks', JSON.stringify(tasks))
 });
