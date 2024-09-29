@@ -56,7 +56,7 @@
         <span class="close">&times;</span>
         <h2 id="modalTitle">Add New Sprint</h2>
         <form id="sprintForm">
-            <!-- task name -->
+            <!-- sprint name -->
             <div class="form-group">
                 <label for="sprintName">Sprint Name:</label>
                 <input type="text" id="sprintName" name="sprintName" required>
@@ -67,12 +67,14 @@
             <div class="form-group">
                 <label for="startDate">Start Date:</label>
                 <input type="date" id="startDate" name="startDate" required>
+                <span class="error-message" id="startDateError"></span>
             </div>  
 
             <!-- end date -->
             <div class="form-group">
                 <label for="endDate">End Date:</label>
                 <input type="date" id="endDate" name="endDate" required>
+                <span class="error-message" id="endDateError"></span>
             </div>  
 
             <!-- status -->
@@ -92,15 +94,7 @@
                         <div class="selected-items" id="selectedItems">Select Product Backlog Items</div>
                         <div class="caret-down"></div>
                     </div>
-                    <div class="options-container" id="optionsContainer">
-                        <!-- <label><span>PBI 1</span><input type="checkbox" value="PBI 1"></label>
-                        <label><span>PBI 2</span><input type="checkbox" value="PBI 2"></label>
-                        <label><span>PBI 3</span><input type="checkbox" value="PBI 3"></label>
-                        <label><span>PBI 4</span><input type="checkbox" value="PBI 4"></label>
-                        <label><span>PBI 5</span><input type="checkbox" value="PBI 5"></label>
-                        <label><span>PBI 6</span><input type="checkbox" value="PBI 6"></label> -->
-                    
-                    </div>
+                    <div class="options-container" id="optionsContainer"></div>
                 </div>
                 <input type="hidden" id="pbi" name="pbi">
             </div>
@@ -110,7 +104,6 @@
         </form>
     </div>
 </div>
-
 
 <!-- Footer -->
 <footer>
