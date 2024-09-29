@@ -35,22 +35,6 @@ document.addEventListener('DOMContentLoaded', function () {
     // Add event listener to login form
     document.getElementById('loginForm').addEventListener('submit', handleLogin);
 
-    // Existing functionality to toggle between "Sign In" and "Register" forms
-    const signUpButton = document.getElementById("signUpButton");
-    const signInButton = document.getElementById("signInButton");
-    const signInForm = document.getElementById("signIn");
-    const signUpForm = document.getElementById("signup");
-
-    signUpButton.addEventListener('click', function () {
-        signInForm.style.display = "none";
-        signUpForm.style.display = "block";
-    });
-
-    signInButton.addEventListener('click', function () {
-        signInForm.style.display = "block";
-        signUpForm.style.display = "none";
-    });
-
     // Register a new user
     signUpForm.querySelector('form').addEventListener('submit', function (event) {
         event.preventDefault();
