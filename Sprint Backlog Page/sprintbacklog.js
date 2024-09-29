@@ -84,7 +84,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Show the sprint modal
     addSprintButton.onclick = function() {
         modal.style.display = 'block';
-        // sprintForm.onsubmit = addSprint;
+        sprintForm.onsubmit = addSprint;
     };
 
 
@@ -162,7 +162,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // Handle form submission (Add new sprint)
-    sprintForm.onsubmit = function(event) {
+    function addSprint(event) {
         event.preventDefault(); // Prevent default form submission
 
         // Get form values
@@ -170,6 +170,7 @@ document.addEventListener('DOMContentLoaded', function() {
         var startDate = document.getElementById('startDate').value;
         var endDate = document.getElementById('endDate').value;
         var status = document.getElementById('status').value;
+        var selectedPBIS = document.getElementById('customMultiselect').value; 
         
         // date validation
         var startDateError = document.getElementById('startDateError');
@@ -182,7 +183,6 @@ document.addEventListener('DOMContentLoaded', function() {
         let currentDate = date.toJSON();
 
         if (startDate < currentDate.slice(0,10)) {
-            console.log('too EARLY')
             startDateError.textContent = 'Invalid start date. Start date must not be in the past.'
             return;
         } else { 
@@ -198,28 +198,41 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
         // Store sprint in the centralized array
-        var newSprint = document.createElement('li')
-        newSprint.textContent = sprintName;
+        var newSprintData = {
+            sprintName: sprintName, 
+            startDate: startDate,
+            endDate: endDate,
+            status: status,
+            selectedPBIS: selectedPBIS
+        }
+        var newSprintDraggable = document.createElement('li')
+        newSprintDraggable.innerHTML = `<button class="editSprintButton">${sprintName}</button></td>`;
 
-        newSprint.setAttribute('name', sprintName);
-        newSprint.setAttribute('start-date', startDate);
-        newSprint.setAttribute('end-date', endDate);
-        newSprint.setAttribute('status', status);
+        newSprintDraggable.setAttribute('name', sprintName);
+        newSprintDraggable.setAttribute('start-date', startDate);
+        newSprintDraggable.setAttribute('end-date', endDate);
+        newSprintDraggable.setAttribute('status', status);
 
-        sprints.push(newSprint);
-        // originalSprints.push(newSprint); // Update the original sprint list
+        sprints.push(newSprintData);
+        originalSprints.push(newSprintData); // Update the original sprint list
 
-        itemDraggable(newSprint);
+        itemDraggable(newSprintDraggable);
 
         // adding new sprint to column 
         if (status == 'not-started') { 
             // append sprint to column
-            notStartedList.append(newSprint)
+            notStartedList.append(newSprintDraggable)
+
         } else if (status == 'in-progress') {
-            activeList.append(newSprint)
+            activeList.append(newSprintDraggable)
+
         } else {
-            completedList.append(newSprint)
+            completedList.append(newSprintDraggable)
+            
         }
+
+        // attach event listener to new sprint
+        attachSprintEventListeners(newSprintDraggable,sprints.length-1);
 
         // // Re-render both views after adding the sprint
         // renderListView();
@@ -231,6 +244,57 @@ document.addEventListener('DOMContentLoaded', function() {
         // Close the modal
         modal.style.display = 'none';
     };
+
+    // edit sprint functionality 
+    // Attach event listeners to new sprints
+    function attachSprintEventListeners(sprint, sprintIndex) {
+        var editSprintButton = sprint.querySelector('.editSprintButton');
+    
+        editSprintButton.addEventListener('click', function() {
+            // Open the modal and populate the form with the task details
+            modal.style.display = 'block';
+            console.log(sprints)
+            console.log(sprintIndex)
+            document.getElementById('sprintName').value = sprints[sprintIndex].sprintName;
+            document.getElementById('startDate').value = sprints[sprintIndex].startDate;
+            document.getElementById('endDate').value = sprints[sprintIndex].endDate;
+            document.getElementById('status').value = sprints[sprintIndex].status;
+            document.getElementById('customMultiselect').value = sprints[sprintIndex].selectedPBIS;
+
+            // Update form submission to save changes
+            sprintForm.onsubmit = function(event) {
+                event.preventDefault(); // Prevent default form submission
+
+                // Update sprint details in the sprint array
+                sprints[sprintIndex] = {
+                    sprintName: document.getElementById('sprintName').value,
+                    startDate: document.getElementById('startDate').value,
+                    endDate: document.getElementById('endDate').value,
+                    status: document.getElementById('status').value,
+                    selectedPBIS: document.getElementById('customMultiselect').value    
+                };
+
+                // updates sprint name if modified 
+                sprint.querySelector('.editSprintButton').innerText = sprints[sprintIndex].sprintName; 
+
+                var sprintToEdit = sprints[sprintIndex]
+                var originalIndex = originalSprints.findIndex(sprint => sprint.sprintName === sprintToEdit.sprintName && sprint.startDate === sprintToEdit.sprintDate);
+                if (originalIndex !== -1) {
+                    originalSprints[originalIndex] = { ...sprints[sprintIndex] };
+                }
+
+                // // Re-render both views
+                // renderListView();
+                // renderCardView();
+                sprintForm.reset();
+
+                // Close the modal
+                modal.style.display = 'none';
+            };
+        });
+    }
+
+    var originalSprints = [...sprints]; // Keep a copy of the original task list
 
 
     // Custom multiselect logic
