@@ -214,8 +214,9 @@ var pbiInput = document.getElementById('pbi');
 // dropdown boxes for each task 
 tasks.forEach(function(task) {
     var pbi = document.createElement('div');
-    pbi.innerHTML = `<label><span>${task}</span><input type="checkbox" value="${task}"></label>`;
-    optionsContainer.append(task);
+    pbi.innerHTML = `<label><span>${task.taskName}</span><input type="checkbox" value='${JSON.stringify(task)}'></label>`;
+    console.log(JSON.stringify(task));
+    optionsContainer.append(pbi);
 });
 
 // Attach the event listener to the entire select-box
@@ -230,7 +231,7 @@ document.querySelector('.select-box').addEventListener('click', function() {
 optionsContainer.querySelectorAll('input[type="checkbox"]').forEach(function(checkbox) {
     checkbox.addEventListener('change', function() {
         var selectedOptions = Array.from(optionsContainer.querySelectorAll('input[type="checkbox"]:checked'))
-            .map(option => option.value);
+            .map(option => JSON.parse(option.value).taskName);
         selectedItems.innerText = selectedOptions.length > 0 ? selectedOptions.join(', ') : 'Select Product Backlog Items';
         pbiInput.value = selectedOptions.join(', '); // Update the hidden input field for form submission
     });
