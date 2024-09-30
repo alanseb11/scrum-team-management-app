@@ -24,7 +24,8 @@ document.addEventListener('DOMContentLoaded', function() {
     var table = document.getElementById('productBacklogTable').getElementsByTagName('tbody')[0];
     var toggleViewButton = document.getElementById('toggleViewButton');
     var isListView = true;
-    var tasks = [
+    // Load tasks from local storage or initialize with predefined tasks
+    var originalTasks = JSON.parse(localStorage.getItem('originalTasks')) || [
         {
             taskName: 'Example Task 1',
             taskType: 'Story',
@@ -34,7 +35,7 @@ document.addEventListener('DOMContentLoaded', function() {
             startDate: '2024-09-10',
             taskDescription: 'This is an example task',
             status: 'In Progress',
-            stage: 'Planning', 
+            stage: 'Planning',
             storyPoints: '5',
             taskMember: 'Lisa'
         },
@@ -52,6 +53,9 @@ document.addEventListener('DOMContentLoaded', function() {
             taskMember: 'Amar'
         }
     ];
+
+    // Initialize tasks with the original list or predefined tasks if none exist in localStorage
+    const tasks = JSON.parse(localStorage.getItem('originalTasks')) || [...originalTasks];
 
     const mainContainer = document.querySelector('.main-container');
     var cardViewContainer = document.createElement('div');
@@ -131,6 +135,8 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
+    renderListView();
+
     // Handle form submission (Add new task)
     taskForm.onsubmit = function(event) {
         event.preventDefault(); // Prevent default form submission
@@ -166,6 +172,8 @@ document.addEventListener('DOMContentLoaded', function() {
         tasks.push(newTask);
         originalTasks.push(newTask); // Update the original task list
 
+        localStorage.setItem('originalTasks', JSON.stringify(originalTasks));
+
         // Re-render both views after adding the task
         renderListView();
         renderCardView();
@@ -193,7 +201,10 @@ document.addEventListener('DOMContentLoaded', function() {
             if (originalIndex !== -1) {
                 originalTasks.splice(originalIndex, 1); // Remove from the full list
             }
-    
+
+            // Save the updated task list back to localStorage
+            localStorage.setItem('originalTasks', JSON.stringify(originalTasks));
+
             // Re-render both views after deleting the task
             renderListView();
             renderCardView();
@@ -240,6 +251,9 @@ document.addEventListener('DOMContentLoaded', function() {
                     originalTasks[originalIndex] = { ...tasks[taskIndex] };
                 }
 
+                // Save the updated task list back to localStorage
+                localStorage.setItem('originalTasks', JSON.stringify(originalTasks));
+
                 // Re-render both views
                 renderListView();
                 renderCardView();
@@ -269,13 +283,13 @@ document.addEventListener('DOMContentLoaded', function() {
             // Switch to list view
             tableView.style.display = 'table';
             cardViewContainer.style.display = 'none';
+            renderListView();
             toggleViewButton.innerText = 'Switch to Card View';
         }
 
         isListView = !isListView;
     };
 
-    var originalTasks = [...tasks]; // Keep a copy of the original task list
 
 // Filtering tasks by selected tag
 document.getElementById('tagFilter').addEventListener('change', function() {
