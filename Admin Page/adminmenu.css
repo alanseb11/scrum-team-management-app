@@ -52,45 +52,54 @@ nav {
 
 /* Edit Button Styling */
 .edit-button {
-    background-color: #3498db; /* Blue color for edit */
-    color: white;
-    padding: 5px 10px;
+    background-color: #ff4db8; 
+    color: #ffffff;
     border: none;
-    border-radius: 5px;
+    border-radius: 5px; 
+    padding: 10px 20px; 
+    font-size: 14px; 
+    font-family: "Roboto", "Poppins", 'Gill Sans', 'Gill Sans MT', 'Trebuchet MS', sans-serif;
     cursor: pointer;
-    font-size: 14px;
-    transition: background-color 0.3s ease, box-shadow 0.3s ease;
-    margin-right: 10px; /* Space between edit and delete buttons */
-    text-transform: uppercase;
-    font-weight: bold;
+    transition: background-color 0.3s, transform 0.2s; 
+    text-transform: uppercase; 
+    font-weight: bold; 
+    margin-right: 5px; 
 }
 
 /* Edit button hover effect */
 .edit-button:hover {
-    background-color: #2980b9; /* Darker blue when hovered */
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    background-color: #ff91c9; /* Lighter shade for hover effect, similar to general button */
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, .15); /* Same shadow as general button */
 }
 
 /* Delete Button Styling */
 .delete-button {
-    background-color: #ff4d4d; /* Red color for delete */
+    background-color: #e74c3c; /* Red color for delete */
     color: white;
-    padding: 5px 10px;
+    padding: 10px 20px; /* Consistent padding with edit button */
     border: none;
     border-radius: 5px;
     cursor: pointer;
     font-size: 14px;
     transition: background-color 0.3s ease, box-shadow 0.3s ease;
-    margin-left: 10px; /* Space between details and delete button */
+    margin-left: 5px; /* Reduced space between edit and delete buttons */
     text-transform: uppercase;
     font-weight: bold;
 }
 
 /* Delete button hover effect */
 .delete-button:hover {
-    background-color: #ff6666; /* Lighter red when hovered */
+    background-color: #c0392b; /* Darker red when hovered */
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
+
+/* Actions Container Styling */
+.actions-container {
+    display: flex;
+    justify-content: flex-start; /* Align buttons to the left */
+    gap: 5px; /* Small gap between edit and delete buttons */
+}
+
 /* Styling for nav links */
 nav a {
     color: white;
@@ -213,13 +222,6 @@ nav a:hover {
     margin: 0 auto; 
     padding: 10px;
     box-sizing: border-box;
-}
-
-/* Styling for the Actions Container */
-.actions-container {
-    display: flex;
-    justify-content: space-between;
-    gap: 10px; /* Space between the buttons */
 }
 
 /* Team Members Table Styling */
