@@ -49,6 +49,28 @@ nav {
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
+
+/* Edit Button Styling */
+.edit-button {
+    background-color: #3498db; /* Blue color for edit */
+    color: white;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    margin-right: 10px; /* Space between edit and delete buttons */
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+/* Edit button hover effect */
+.edit-button:hover {
+    background-color: #2980b9; /* Darker blue when hovered */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
 /* Delete Button Styling */
 .delete-button {
     background-color: #ff4d4d; /* Red color for delete */
@@ -184,31 +206,158 @@ nav a:hover {
     background-color: #ff91c9;
 }
 
-/* Table Styles (e.g., for viewing teams or tasks) */
-.admin-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
+/* Table Container for Admin Page */
+.table-container {
+    width: 90%; 
+    max-width: 1200px; 
+    margin: 0 auto; 
+    padding: 10px;
+    box-sizing: border-box;
 }
 
-.admin-table th, .admin-table td {
-    border: 1px solid #ff91c9;
-    padding: 10px;
+/* Styling for the Actions Container */
+.actions-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px; /* Space between the buttons */
+}
+
+/* Team Members Table Styling */
+#teamMembersTable {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+#teamMembersTable th, #teamMembersTable td {
+    border: 1px solid #bdc3c7;
+    text-align: left;
+    padding: 12px;
+    font-size: 16px;
+}
+
+#teamMembersTable th {
+    background-color: #34495e;
+    color: #ffffff;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+#teamMembersTable td {
+    color: #555;
+}
+
+#teamMembersTable tr:nth-child(even) {
+    background-color: #f3f3f3;
+}
+
+#teamMembersTable tr:hover {
+    background-color: #ffedf3;
+}
+
+#teamMembersTable th:last-child, #teamMembersTable td:last-child {
+    width: 180px; 
     text-align: center;
 }
 
-.admin-table th {
-    background-color: #ff4db8;
+/* Modal Styles */
+.modal {
+    display: none; 
+    position: fixed; 
+    z-index: 1000; /* Higher z-index for better stacking */
+    left: 0;
+    top: 0;
+    width: 100%; 
+    height: 100%; 
+    overflow: auto; 
+    background-color: rgba(0, 0, 0, 0.5); /* Darker overlay for better contrast */
+}
+
+/* Modal Content */
+.modal-content {
+    background-color: #ffffff; /* White background for content */
+    margin: 5% auto;
+    padding: 20px;
+    border-radius: 8px; /* Rounded corners for a softer look */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
+    width: 70%; /* Adjusted width for better fit */
+    max-width: 600px; /* Max width for large screens */
+    text-align: left;
+}
+
+/* Modal Header and Close Button */
+.modal-content h2 {
+    margin-top: 0;
+    font-size: 24px;
+    color: #ff4db8; /* Match the accent color */
+}
+
+.close {
+    color: #888;
+    float: right;
+    font-size: 32px; /* Larger size for better visibility */
+    font-weight: bold;
+    cursor: pointer;
+    transition: color 0.3s; /* Smooth color transition */
+}
+
+.close:hover,
+.close:focus {
+    color: #2c3e50; /* Darker color on hover/focus */
+    text-decoration: none;
+}
+
+/* Form Styles for Modal */
+.modal-content .form-group {
+    margin-bottom: 15px;
+}
+
+.modal-content .form-group label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #333;
+}
+
+.modal-content .form-group input, 
+.modal-content .form-group select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-family: "Roboto", "Poppins", 'Gill Sans', 'Gill Sans MT', 'Trebuchet MS', sans-serif;
+    font-size: 16px;
+}
+
+/* Modal Button Styling */
+.modal-content button {
+    background-color: #ff4db8; /* Match the main button color */
     color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s, box-shadow 0.3s ease;
+    text-transform: uppercase;
     font-weight: bold;
 }
 
-.admin-table tr:nth-child(even) {
-    background-color: #f9f9f9;
+.modal-content button:hover {
+    background-color: #ff91c9; /* Lighter pink on hover */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
-.admin-table tr:hover {
-    background-color: #ffeded;
+/* Modal Input Field Focus Effect */
+.modal-content input:focus {
+    outline: none;
+    border-color: #ff4db8; /* Match the accent color when focused */
+    box-shadow: 0 0 5px rgba(255, 77, 184, 0.5); /* Soft glow */
 }
 
 /* Footer Styling */
