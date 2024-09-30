@@ -497,3 +497,10 @@ option[value = "urgent"] {
 .options-container label:hover {
     background-color: #f0f0f0;
 }
+
+.error-message { 
+    color: #e74c3c; 
+    font-size: 14px;
+    font-family: "Roboto", "Poppins", 'Gill Sans', 'Gill Sans MT', 'Trebuchet MS', sans-serif;
+    margin-left: 10px;
+}

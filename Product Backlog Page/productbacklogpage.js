@@ -147,7 +147,22 @@ document.addEventListener('DOMContentLoaded', function() {
         var stage = document.getElementById('stage').value;
         var storyPoints = document.getElementById('storyPoints').value;
         var taskMember = document.getElementById('taskMember').value;
+        
+        // date validation
+        var startDateError = document.getElementById('startDateError');
+        startDateError.textContent = ''
 
+        // get current date
+        const date = new Date(); 
+        let currentDate = date.toJSON();
+
+        if (startDate < currentDate.slice(0,10)) {
+            startDateError.textContent = 'Invalid start date. Start date must not be in the past.'
+            return;
+        } else { 
+            startDateError.textContent = ''
+        }
+        
         // Store task in the centralized array
         var newTask = {
             taskName,
