@@ -253,8 +253,6 @@ document.addEventListener('DOMContentLoaded', function() {
         editSprintButton.addEventListener('click', function() {
             // Open the modal and populate the form with the task details
             modal.style.display = 'block';
-            console.log(sprints)
-            console.log(sprintIndex)
             document.getElementById('sprintName').value = sprints[sprintIndex].sprintName;
             document.getElementById('startDate').value = sprints[sprintIndex].startDate;
             document.getElementById('endDate').value = sprints[sprintIndex].endDate;
