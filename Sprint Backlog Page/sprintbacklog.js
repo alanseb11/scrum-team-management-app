@@ -3,7 +3,7 @@
 document.addEventListener('DOMContentLoaded', function() {
     var addSprintButton = document.getElementById('addSprintButton');
     var modal = document.getElementById('sprintModal');
-    var sprints = [];
+    const sprints = JSON.parse(localStorage.getItem('sprints')) || [];
     var closeButton = document.querySelector('.close');
     var sprintForm = document.getElementById('sprintForm');
 
@@ -161,6 +161,36 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
+    // Call the render function so that the sprints from storage register
+    renderStoredSprints();
+
+    // Render the sprints stored in localStorage when the page loads
+    function renderStoredSprints() {
+        sprints.forEach((sprint, index) => {
+            var sprintItem = document.createElement('li');
+            sprintItem.innerHTML = `<button class="editSprintButton">${sprint.sprintName}</button>`;
+            sprintItem.setAttribute('name', sprint.sprintName);
+            sprintItem.setAttribute('start-date', sprint.startDate);
+            sprintItem.setAttribute('end-date', sprint.endDate);
+            sprintItem.setAttribute('status', sprint.status);
+
+            // Add draggable functionality
+            itemDraggable(sprintItem);
+
+            // Append the sprint to the correct column based on its status
+            if (sprint.status == 'not-started') {
+                notStartedList.append(sprintItem);
+            } else if (sprint.status == 'in-progress') {
+                activeList.append(sprintItem);
+            } else {
+                completedList.append(sprintItem);
+            }
+
+            // Attach event listeners for editing the sprint
+            attachSprintEventListeners(sprintItem, index);
+        });
+    }
+
     // Handle form submission (Add new sprint)
     function addSprint(event) {
         event.preventDefault(); // Prevent default form submission
@@ -215,6 +245,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
         sprints.push(newSprintData);
         originalSprints.push(newSprintData); // Update the original sprint list
+
+        localStorage.setItem('sprints', JSON.stringify(sprints));
 
         itemDraggable(newSprintDraggable);
 
