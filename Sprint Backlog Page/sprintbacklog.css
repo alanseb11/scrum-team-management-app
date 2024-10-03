@@ -86,38 +86,75 @@ h2 {
     text-align: center;
 }
 
-ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    width: 250px;
-    min-height: 200px;
-    background-color: #f1f1f1;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    padding: 10px;
+.table-container {
+    width: 90%; /* Shrink the table container to 90% of the screen width */
+    max-width: 2500px; /* Set a max width for larger screens */
+    margin: 0 auto; /* Center the table horizontally */
+    padding: 10px; /* Add some padding around the table */
+    box-sizing: border-box; /* Ensure padding is included in width calculation */
+}
+/* Table Styling */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-family: "Roboto", "Poppins", 'Gill Sans', 'Gill Sans MT', 'Trebuchet MS', sans-serif;
+    background-color: #f9f9f9; /* Subtle background for the table */
+    border-radius: 8px; /* Rounded corners for table */
+    overflow: hidden; /* Clip overflow on rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Soft shadow */
 }
 
-li {
-    padding: 15px;
-    margin: 10px 0;
-    background-color: #ff4db8;
-    color: white;
-    cursor: grab;
-    border-radius: 4px;
-    text-align: center;
-    user-select: none;
-    transition: background-color 0.3s ease;
+th, td {
+    border: 1px solid #bdc3c7; /* Lighter border for a cleaner look */
+    text-align: left;
+    padding: 12px; /* Increased padding for better readability */
+    font-size: 16px;
 }
 
-li.dragging {
-    opacity: 0.7;
+th {
+    background-color: #34495e; /* Darker header background */
+    color: #ffffff; /* Lighter text color for contrast */
+    text-transform: uppercase; /* Capitalize header text */
+    letter-spacing: 0.05em; /
 }
 
-li.over {
-    border: 2px dashed #ddd;
+td {
+    color: #555; /* Slightly muted text color for readability */
+    white-space: nowrap;
 }
 
+td button {
+    display: inline-block;
+}
+
+tr:nth-child(even) {
+    background-color: #f3f3f3; /* Alternate row color for readability */
+}
+
+tr:hover {
+    background-color: #ffedf3; /* Light pink hover effect */
+}
+
+tr td:first-child {
+    font-weight: bold; /* Bold the first column (task name) for emphasis */
+}
+
+tr:last-child {
+    border-bottom: none; /* Remove bottom border for last row */
+}
+
+/* Adjust the width of the Actions column */
+th:last-child, td:last-child {
+    width: 180px; 
+    text-align: center; /* Center the content inside the column */
+}
+
+/* Alternatively, if you want to make the buttons in the Actions column smaller */
+.actions-column button {
+    padding: 5px 10px; /* Reduce padding for smaller buttons */
+    font-size: 12px;    /* Smaller font size */
+}
 
 /* Footer */
 footer {

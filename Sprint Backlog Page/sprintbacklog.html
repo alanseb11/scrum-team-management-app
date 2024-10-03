@@ -22,88 +22,90 @@
     
 
     <main class="main-container">
-        <div class="list-container">
-            <h2>Not Started</h2>
-            <ul id="list1" class="draggable-list">
-                <!-- <li draggable="true">Sprint 1</li>
-                <li draggable="true">Sprint 2</li>
-                <li draggable="true">Sprint 3</li> -->
-            </ul>
+         
+        <div class = "table-container">
+            <table id="productBacklogTable" class="list-view">
+                <thead>
+                    <tr>
+                        <th>Sprint Name</th>
+                        <th>Priority</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Example Task 1 -->
+                    <tr>
+                        <td>Example Sprint 1</td>
+                        <td>Medium</td>
+                        <td>
+                            <button class="startsprintButton">Start</button>
+                            <button class="editButton">Edit</button>
+                            <button class="deleteButton">Delete</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
-    
-        <div class="list-container">
-            <h2>Active</h2>
-            <ul id="list2" class="draggable-list">
-                <!-- <li draggable="true">Sprint 4</li>
-                <li draggable="true">Sprint 5</li> -->
-            </ul>
-        </div>
-    
-        <div class="list-container">
-            <h2>Completed</h2>
-            <ul id="list3" class="draggable-list">
-                <!-- <li draggable="true">Sprint 6</li> -->
-            </ul>
-        </div>
-
+        
+        
         <div><button id="addSprintButton">Add New Sprint</button></div>
-    </main>
     
 
-<!-- Modal for Adding/Editing Sprints -->
-<div id="sprintModal" class="modal">
-    <div class="modal-content">
-        <span class="close">&times;</span>
-        <h2 id="modalTitle">Add New Sprint</h2>
-        <form id="sprintForm">
-            <!-- sprint name -->
-            <div class="form-group">
-                <label for="sprintName">Sprint Name:</label>
-                <input type="text" id="sprintName" name="sprintName" required>
-            </div>
-            
-
-            <!-- start date -->
-            <div class="form-group">
-                <label for="startDate">Start Date:</label>
-                <input type="date" id="startDate" name="startDate" required>
-                <span class="error-message" id="startDateError"></span>
-            </div>  
-
-            <!-- end date -->
-            <div class="form-group">
-                <label for="endDate">End Date:</label>
-                <input type="date" id="endDate" name="endDate" required>
-                <span class="error-message" id="endDateError"></span>
-            </div>  
-
-            <!-- status -->
-            <div class="form-group">
-                <label for="status">Status:</label>
-                <select id="status" name="status">
-                    <option value="not-started">Not Started</option>
-                    <option value="in-progress">In Progress</option>
-                    <option value="completed">Completed</option>
-                </select>
-            </div>
-
-            <div class="form-group">
-                <label for="pbi">Tasks:</label>
-                <div class="custom-multiselect" id="customMultiselect">
-                    <div class="select-box">
-                        <div class="selected-items" id="selectedItems">Select Product Backlog Items</div>
-                        <div class="caret-down"></div>
+        <!-- Modal for Adding/Editing Sprints -->
+        <div id="sprintModal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h2 id="modalTitle">Add New Sprint</h2>
+                <form id="sprintForm">
+                    <!-- sprint name -->
+                    <div class="form-group">
+                        <label for="sprintName">Sprint Name:</label>
+                        <input type="text" id="sprintName" name="sprintName" required>
                     </div>
-                    <div class="options-container" id="optionsContainer"></div>
-                </div>
-                <input type="hidden" id="pbi" name="pbi">
-            </div>
 
-            
-            <button type="submit">Save Sprint</button>
-        </form>
-    </div>
-</div>
+                    <!-- start date -->
+                    <div class="form-group">
+                        <label for="startDate">Start Date:</label>
+                        <input type="date" id="startDate" name="startDate" required>
+                        <span class="error-message" id="startDateError"></span>
+                    </div>  
+
+                    <!-- end date -->
+                    <div class="form-group">
+                        <label for="endDate">End Date:</label>
+                        <input type="date" id="endDate" name="endDate" required>
+                        <span class="error-message" id="endDateError"></span>
+                    </div>  
+
+                    <!-- status -->
+                    <div class="form-group">
+                        <label for="status">Status:</label>
+                        <select id="status" name="status">
+                            <option value="not-started">Not Started</option>
+                            <option value="in-progress">In Progress</option>
+                            <option value="completed">Completed</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="pbi">Tasks:</label>
+                        <div class="custom-multiselect" id="customMultiselect">
+                            <div class="select-box">
+                                <div class="selected-items" id="selectedItems">Select Product Backlog Items</div>
+                                <div class="caret-down"></div>
+                            </div>
+                            <div class="options-container" id="optionsContainer"></div>
+                        </div>
+                        <input type="hidden" id="pbi" name="pbi">
+                    </div>
+
+                    
+                    <button type="submit">Save Sprint</button>
+                </form>
+            </div>
+        </div>
+    </main>
+
 
 <!-- Footer -->
 <footer>
