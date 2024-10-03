@@ -353,4 +353,18 @@ document.getElementById('tagFilter').addEventListener('change', function() {
 
     // store tasks list in local storage to be used in sprint backlog 
     localStorage.setItem('tasks', JSON.stringify(tasks))
+
+    // Logic to show admin menu in header
+    if (localStorage.getItem('isAdminLoggedIn')) {
+        const nav = document.getElementById('nav');
+        nav.innerHTML = `
+        <a href="../Home Page/homepage.html">Home</a>
+        <a href="../Product Backlog Page/productbacklogpage.html">Product Backlog</a>
+        <a href="../Sprint Backlog Page/sprintbacklog.html">Sprint Backlog</a>
+        <span id="adminLink">
+        <a href="../Admin Page/adminmenu.html">Admin Menu</a>
+        </span>
+        <button class="logout-button" id="logoutButton">Logout</button>
+        `;
+    }
 });
