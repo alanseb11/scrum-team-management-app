@@ -132,8 +132,9 @@ tr:nth-child(even) {
     background-color: #f3f3f3; /* Alternate row color for readability */
 }
 
-tr:hover {
+tbody tr:hover {
     background-color: #ffedf3; /* Light pink hover effect */
+    cursor: pointer;
 }
 
 tr td:first-child {
