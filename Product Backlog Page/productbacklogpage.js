@@ -1,22 +1,4 @@
 document.addEventListener('DOMContentLoaded', function() {
-
-
-    //Adding the logout functionality
-    if (localStorage.getItem('isAdminLoggedIn') !== 'true' && localStorage.getItem('isUserLoggedIn') !== 'true') {
-        // If not logged in, redirect to the login page
-        window.location.href = "../Login Page/loginpage.html";
-    }
-
-    // Logout functionality
-    document.getElementById('logoutButton').addEventListener('click', function() {
-        // Clear login status from localStorage
-        localStorage.removeItem('isAdminLoggedIn');
-        localStorage.removeItem('isUserLoggedIn');
-        // Redirect to login page
-        window.location.href = "../Login Page/loginpage.html";
-    });
-
-
     var modal = document.getElementById('taskModal');
     var addRowButton = document.getElementById('addRowButton');
     var closeButton = document.querySelector('.close');
@@ -353,6 +335,21 @@ document.getElementById('tagFilter').addEventListener('change', function() {
 
     // store tasks list in local storage to be used in sprint backlog 
     localStorage.setItem('tasks', JSON.stringify(tasks))
+    
+    //Adding the logout functionality
+    if (localStorage.getItem('isAdminLoggedIn') !== 'true' && localStorage.getItem('isUserLoggedIn') !== 'true') {
+        // If not logged in, redirect to the login page
+        window.location.href = "../Login Page/loginpage.html";
+    }
+
+    // Logout functionality
+    document.getElementById('logoutButton').addEventListener('click', function() {
+        // Clear login status from localStorage
+        localStorage.removeItem('isAdminLoggedIn');
+        localStorage.removeItem('isUserLoggedIn');
+        // Redirect to login page
+        window.location.href = "../Login Page/loginpage.html";
+    });
 
     // Logic to show admin menu in header
     if (localStorage.getItem('isAdminLoggedIn')) {
