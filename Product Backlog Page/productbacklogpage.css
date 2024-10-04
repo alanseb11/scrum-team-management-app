@@ -67,7 +67,7 @@ nav a:hover {
 .main-container {
     display: flex;
     flex-grow: 1;
-    padding: 20px 0;
+    padding: 20px 10px;
     flex-direction: column;
 }
 
