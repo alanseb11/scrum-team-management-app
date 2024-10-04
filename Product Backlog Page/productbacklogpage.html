@@ -66,35 +66,14 @@
                     <th>Actions</th>
                 </tr>
             </thead>
-            <tbody>
-                <!-- Example Task 1 -->
-                <tr>
-                    <td>Example Task 1</td>
-                    <td>Medium</td>
-                    <td>Frontend, API</td>
-                    <td>7</td>
-                    <td>
-                        <button class="editButton">Edit</button>
-                        <button class="deleteButton">Delete</button>
-                    </td>
-                </tr>
-                <!-- Example Task 2 -->
-                <tr>
-                    <td>Example Task 2</td>
-                    <td>Urgent</td>
-                    <td>Backend, Database</td>
-                    <td>10</td>
-                    <td>
-                        <button class="editButton">Edit</button>
-                        <button class="deleteButton">Delete</button>
-                    </td>
-                </tr>
+            <tbody id="tableBody">
+                
             </tbody>
         </table>
     </div>
     
     
-    <div><button id="addRowButton">Add New Task</button></div>
+    <div><button id="addNewTask">Add New Task</button></div>
 </main>
 
 <!-- Modal for Adding/Editing Tasks -->
@@ -157,14 +136,7 @@
             <div class="form-group">
                 <label for="sprint">Sprint:</label>
                 <input type="text" id="sprint" name="sprint" required>
-            </div>
-
-            <!-- start date -->
-            <div class="form-group">
-                <label for="startDate">Start Date:</label>
-                <input type="date" id="startDate" name="startDate" required>
-                <span class="error-message" id="startDateError"></span>
-            </div>  
+            </div> 
 
             <!-- task description -->
             <div class="form-group">
