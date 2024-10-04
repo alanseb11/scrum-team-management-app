@@ -1,5 +1,3 @@
-// script.js
-
 document.addEventListener('DOMContentLoaded', function() {
     const sprintTableBody = document.getElementById('sprintTableBody');
     const addSprintButton = document.getElementById('addSprintButton');
@@ -154,16 +152,6 @@ document.addEventListener('DOMContentLoaded', function() {
         row.remove();
     }
 
-    renderSprints();
-
-
-    // Add Logout Functionality
-    // Check if the user is logged in as admin or a regular user
-    if (localStorage.getItem('isAdminLoggedIn') !== 'true' && localStorage.getItem('isUserLoggedIn') !== 'true') {
-        // If not logged in, redirect to the login page
-        window.location.href = "../Login Page/loginpage.html";
-    }
-
     // Logic to show admin menu in header
     if (localStorage.getItem('isAdminLoggedIn')) {
         const nav = document.getElementById('nav');
@@ -179,6 +167,14 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
 
+    // Add Logout Functionality
+    // Check if the user is logged in as admin or a regular user
+    if (localStorage.getItem('isAdminLoggedIn') !== 'true' && localStorage.getItem('isUserLoggedIn') !== 'true') {
+        // If not logged in, redirect to the login page
+        window.location.href = "../Login Page/loginpage.html";
+    }
+
+
     // Logout functionality
     const logoutButton = document.getElementById('logoutButton');
     if (logoutButton) {
@@ -191,6 +187,9 @@ document.addEventListener('DOMContentLoaded', function() {
             window.location.href = "../Login Page/loginpage.html";
         });
     }
+
+    renderSprints();
+
 });
 
 
