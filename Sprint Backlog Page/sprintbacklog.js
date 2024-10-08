@@ -4,24 +4,20 @@ document.addEventListener('DOMContentLoaded', function() {
     const modal = document.getElementById('sprintModal');
     const closeButton = document.querySelector('.close');
     const sprintForm = document.getElementById('sprintForm');
-
-    // Sprint data
-    const sprints = JSON.parse(localStorage.getItem('sprints')) || [
-        {
-            sprintName: 'Example Sprint 1', 
-            startDate: '2024-10-10',
-            endDate: '2024-10-30',
-            status: 'Not Started',
-            selectedPBIS: 'Example Task 1'
-        }
-    ];
     
+    // Get tasks from localStorage (where you save the tasks)
+    const productBacklog = JSON.parse(localStorage.getItem('tasks')) || [];
+
+    // Retrieve sprint data from localStorage or set initial data
+    const sprints = JSON.parse(localStorage.getItem('sprints')) || [];
+
     // Open the modal to add a new sprint
     addSprintButton.addEventListener('click', () => {
         modal.style.display = 'block';
         sprintForm.reset();
         document.getElementById('modalTitle').textContent = 'Add New Sprint';
         sprintForm.onsubmit = handleAddSprint;
+        populatePbiOptions(); // Populate PBIs from the tasks when opening the modal
     });
 
     // Close the modal
@@ -34,16 +30,14 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-
     // Render sprints stored in localStorage
     function renderSprints() {
         sprints.forEach(sprint => addSprintToTable(sprint));
     }
-    
 
+    // Add a sprint to the table
     function addSprintToTable(sprint) {
         const row = document.createElement('tr');
-
         row.innerHTML = `
             <td>${sprint.sprintName}</td>
             <td>${sprint.status}</td>
@@ -53,27 +47,25 @@ document.addEventListener('DOMContentLoaded', function() {
                 <button class="deleteButton">Delete</button>
             </td>
         `;
+        sprintTableBody.appendChild(row);
 
         // Add an event listener to the row for the click event
         row.addEventListener('click', () => {
-            // Redirect to the page you want when the row is clicked
             window.location.href = `../Kanban Board/kanbanboard.html`;
         });
 
-        sprintTableBody.appendChild(row);
-
         // Attach edit and delete functionality
         row.querySelector('.editButton').addEventListener('click', (e) => {
-            e.stopPropagation(); // Prevent the click event from bubbling up to the row
+            e.stopPropagation();
             openEditSprintModal(sprint, row);
         });
         row.querySelector('.deleteButton').addEventListener('click', (e) => {
-            e.stopPropagation(); // Prevent the click event from bubbling up to the row
+            e.stopPropagation();
             deleteSprint(row, sprint);
         });
     }
 
-
+    // Handle adding a new sprint
     function handleAddSprint(event) {
         event.preventDefault();
 
@@ -82,9 +74,13 @@ document.addEventListener('DOMContentLoaded', function() {
         const endDate = document.getElementById('endDate').value;
         const status = document.getElementById('status').value;
 
-        dateValidation();
+        // Get selected PBIs
+        const selectedCheckboxes = Array.from(document.querySelectorAll('#optionsContainer input[type="checkbox"]:checked'));
+        const selectedPBIs = selectedCheckboxes.map(cb => JSON.parse(cb.value).taskName);
 
-        const newSprint = { sprintName, startDate, endDate, status };
+        if (!dateValidation()) return;
+
+        const newSprint = { sprintName, startDate, endDate, status, selectedPBIs };
         sprints.push(newSprint);
         localStorage.setItem('sprints', JSON.stringify(sprints));
 
@@ -92,34 +88,31 @@ document.addEventListener('DOMContentLoaded', function() {
         modal.style.display = 'none';
     }
 
-
+    // Validate the sprint dates
     function dateValidation() {
-        // date validation
         const startDateError = document.getElementById('startDateError');
         const endDateError = document.getElementById('endDateError');
-        startDateError.textContent = ''
-        endDateError.textContent = ''
+        startDateError.textContent = '';
+        endDateError.textContent = '';
 
-        // get current date
-        const date = new Date(); 
-        let currentDate = date.toJSON();
+        const startDate = document.getElementById('startDate').value;
+        const endDate = document.getElementById('endDate').value;
+        const currentDate = new Date().toISOString().split('T')[0];
 
-        if (startDate < currentDate.slice(0,10)) {
-            startDateError.textContent = 'Invalid start date. Start date must not be in the past.'
-            return;
-        } else { 
-            startDateError.textContent = ''
+        if (startDate < currentDate) {
+            startDateError.textContent = 'Invalid start date. Start date must not be in the past.';
+            return false;
         }
 
         if (endDate < startDate) {
-            endDateError.textContent = 'Invalid end date. End date must be after start date.'
-            return;
-        } else { 
-            endDateError.textContent = ''
+            endDateError.textContent = 'Invalid end date. End date must be after start date.';
+            return false;
         }
+
+        return true;
     }
 
-    // Open the edit modal
+    // Open the modal to edit a sprint
     function openEditSprintModal(sprint, row) {
         modal.style.display = 'block';
         document.getElementById('modalTitle').textContent = 'Edit Sprint';
@@ -127,6 +120,8 @@ document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('startDate').value = sprint.startDate;
         document.getElementById('endDate').value = sprint.endDate;
         document.getElementById('status').value = sprint.status;
+        
+        populatePbiOptions(sprint.selectedPBIS);
 
         sprintForm.onsubmit = (event) => {
             event.preventDefault();
@@ -134,6 +129,11 @@ document.addEventListener('DOMContentLoaded', function() {
             sprint.startDate = document.getElementById('startDate').value;
             sprint.endDate = document.getElementById('endDate').value;
             sprint.status = document.getElementById('status').value;
+
+            // Get selected PBIs
+            const selectedCheckboxes = Array.from(document.querySelectorAll('#optionsContainer input[type="checkbox"]:checked'));
+            sprint.selectedPBIS = selectedCheckboxes.map(cb => JSON.parse(cb.value).taskName);
+
             localStorage.setItem('sprints', JSON.stringify(sprints));
 
             // Update table row
@@ -142,6 +142,38 @@ document.addEventListener('DOMContentLoaded', function() {
 
             modal.style.display = 'none';
         };
+    }
+
+    // Populate PBIs into the multiselect options from the tasks stored in localStorage
+    function populatePbiOptions(selectedPBIS = []) {
+        const optionsContainer = document.getElementById('optionsContainer');
+        optionsContainer.innerHTML = ''; // Clear previous options
+
+        // Iterate over tasks stored in localStorage under 'tasks'
+        productBacklog.forEach(task => {
+            const isChecked = selectedPBIS.includes(task.taskName) ? 'checked' : '';
+            const pbiDiv = document.createElement('div');
+            pbiDiv.innerHTML = `
+                <label>
+                    <span>${task.taskName}</span>
+                    <input type="checkbox" value='${JSON.stringify(task)}' ${isChecked}>
+                </label>
+            `;
+            optionsContainer.appendChild(pbiDiv);
+        });
+
+        // Update selected items
+        optionsContainer.querySelectorAll('input[type="checkbox"]').forEach(function(checkbox) {
+            checkbox.addEventListener('change', updateSelectedItems);
+        });
+    }
+
+    // Update the selected items display
+    function updateSelectedItems() {
+        const selectedCheckboxes = Array.from(document.querySelectorAll('#optionsContainer input[type="checkbox"]:checked'));
+        const selectedNames = selectedCheckboxes.map(cb => JSON.parse(cb.value).taskName);
+        const selectedItems = document.getElementById('selectedItems');
+        selectedItems.innerText = selectedNames.length > 0 ? selectedNames.join(', ') : 'Select Product Backlog Items';
     }
 
     // Delete a sprint
@@ -166,61 +198,25 @@ document.addEventListener('DOMContentLoaded', function() {
         `;
     }
 
-
-    // Add Logout Functionality
-    // Check if the user is logged in as admin or a regular user
-    if (localStorage.getItem('isAdminLoggedIn') !== 'true' && localStorage.getItem('isUserLoggedIn') !== 'true') {
-        // If not logged in, redirect to the login page
-        window.location.href = "../Login Page/loginpage.html";
-    }
-
-
     // Logout functionality
     const logoutButton = document.getElementById('logoutButton');
     if (logoutButton) {
         logoutButton.addEventListener('click', function () {
-            console.log('clicked')
-            // Clear login status from localStorage
             localStorage.removeItem('isAdminLoggedIn');
             localStorage.removeItem('isUserLoggedIn');
-            // Redirect to login page
             window.location.href = "../Login Page/loginpage.html";
         });
     }
 
     renderSprints();
-
-});
-
-
-    /* // Custom multiselect logic
-    var selectedItems = document.getElementById('selectedItems');
-    var optionsContainer = document.getElementById('optionsContainer');
-    var pbiInput = document.getElementById('pbi');
-
-    // dropdown boxes for each task 
-    tasks.forEach(function(task) {
-        var pbi = document.createElement('div');
-        pbi.innerHTML = `<label><span>${task.taskName}</span><input type="checkbox" value='${JSON.stringify(task)}'></label>`;
-        console.log(JSON.stringify(task));
-        optionsContainer.append(pbi);
-    });
-
-    // Attach the event listener to the entire select-box
+    
+    // Handle dropdown toggle for PBIs
     document.querySelector('.select-box').addEventListener('click', function() {
-        optionsContainer.style.display = optionsContainer.style.display === 'none' || optionsContainer.style.display === '' ? 'block' : 'none';
-        // Rotate the caret when dropdown is opened
-        document.querySelector('.caret-down').style.transform = optionsContainer.style.display === 'block' ? 'rotate(180deg)' : 'rotate(0deg)';
-    });
+        const optionsContainer = document.getElementById('optionsContainer');
+        const isDisplayed = optionsContainer.style.display === 'block';
+        optionsContainer.style.display = isDisplayed ? 'none' : 'block';
 
-
-    // Update selected product backlog items (pbis)
-    optionsContainer.querySelectorAll('input[type="checkbox"]').forEach(function(checkbox) {
-        checkbox.addEventListener('change', function() {
-            var selectedOptions = Array.from(optionsContainer.querySelectorAll('input[type="checkbox"]:checked'))
-                .map(option => JSON.parse(option.value).taskName);
-            selectedItems.innerText = selectedOptions.length > 0 ? selectedOptions.join(', ') : 'Select Product Backlog Items';
-            pbiInput.value = selectedOptions.join(', '); // Update the hidden input field for form submission
-        });
+        // Rotate caret
+        document.querySelector('.caret-down').style.transform = isDisplayed ? 'rotate(0deg)' : 'rotate(180deg)';
     });
-    }); */
+});

@@ -172,6 +172,8 @@ document.addEventListener('DOMContentLoaded', function() {
         const taskMember = document.getElementById('taskMember').value;
 
         const newTask = { taskName, taskType, priority, taskTags, storyPoints, sprint, taskDescription, status, stage, taskMember };
+        
+        let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
         tasks.push(newTask);
         localStorage.setItem('tasks', JSON.stringify(tasks));
 
