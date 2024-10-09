@@ -45,7 +45,7 @@ nav {
 
 /* Logout button hover effect */
 .logout-button:hover {
-    background-color: #ff91c9;
+    background-color: #ff3fa2;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
@@ -68,7 +68,7 @@ nav {
 
 /* Edit button hover effect */
 .edit-button:hover {
-    background-color: #ff91c9; /* Lighter shade for hover effect, similar to general button */
+    background-color: #ff3fa2; /* Lighter shade for hover effect, similar to general button */
     box-shadow: 2px 2px 5px rgba(0, 0, 0, .15); /* Same shadow as general button */
 }
 
@@ -89,7 +89,7 @@ nav {
 
 /* Delete button hover effect */
 .delete-button:hover {
-    background-color: #c0392b; /* Darker red when hovered */
+    background-color: #c41805; /* Darker red when hovered */
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
@@ -212,7 +212,7 @@ nav a:hover {
 }
 
 .admin-button:hover {
-    background-color: #ff91c9;
+    background-color: #ff3fa2;
 }
 
 /* Table Container for Admin Page */
@@ -309,7 +309,7 @@ nav a:hover {
 
 .close:hover,
 .close:focus {
-    color: #2c3e50; /* Darker color on hover/focus */
+    color: #0c2e50; /* Darker color on hover/focus */
     text-decoration: none;
 }
 
@@ -351,7 +351,7 @@ nav a:hover {
 }
 
 .modal-content button:hover {
-    background-color: #ff91c9; /* Lighter pink on hover */
+    background-color: #ff3fa2; /* Lighter pink on hover */
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 

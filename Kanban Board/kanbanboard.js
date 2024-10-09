@@ -1,16 +1,26 @@
 // script.js
 
 document.addEventListener('DOMContentLoaded', function() {
+    // Get the sprint name from the URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const sprintName = urlParams.get('sprintName');
+
     var addSprintButton = document.getElementById('addSprintButton');
     var modal = document.getElementById('sprintModal');
-    const sprints = JSON.parse(localStorage.getItem('sprints')) || [];
+    
+    // Retrieve the kanbanBoardItems from localStorage
+    let kanbanBoardItems = JSON.parse(localStorage.getItem('kanbanBoardItems')) || {};
+
+    // Get the tasks associated with the specific sprint
+    const sprintTasks = kanbanBoardItems[sprintName] || [];
+
     var closeButton = document.querySelector('.close');
     var sprintForm = document.getElementById('sprintForm');
 
     // getting sprint columns
-    var notStartedList = document.getElementById('list1');
-    var activeList = document.getElementById('list2');
-    var completedList = document.getElementById('list3');
+    const notStartedList = document.getElementById('Not Started');
+    const activeList = document.getElementById('In Progress');
+    const completedList = document.getElementById('Completed');
 
     const lists = document.querySelectorAll('.draggable-list');
     let draggedItem = null;
@@ -56,15 +66,15 @@ document.addEventListener('DOMContentLoaded', function() {
 
         list.addEventListener('drop', function (e) {
             e.preventDefault(); // Prevent default action (open as link for some elements)
-
+        
             if (e.target.tagName === 'LI') {
                 e.target.classList.remove('over');
-
+        
                 // Move dragged item to the dropped position
                 if (draggedItem !== this) {
                     let draggedIndex = [...this.parentNode.children].indexOf(draggedItem);
                     let targetIndex = [...this.parentNode.children].indexOf(e.target);
-
+        
                     if (targetIndex > draggedIndex) {
                         this.insertBefore(draggedItem, e.target.nextSibling);
                     } else {
@@ -77,7 +87,24 @@ document.addEventListener('DOMContentLoaded', function() {
             if (e.target === this && draggedItem !== null) {
                 this.appendChild(draggedItem);
             }
-        });
+        
+            // Update the status of the dragged item based on the column it was dropped into
+            const newStatus = this.id; // Assuming the list ID corresponds to the status
+            const taskName = draggedItem.textContent; // Get the name of the task
+        
+            // Find the task in sprintTasks and update its status
+            const task = sprintTasks.find(task => task.taskName === taskName);
+            if (task) {
+                task.status = newStatus.charAt(0).toUpperCase() + newStatus.slice(1); // Capitalize the status
+            }
+
+            // Save updated tasks back to localStorage
+            kanbanBoardItems[sprintName] = sprintTasks; // Update tasks for the current sprint
+            localStorage.setItem('kanbanBoardItems', JSON.stringify(kanbanBoardItems));
+
+            // Re-render the board to reflect the new state
+            renderKanbanBoard(sprintTasks);
+        });        
     });
 
 
@@ -178,35 +205,33 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Call the render function so that the sprints from storage register
-    renderStoredSprints();
+    // Function to render the Kanban board with task categorization
+    function renderKanbanBoard(tasks) {
+        // Clear previous tasks in each status list
+        notStartedList.innerHTML = '';
+        activeList.innerHTML = '';
+        completedList.innerHTML = '';
 
-    // Render the sprints stored in localStorage when the page loads
-    function renderStoredSprints() {
-        sprints.forEach((sprint, index) => {
-            var sprintItem = document.createElement('li');
-            sprintItem.innerHTML = `<button class="editSprintButton">${sprint.sprintName}</button>`;
-            sprintItem.setAttribute('name', sprint.sprintName);
-            sprintItem.setAttribute('start-date', sprint.startDate);
-            sprintItem.setAttribute('end-date', sprint.endDate);
-            sprintItem.setAttribute('status', sprint.status);
-
+        tasks.forEach(task => {
+            const taskElement = document.createElement('li'); // Create an individual task element
+            taskElement.textContent = task.taskName; // Display the task name
+            
             // Add draggable functionality
-            itemDraggable(sprintItem);
+            itemDraggable(taskElement);
 
-            // Append the sprint to the correct column based on its status
-            if (sprint.status == 'not-started') {
-                notStartedList.append(sprintItem);
-            } else if (sprint.status == 'in-progress') {
-                activeList.append(sprintItem);
-            } else {
-                completedList.append(sprintItem);
+            // Append to the appropriate column based on status
+            if (task.status === 'Not Started') {
+                notStartedList.appendChild(taskElement);
+            } else if (task.status === 'In Progress') {
+                activeList.appendChild(taskElement);
+            } else if (task.status === 'Completed') {
+                completedList.appendChild(taskElement);
             }
-
-            // Attach event listeners for editing the sprint
-            attachSprintEventListeners(sprintItem, index);
         });
     }
+
+    // Call the render function when the page loads
+    renderKanbanBoard(sprintTasks);
 
     // Handle form submission (Add new sprint)
     function addSprint(event) {

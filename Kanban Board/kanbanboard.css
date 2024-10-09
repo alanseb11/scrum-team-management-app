@@ -41,7 +41,7 @@ body {
 
 /* Logout button hover effect */
 .logout-button:hover {
-    background-color: #ff91c9;
+    background-color: #ff3fa2;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
@@ -161,7 +161,7 @@ footer {
 }
 
 #addSprintButton:hover {
-    background-color: #ff91c9;
+    background-color: #ff3fa2;
 }
 
 
@@ -199,7 +199,7 @@ footer {
 
 .close:hover,
 .close:focus {
-    color: #2c3e50; /* Darker color on hover/focus */
+    color: #0c2e50; /* Darker color on hover/focus */
     text-decoration: none;
 }
 
@@ -219,7 +219,7 @@ button {
 
 /* Button Hover Effects */
 button:hover {
-    background-color: #ff91c9;
+    background-color: #ff3fa2;
     outline: none; /* Remove default focus outline */
     box-shadow: 2px 2px 5px rgba(0, 0, 0, .15);
 }
@@ -257,7 +257,7 @@ button:hover {
 }
 
 .form-group button:hover {
-    background-color: #0056b3;
+    background-color: #0c2e50;
 }
 
 

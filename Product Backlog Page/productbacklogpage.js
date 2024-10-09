@@ -32,6 +32,54 @@ document.addEventListener('DOMContentLoaded', function() {
             stage: 'Integration',
             storyPoints: '8',
             taskMember: 'Amar'
+        },
+        {
+            taskName: 'Example Task 3',
+            taskType: 'Story',
+            priority: 'Important',
+            taskTags: 'Framework',
+            sprint: 'Sprint 1',
+            taskDescription: 'This is an example task',
+            status: 'In Progress',
+            stage: 'Planning',
+            storyPoints: '5',
+            taskMember: 'Lisa'
+        },
+        {
+            taskName: 'Example Task 4',
+            taskType: 'Bug',
+            priority: 'Medium',
+            taskTags: 'Backend, Database, API',
+            sprint: 'Sprint 2',
+            taskDescription: 'This is another example task',
+            status: 'Not Started',
+            stage: 'Integration',
+            storyPoints: '1',
+            taskMember: 'Amar'
+        },
+        {
+            taskName: 'Example Task 5',
+            taskType: 'Story',
+            priority: 'Low',
+            taskTags: 'UI',
+            sprint: 'Sprint 1',
+            taskDescription: 'This is an example task',
+            status: 'In Progress',
+            stage: 'Planning',
+            storyPoints: '5',
+            taskMember: 'Lisa'
+        },
+        {
+            taskName: 'Example Task 6',
+            taskType: 'Story',
+            priority: 'Urgent',
+            taskTags: 'Testing, Database',
+            sprint: 'Sprint 2',
+            taskDescription: 'This is another example task',
+            status: 'Not Started',
+            stage: 'Integration',
+            storyPoints: '4',
+            taskMember: 'Amar'
         }
     ];
 
