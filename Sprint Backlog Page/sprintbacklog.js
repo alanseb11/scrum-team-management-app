@@ -65,90 +65,121 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-// Ensure that tasks are saved as full objects, not just names
-function handleAddSprint(event) {
-    event.preventDefault();
-    const sprintName = document.getElementById('sprintName').value;
-    const startDate = document.getElementById('startDate').value;
-    const endDate = document.getElementById('endDate').value;
-    const status = document.getElementById('status').value;
-
-    // Get selected PBIs as full objects
-    const selectedCheckboxes = Array.from(document.querySelectorAll('#optionsContainer input[type="checkbox"]:checked'));
-    const selectedPBIs = selectedCheckboxes.map(cb => JSON.parse(cb.value)); // Full task objects
-
-    if (!dateValidation()) return;
-
-    // Find the sprint if it already exists and append to its tasks
-    let existingSprint = sprints.find(sprint => sprint.sprintName === sprintName);
-    if (existingSprint) {
-        // Append the new PBIs to the existing ones (ensure no duplicates)
-        existingSprint.selectedPBIS = [...new Set([...existingSprint.selectedPBIS, ...selectedPBIs])];
-    } else {
-        // Create a new sprint and add it to the list
-        const newSprint = { sprintName, startDate, endDate, status, selectedPBIS: selectedPBIs };
-        sprints.push(newSprint);
-    }
-
-    // Remove allocated tasks from product backlog
-    productBacklog = productBacklog.filter(task => !selectedPBIs.some(pbi => pbi.taskName === task.taskName));
-
-    // Save updates to localStorage
-    localStorage.setItem('tasks', JSON.stringify(productBacklog));
-    localStorage.setItem('sprints', JSON.stringify(sprints));
-    renderSprints();
-    modal.style.display = 'none';
-}
-
-function openEditSprintModal(sprint, row) {
-    modal.style.display = 'block';
-    document.getElementById('modalTitle').textContent = 'Edit Sprint';
-    document.getElementById('sprintName').value = sprint.sprintName;
-    document.getElementById('startDate').value = sprint.startDate;
-    document.getElementById('endDate').value = sprint.endDate;
-    document.getElementById('status').value = sprint.status;
-
-    // Populate the PBIs with the ones that are already selected for the sprint
-    populatePbiOptions(sprint.selectedPBIS);
-
-    sprintForm.onsubmit = (event) => {
+    function handleAddSprint(event) {
         event.preventDefault();
-        sprint.sprintName = document.getElementById('sprintName').value;
-        sprint.startDate = document.getElementById('startDate').value;
-        sprint.endDate = document.getElementById('endDate').value;
-        sprint.status = document.getElementById('status').value;
-
+        const sprintName = document.getElementById('sprintName').value;
+        const startDate = document.getElementById('startDate').value;
+        const endDate = document.getElementById('endDate').value;
+        const status = document.getElementById('status').value;
+    
         // Get selected PBIs as full objects
         const selectedCheckboxes = Array.from(document.querySelectorAll('#optionsContainer input[type="checkbox"]:checked'));
-        const newSelectedPBIS = selectedCheckboxes.map(cb => JSON.parse(cb.value));
-
-        // Combine and remove duplicates
-        sprint.selectedPBIS = [...new Set([...sprint.selectedPBIS, ...newSelectedPBIS])];
-
-        // Remove allocated tasks from product backlog
-        productBacklog = productBacklog.filter(task => !sprint.selectedPBIS.some(pbi => pbi.taskName === task.taskName));
-
-        // Save changes to localStorage
+        const newSelectedPBIS = selectedCheckboxes.map(cb => JSON.parse(cb.value)); // Full task objects
+    
+        if (!dateValidation()) return;
+    
+        // Find the sprint if it already exists
+        let existingSprint = sprints.find(sprint => sprint.sprintName === sprintName);
+        if (existingSprint) {
+            // Handle task removal: add unselected tasks back to product backlog
+            const removedTasks = existingSprint.selectedPBIS.filter(task => !newSelectedPBIS.some(newTask => newTask.taskName === task.taskName));
+            productBacklog.push(...removedTasks);
+    
+            // Remove duplicates in the product backlog
+            productBacklog = [...new Set(productBacklog.map(task => JSON.stringify(task)))].map(task => JSON.parse(task));
+    
+            // Update the sprint's selected PBIS
+            existingSprint.selectedPBIS = newSelectedPBIS;
+        } else {
+            // Create a new sprint and add it to the list
+            const newSprint = { sprintName, startDate, endDate, status, selectedPBIS: newSelectedPBIS };
+            sprints.push(newSprint);
+        }
+    
+        // Remove newly selected tasks from the product backlog
+        productBacklog = productBacklog.filter(task => !newSelectedPBIS.some(pbi => pbi.taskName === task.taskName));
+    
+        // Save updates to localStorage
         localStorage.setItem('tasks', JSON.stringify(productBacklog));
         localStorage.setItem('sprints', JSON.stringify(sprints));
-
-        // Update table row
-        row.cells[0].textContent = sprint.sprintName;
-        row.cells[1].textContent = sprint.status;
-
+        renderSprints();
         modal.style.display = 'none';
-    };
+    }
+    
+    
+    
+
+    function openEditSprintModal(sprint, row) {
+        modal.style.display = 'block';
+        document.getElementById('modalTitle').textContent = 'Edit Sprint';
+        document.getElementById('sprintName').value = sprint.sprintName;
+        document.getElementById('startDate').value = sprint.startDate;
+        document.getElementById('endDate').value = sprint.endDate;
+        document.getElementById('status').value = sprint.status;
+    
+        // Populate the PBIs with the ones that are already selected for the sprint
+        populatePbiOptions(sprint.selectedPBIS);
+    
+        sprintForm.onsubmit = (event) => {
+            event.preventDefault();
+            sprint.sprintName = document.getElementById('sprintName').value;
+            sprint.startDate = document.getElementById('startDate').value;
+            sprint.endDate = document.getElementById('endDate').value;
+            sprint.status = document.getElementById('status').value;
+    
+            // Get selected PBIs as full objects
+            const selectedCheckboxes = Array.from(document.querySelectorAll('#optionsContainer input[type="checkbox"]:checked'));
+            const newSelectedPBIS = selectedCheckboxes.map(cb => JSON.parse(cb.value));
+    
+            // Handle task removal: add unselected tasks back to product backlog
+            const removedTasks = sprint.selectedPBIS.filter(task => !newSelectedPBIS.some(newTask => newTask.taskName === task.taskName));
+            productBacklog.push(...removedTasks);
+    
+            // Remove duplicates in the product backlog
+            productBacklog = [...new Set(productBacklog.map(task => JSON.stringify(task)))].map(task => JSON.parse(task));
+    
+            // Replace the sprint's selectedPBIS with the newly selected PBIS (no duplicates)
+            sprint.selectedPBIS = newSelectedPBIS;
+    
+            // Remove allocated tasks from product backlog
+            productBacklog = productBacklog.filter(task => !sprint.selectedPBIS.some(pbi => pbi.taskName === task.taskName));
+    
+            // Save changes to localStorage
+            localStorage.setItem('tasks', JSON.stringify(productBacklog));
+            localStorage.setItem('sprints', JSON.stringify(sprints));
+    
+            // Update table row
+            row.cells[0].textContent = sprint.sprintName;
+            row.cells[1].textContent = sprint.status;
+    
+            modal.style.display = 'none';
+        };
+    }
+    
+    
+
+function getAvailableTasksForSprint(selectedPBIS = []) {
+    // First, ensure the tasks in the current sprint are available for selection
+    const selectedTasksFromSprint = selectedPBIS.map(pbi => pbi.taskName);
+    
+    // Get all tasks currently allocated to any sprint
+    const allocatedTasks = sprints.flatMap(sprint => sprint.selectedPBIS.map(pbi => pbi.taskName));
+
+    // Return tasks that are either not allocated to any sprint OR are in the current sprint's PBIS
+    return [...productBacklog, ...selectedPBIS].filter(task => 
+        !allocatedTasks.includes(task.taskName) || selectedTasksFromSprint.includes(task.taskName)
+    );
 }
 
 
 
-    // Populate PBIs from the product backlog into the multiselect options
+
     function populatePbiOptions(selectedPBIS = []) {
         const optionsContainer = document.getElementById('optionsContainer');
         optionsContainer.innerHTML = ''; // Clear previous options
 
-        // Get available tasks that are not in any sprint
-        const availableTasks = productBacklog;
+        // Get available tasks that are not in any sprint or are in the current sprint
+        const availableTasks = getAvailableTasksForSprint(selectedPBIS);
 
         availableTasks.forEach(task => {
             const isChecked = selectedPBIS.some(pbi => pbi.taskName === task.taskName) ? 'checked' : '';
@@ -162,6 +193,7 @@ function openEditSprintModal(sprint, row) {
             optionsContainer.appendChild(pbiDiv);
         });
     }
+
 
     // Delete a sprint and return tasks to the product backlog
     function deleteSprint(row, sprint) {
@@ -216,5 +248,7 @@ function openEditSprintModal(sprint, row) {
         document.querySelector('.caret-down').style.transform = isDisplayed ? 'rotate(0deg)' : 'rotate(180deg)';
     });
 });
+
+//localStorage.clear();
 
 

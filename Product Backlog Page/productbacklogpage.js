@@ -328,3 +328,4 @@ document.addEventListener('DOMContentLoaded', function() {
     renderListView();
 });
 
+//localStorage.clear();
