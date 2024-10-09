@@ -49,7 +49,7 @@ body {
 
 /* Logout button hover effect */
 .logout-button:hover {
-    background-color: #ff91c9;
+    background-color: #ff3fa2;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 

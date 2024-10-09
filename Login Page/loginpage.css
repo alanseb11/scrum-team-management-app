@@ -82,7 +82,7 @@ input[type="text"]:focus {
     transition: background-color 0.3s ease;
 }
 .btn:hover {
-    background-color: #e60073;
+    background-color: #ff3fa2;
 }
 .links {
     margin-top: 20px;
@@ -101,7 +101,7 @@ button {
     transition: background-color 0.3s ease;
 }
 button:hover {
-    background-color: #e60073;
+    background-color: #ff3fa2;
 }
 
 footer {
