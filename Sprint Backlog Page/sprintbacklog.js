@@ -54,14 +54,22 @@ document.addEventListener('DOMContentLoaded', function () {
         });
         sprintTableBody.appendChild(row);
 
-        // Attach edit and delete functionality
+        // Attach edit functionality
         row.querySelector('.editButton').addEventListener('click', (e) => {
             e.stopPropagation();
             openEditSprintModal(sprint, row);
         });
+
+        // Attach delete functionality
         row.querySelector('.deleteButton').addEventListener('click', (e) => {
             e.stopPropagation();
             deleteSprint(row, sprint);
+        });
+    
+        // Add event listener for the Start button
+        row.querySelector('.startSprintButton').addEventListener('click', (e) => {
+            e.stopPropagation();
+            handleStartSprint(sprint);  // Pass the sprint to the handler function
         });
     }
 
@@ -179,6 +187,30 @@ function openEditSprintModal(sprint, row) {
             row.remove();
         }
     }
+
+    function handleStartSprint(sprint) {
+        // Change the sprint status to 'In Progress'
+        sprint.status = 'In Progress';
+    
+        // Log the PBIs for debugging
+        console.log("Starting sprint with PBIs:", sprint.selectedPBIS);
+    
+        // Retrieve existing kanbanBoardItems from localStorage or initialize it if it doesn't exist
+        let kanbanBoardItems = JSON.parse(localStorage.getItem('kanbanBoardItems')) || {};
+    
+        // Add the selectedPBIS for the current sprint to the kanbanBoardItems
+        kanbanBoardItems[sprint.sprintName] = sprint.selectedPBIS;
+    
+        // Save the updated kanbanBoardItems to localStorage
+        localStorage.setItem('kanbanBoardItems', JSON.stringify(kanbanBoardItems));
+    
+        // Redirect to the Kanban board page with the sprint name as a query parameter
+        window.location.href = `../Kanban Board/kanbanboard.html?sprintName=${encodeURIComponent(sprint.sprintName)}`;
+    
+        // Re-render the sprints table to reflect the status change
+        renderSprints();
+    }
+    
 
     // Validate the sprint dates
     function dateValidation() {
