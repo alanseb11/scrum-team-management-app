@@ -215,6 +215,42 @@ function openEditSprintModal(sprint, row) {
         // Rotate caret
         document.querySelector('.caret-down').style.transform = isDisplayed ? 'rotate(0deg)' : 'rotate(180deg)';
     });
+
+    // Logic to show admin menu in header
+    if (localStorage.getItem('isAdminLoggedIn')) {
+        const nav = document.getElementById('nav');
+        nav.innerHTML = `
+        <a href="../Home Page/homepage.html">Home</a>
+        <a href="../Product Backlog Page/productbacklogpage.html">Product Backlog</a>
+        <a href="../Sprint Backlog Page/sprintbacklog.html">Sprint Backlog</a>
+        <span id="adminLink">
+        <a href="../Admin Page/adminmenu.html">Admin Menu</a>
+        </span>
+        <button class="logout-button" id="logoutButton">Logout</button>
+        `;
+    }
+
+
+    // Add Logout Functionality
+    // Check if the user is logged in as admin or a regular user
+    if (localStorage.getItem('isAdminLoggedIn') !== 'true' && localStorage.getItem('isUserLoggedIn') !== 'true') {
+        // If not logged in, redirect to the login page
+        window.location.href = "../Login Page/loginpage.html";
+    }
+
+
+    // Logout functionality
+    const logoutButton = document.getElementById('logoutButton');
+    if (logoutButton) {
+        logoutButton.addEventListener('click', function () {
+            console.log('clicked')
+            // Clear login status from localStorage
+            localStorage.removeItem('isAdminLoggedIn');
+            localStorage.removeItem('isUserLoggedIn');
+            // Redirect to login page
+            window.location.href = "../Login Page/loginpage.html";
+        });
+    }
 });
 
 
