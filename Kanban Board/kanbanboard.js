@@ -102,6 +102,14 @@ document.addEventListener('DOMContentLoaded', function() {
             kanbanBoardItems[sprintName] = sprintTasks; // Update tasks for the current sprint
             localStorage.setItem('kanbanBoardItems', JSON.stringify(kanbanBoardItems));
 
+            // Sync the sprint data with updated statuses to localStorage
+            let sprints = JSON.parse(localStorage.getItem('sprints')) || [];
+            const sprintToUpdate = sprints.find(sprint => sprint.sprintName === sprintName);
+            if (sprintToUpdate) {
+                sprintToUpdate.selectedPBIS = sprintTasks; // Sync updated tasks
+                localStorage.setItem('sprints', JSON.stringify(sprints)); // Save changes to sprints
+            }
+
             // Re-render the board to reflect the new state
             renderKanbanBoard(sprintTasks);
         });        
