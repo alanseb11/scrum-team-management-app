@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Drag & Drop Between Lists</title>
     <link rel="stylesheet" href="kanbanboard.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
     <header class="header-container">
@@ -40,7 +42,7 @@
             </ul>
         </div>
 
-        <div><button id="addSprintButton">Add New Technical Task</button></div>
+        <div><button id="burndownChartButton">View Burndown Chart</button></div>
     </main>
     
 
@@ -98,6 +100,16 @@
     </div>
 </div>
 
+<!-- Modal for Burndown Chart -->
+<div id="burndownChartModal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>Burndown Chart</h2>
+        <canvas id="burndownChartCanvas"></canvas> <!-- Chart.js will render the chart here -->
+    </div>
+</div>
+
+
 <!-- Footer -->
 <footer>
     <div class="footer-content">
@@ -111,5 +123,6 @@
     <!-- JavaScript to manage user login and logout -->
 <script src="../Login Page/loginpage.js"></script>
 <script src="kanbanboard.js"></script>
+<script src="burndownChart.js"></script>
 </body>
 </html>
