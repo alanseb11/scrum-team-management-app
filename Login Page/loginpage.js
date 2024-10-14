@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     // Redirect to the homepage if credentials match a registered user
                     localStorage.setItem('isUserLoggedIn', 'true');
                     localStorage.setItem('loggedInUsername', username);
-                    window.location.href = "../Home Page/homepage.html";
+                    window.location.href = "../Sprint Backlog Page/sprintbacklog.html";
                 } else {
                     // Show an alert if the credentials are invalid
                     alert("Invalid username or password. Please try again.");
