@@ -90,7 +90,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const sprintName = document.getElementById('sprintName').value;
         const startDate = document.getElementById('startDate').value;
         const endDate = document.getElementById('endDate').value;
-        const status = document.getElementById('status').value;
+        const status = 'Not Started';
         let hasSprintStarted = false;
     
         // Get selected PBIs as full objects
@@ -137,7 +137,6 @@ document.addEventListener('DOMContentLoaded', function () {
         document.getElementById('sprintName').value = sprint.sprintName;
         document.getElementById('startDate').value = sprint.startDate;
         document.getElementById('endDate').value = sprint.endDate;
-        document.getElementById('status').value = sprint.status;
     
         // Populate the PBIs with the ones that are already selected for the sprint
         populatePbiOptions(sprint.selectedPBIS);
@@ -147,7 +146,6 @@ document.addEventListener('DOMContentLoaded', function () {
             sprint.sprintName = document.getElementById('sprintName').value;
             sprint.startDate = document.getElementById('startDate').value;
             sprint.endDate = document.getElementById('endDate').value;
-            sprint.status = document.getElementById('status').value;
     
             // Get selected PBIs as full objects
             const selectedCheckboxes = Array.from(document.querySelectorAll('#optionsContainer input[type="checkbox"]:checked'));
