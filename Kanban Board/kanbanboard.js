@@ -107,7 +107,16 @@ document.addEventListener('DOMContentLoaded', function() {
             const sprintToUpdate = sprints.find(sprint => sprint.sprintName === sprintName);
             if (sprintToUpdate) {
                 sprintToUpdate.selectedPBIS = sprintTasks; // Sync updated tasks
-                localStorage.setItem('sprints', JSON.stringify(sprints)); // Save changes to sprints
+        
+                // Check if all tasks are completed
+                const allCompleted = sprintTasks.every(task => task.status === 'Completed');
+                if (allCompleted) {
+                    sprintToUpdate.status = 'Completed'; // Update sprint status to Completed
+                    console.log(`Sprint "${sprintName}" marked as completed.`);
+                }
+        
+                // Save changes to sprints in localStorage
+                localStorage.setItem('sprints', JSON.stringify(sprints));
             }
 
             // Re-render the board to reflect the new state
@@ -205,6 +214,62 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     }
+
+    // Select the Complete Sprint button
+    const completeSprintButton = document.getElementById('completeSprintButton');
+
+    let sprints = JSON.parse(localStorage.getItem('sprints')) || [];
+    const sprintToUpdate = sprints.find(sprint => sprint.sprintName === sprintName);
+
+    if (sprintToUpdate.status === 'Completed') {
+        completeSprintButton.innerHTML = 'Sprint Completed'
+    }
+
+    // Add event listener for the Complete Sprint button
+    completeSprintButton.addEventListener('click', function () {
+        // Retrieve all tasks in the sprint
+        const incompleteTasks = sprintTasks.filter(task => task.status !== 'Completed');
+        
+        // Retrieve the existing product backlog tasks from localStorage
+        let backlogTasks = JSON.parse(localStorage.getItem('tasks'));
+
+        // Move incomplete tasks to the backlog
+        backlogTasks = backlogTasks.concat(incompleteTasks);
+
+        // Save updated backlog tasks to localStorage
+        localStorage.setItem('tasks', JSON.stringify(backlogTasks));
+
+        // Remove the incomplete tasks from the sprint
+        const updatedSprintTasks = sprintTasks.filter(task => task.status === 'Completed');
+
+        // Update the kanbanBoardItems for this sprint
+        kanbanBoardItems[sprintName] = updatedSprintTasks;
+        localStorage.setItem('kanbanBoardItems', JSON.stringify(kanbanBoardItems));
+
+        // Optional: Update the sprints data to reflect the change
+        let sprints = JSON.parse(localStorage.getItem('sprints')) || [];
+        const sprintToUpdate = sprints.find(sprint => sprint.sprintName === sprintName);
+
+        sprintToUpdate.status = 'Completed'
+
+        if (sprintToUpdate) {
+            sprintToUpdate.selectedPBIS = updatedSprintTasks;
+            localStorage.setItem('sprints', JSON.stringify(sprints));
+        }
+
+        // Re-render the Kanban board with updated tasks
+        renderKanbanBoard(updatedSprintTasks);
+
+         // Make all items in the 'Completed' column undraggable
+        const completedTasks = document.querySelectorAll('#Completed li');
+        completedTasks.forEach(task => {
+            task.setAttribute('draggable', 'false'); // Disable dragging
+            task.classList.add('disabled-task'); // Optional: Add a class to style the disabled tasks
+        });
+
+        console.log('Incomplete tasks have been moved back to the product backlog.');
+    });
+
 
     // Function to render the Kanban board with task categorization
     function renderKanbanBoard(tasks) {
