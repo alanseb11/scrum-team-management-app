@@ -53,15 +53,26 @@ document.addEventListener('DOMContentLoaded', function () {
             openEditSprintModal(sprint, row);
         });
 
+        // Add event listener for the Start button
+        row.querySelector('.startSprintButton').addEventListener('click', (e) => {
+            e.stopPropagation();
+            handleStartSprint(sprint);  // Pass the sprint to the handler function
+        });
+
         } else {
             row.innerHTML = `
             <td>${sprint.sprintName}</td>
             <td>${sprint.status}</td>
             <td>
-                <button class="startSprintButton">View</button>
+                <button class="viewButton">View</button>
                 <button class="deleteButton">Delete</button>
             </td>
         `;
+        // Add event listener for the Start button
+        row.querySelector('.viewButton').addEventListener('click', (e) => {
+            e.stopPropagation();
+            handleViewSprint(sprint);  // Pass the sprint to the handler function
+        });
         }
         
         // Add an event listener to the row for the click event
@@ -78,11 +89,6 @@ document.addEventListener('DOMContentLoaded', function () {
             deleteSprint(row, sprint);
         });
     
-        // Add event listener for the Start button
-        row.querySelector('.startSprintButton').addEventListener('click', (e) => {
-            e.stopPropagation();
-            handleStartSprint(sprint);  // Pass the sprint to the handler function
-        });
     }
 
     function handleAddSprint(event) {
@@ -234,8 +240,12 @@ function getAvailableTasksForSprint(selectedPBIS = []) {
 
     function handleStartSprint(sprint) {
         // Change the sprint status to 'In Progress'
-        sprint.status = 'In Progress';
-    
+        if (sprint.status === 'Completed') {
+            sprint.status = 'Completed';
+        } else {
+            sprint.status = 'In Progress'
+        }
+        
         // Log the PBIs for debugging
         console.log("Starting sprint with PBIs:", sprint.selectedPBIS);
     
@@ -252,12 +262,15 @@ function getAvailableTasksForSprint(selectedPBIS = []) {
 
         // Save the updated sprint status to localStorage
         localStorage.setItem('sprints', JSON.stringify(sprints));
-    
-        // Redirect to the Kanban board page with the sprint name as a query parameter
-        window.location.href = `../Kanban Board/kanbanboard.html?sprintName=${encodeURIComponent(sprint.sprintName)}`;
                 
         // Re-render the sprints table to reflect the status change
         renderSprints();
+    }
+
+    const viewButton = document.querySelector('.viewButton')
+    function handleViewSprint(sprint) {
+        // Redirect to the Kanban board page with the sprint name as a query parameter
+        window.location.href = `../Kanban Board/kanbanboard.html?sprintName=${encodeURIComponent(sprint.sprintName)}`;
     }
     
 
