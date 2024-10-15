@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', function() {
             taskTags: 'Frontend, API',
             sprint: 'Sprint 1',
             taskDescription: 'This is an example task',
-            status: 'In Progress',
+            status: 'Not Started',
             stage: 'Planning',
             storyPoints: '5',
             taskMember: 'Lisa'
@@ -40,7 +40,7 @@ document.addEventListener('DOMContentLoaded', function() {
             taskTags: 'Framework',
             sprint: 'Sprint 1',
             taskDescription: 'This is an example task',
-            status: 'In Progress',
+            status: 'Not Started',
             stage: 'Planning',
             storyPoints: '5',
             taskMember: 'Lisa'
@@ -64,7 +64,7 @@ document.addEventListener('DOMContentLoaded', function() {
             taskTags: 'UI',
             sprint: 'Sprint 1',
             taskDescription: 'This is an example task',
-            status: 'In Progress',
+            status: 'Not Started',
             stage: 'Planning',
             storyPoints: '5',
             taskMember: 'Lisa'
@@ -142,6 +142,7 @@ document.addEventListener('DOMContentLoaded', function() {
         filteredTasks.forEach(function(task) {
             var card = document.createElement('div');
             card.classList.add('card');
+            card.style.backgroundColor = priorityColors[task.priority]; // Set background color
             card.innerHTML = `
                 <h3>${task.taskName}</h3>
                 <p><strong>Priority:</strong> ${task.priority}</p>
@@ -186,9 +187,17 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
+    const priorityColors = {
+        Low: '#b2ffb2',       // Light green for Low priority
+        Medium: '#ffffb2',    // Light yellow for Medium priority
+        Important: '#ffcc00', // Orange for Important priority
+        Urgent: '#ff4d4d'     // Red for Urgent priority
+    };
+    
 
     function addTaskToTable(task) {
         const row = document.createElement('tr');
+        row.style.backgroundColor = priorityColors[task.priority]; // Set background color
         row.innerHTML = `
             <td>${task.taskName}</td>
             <td>${task.priority}</td>
@@ -223,7 +232,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const storyPoints = document.getElementById('storyPoints').value;
         const sprint = document.getElementById('sprint').value;
         const taskDescription = document.getElementById('taskDescription').value;
-        const status = document.getElementById('status').value;
+        const status = 'Not Started';
         const stage = document.getElementById('stage').value;
         const taskMember = document.getElementById('taskMember').value;
 
@@ -249,7 +258,6 @@ document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('storyPoints').value = task.storyPoints;
         document.getElementById('sprint').value = task.sprint;
         document.getElementById('taskDescription').value = task.taskDescription;
-        document.getElementById('status').value = task.status;
         document.getElementById('stage').value = task.stage;
         document.getElementById('taskMember').value = task.taskMember;
     
@@ -265,7 +273,6 @@ document.addEventListener('DOMContentLoaded', function() {
             task.storyPoints = document.getElementById('storyPoints').value;
             task.sprint = document.getElementById('sprint').value;
             task.taskDescription = document.getElementById('taskDescription').value;
-            task.status = document.getElementById('status').value;
             task.stage = document.getElementById('stage').value;
             task.taskMember = document.getElementById('taskMember').value;
     
@@ -350,16 +357,14 @@ document.addEventListener('DOMContentLoaded', function() {
     if (localStorage.getItem('isAdminLoggedIn')) {
         const nav = document.getElementById('nav');
         nav.innerHTML = `
-        <a href="../Home Page/homepage.html">Home</a>
-        <a href="../Product Backlog Page/productbacklogpage.html">Product Backlog</a>
         <a href="../Sprint Backlog Page/sprintbacklog.html">Sprint Backlog</a>
+        <a href="../Product Backlog Page/productbacklogpage.html">Product Backlog</a>
         <span id="adminLink">
         <a href="../Admin Page/adminmenu.html">Admin Menu</a>
         </span>
         <button class="logout-button" id="logoutButton">Logout</button>
         `;
     }
-
 
     // Add Logout Functionality
     // Check if the user is logged in as admin or a regular user
