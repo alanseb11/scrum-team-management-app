@@ -142,6 +142,7 @@ document.addEventListener('DOMContentLoaded', function() {
         filteredTasks.forEach(function(task) {
             var card = document.createElement('div');
             card.classList.add('card');
+            card.style.backgroundColor = priorityColors[task.priority]; // Set background color
             card.innerHTML = `
                 <h3>${task.taskName}</h3>
                 <p><strong>Priority:</strong> ${task.priority}</p>
@@ -186,9 +187,17 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
+    const priorityColors = {
+        Low: '#b2ffb2',       // Light green for Low priority
+        Medium: '#ffffb2',    // Light yellow for Medium priority
+        Important: '#ffcc00', // Orange for Important priority
+        Urgent: '#ff4d4d'     // Red for Urgent priority
+    };
+    
 
     function addTaskToTable(task) {
         const row = document.createElement('tr');
+        row.style.backgroundColor = priorityColors[task.priority]; // Set background color
         row.innerHTML = `
             <td>${task.taskName}</td>
             <td>${task.priority}</td>
