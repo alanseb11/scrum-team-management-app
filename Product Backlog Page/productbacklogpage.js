@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', function() {
             taskTags: 'Frontend, API',
             sprint: 'Sprint 1',
             taskDescription: 'This is an example task',
-            status: 'In Progress',
+            status: 'Not Started',
             stage: 'Planning',
             storyPoints: '5',
             taskMember: 'Lisa'
@@ -40,7 +40,7 @@ document.addEventListener('DOMContentLoaded', function() {
             taskTags: 'Framework',
             sprint: 'Sprint 1',
             taskDescription: 'This is an example task',
-            status: 'In Progress',
+            status: 'Not Started',
             stage: 'Planning',
             storyPoints: '5',
             taskMember: 'Lisa'
@@ -64,7 +64,7 @@ document.addEventListener('DOMContentLoaded', function() {
             taskTags: 'UI',
             sprint: 'Sprint 1',
             taskDescription: 'This is an example task',
-            status: 'In Progress',
+            status: 'Not Started',
             stage: 'Planning',
             storyPoints: '5',
             taskMember: 'Lisa'
@@ -232,7 +232,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const storyPoints = document.getElementById('storyPoints').value;
         const sprint = document.getElementById('sprint').value;
         const taskDescription = document.getElementById('taskDescription').value;
-        const status = document.getElementById('status').value;
+        const status = 'Not Started';
         const stage = document.getElementById('stage').value;
         const taskMember = document.getElementById('taskMember').value;
 
@@ -258,7 +258,6 @@ document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('storyPoints').value = task.storyPoints;
         document.getElementById('sprint').value = task.sprint;
         document.getElementById('taskDescription').value = task.taskDescription;
-        document.getElementById('status').value = task.status;
         document.getElementById('stage').value = task.stage;
         document.getElementById('taskMember').value = task.taskMember;
     
@@ -274,7 +273,6 @@ document.addEventListener('DOMContentLoaded', function() {
             task.storyPoints = document.getElementById('storyPoints').value;
             task.sprint = document.getElementById('sprint').value;
             task.taskDescription = document.getElementById('taskDescription').value;
-            task.status = document.getElementById('status').value;
             task.stage = document.getElementById('stage').value;
             task.taskMember = document.getElementById('taskMember').value;
     
