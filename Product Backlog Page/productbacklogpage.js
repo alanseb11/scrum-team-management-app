@@ -289,7 +289,7 @@ document.addEventListener('DOMContentLoaded', function() {
             modal.style.display = 'none';
         };
     }
-    
+
 
     function deleteTask(row, task) {
         const index = tasks.indexOf(task);
