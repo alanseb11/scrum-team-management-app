@@ -20,9 +20,10 @@ document.addEventListener('DOMContentLoaded', function() {
             stage: 'Planning',
             storyPoints: '5',
             taskMember: 'Lisa',
-            dateWorkedOn: '15/10/2024',
-            amountOfHours: '7'
-
+            timeTracking: [
+                { dateWorkedOn: '15/10/2024', hoursWorked: 7 },
+                { dateWorkedOn: '16/10/2024', hoursWorked: 3 }
+            ]
         },
         {
             taskName: 'Example Task 2',
@@ -35,8 +36,10 @@ document.addEventListener('DOMContentLoaded', function() {
             stage: 'Integration',
             storyPoints: '8',
             taskMember: 'Amar',
-            dateWorkedOn: '15/10/2024',
-            amountOfHours: '5'
+            timeTracking: [
+                { dateWorkedOn: '15/10/2024', hoursWorked: 5 },
+                { dateWorkedOn: '17/10/2024', hoursWorked: 4 }
+            ]
         },
         {
             taskName: 'Example Task 3',
@@ -49,8 +52,10 @@ document.addEventListener('DOMContentLoaded', function() {
             stage: 'Planning',
             storyPoints: '5',
             taskMember: 'Lisa',
-            dateWorkedOn: '15/10/2024',
-            amountOfHours: '10'
+            timeTracking: [
+                { dateWorkedOn: '15/10/2024', hoursWorked: 10 },
+                { dateWorkedOn: '18/10/2024', hoursWorked: 6 }
+            ]
         },
         {
             taskName: 'Example Task 4',
@@ -63,8 +68,10 @@ document.addEventListener('DOMContentLoaded', function() {
             stage: 'Integration',
             storyPoints: '1',
             taskMember: 'Amar',
-            dateWorkedOn: '15/10/2024',
-            amountOfHours: '2'
+            timeTracking: [
+                { dateWorkedOn: '15/10/2024', hoursWorked: 2 },
+                { dateWorkedOn: '16/10/2024', hoursWorked: 3 }
+            ]
         },
         {
             taskName: 'Example Task 5',
@@ -77,8 +84,10 @@ document.addEventListener('DOMContentLoaded', function() {
             stage: 'Planning',
             storyPoints: '5',
             taskMember: 'Lisa',
-            dateWorkedOn: '15/10/2024',
-            amountOfHours: '9'
+            timeTracking: [
+                { dateWorkedOn: '15/10/2024', hoursWorked: 9 },
+                { dateWorkedOn: '17/10/2024', hoursWorked: 4 }
+            ]
         },
         {
             taskName: 'Example Task 6',
@@ -91,8 +100,10 @@ document.addEventListener('DOMContentLoaded', function() {
             stage: 'Integration',
             storyPoints: '4',
             taskMember: 'Amar',
-            dateWorkedOn: '15/10/2024',
-            amountOfHours: '6'
+            timeTracking: [
+                { dateWorkedOn: '15/10/2024', hoursWorked: 6 },
+                { dateWorkedOn: '18/10/2024', hoursWorked: 2 }
+            ]
         }
     ];
 
