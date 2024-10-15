@@ -37,6 +37,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // Add a sprint to the table
     function addSprintToTable(sprint) {
         const row = document.createElement('tr');
+        if (!sprint.hasSprintStarted) {
         row.innerHTML = `
             <td>${sprint.sprintName}</td>
             <td>${sprint.status}</td>
@@ -46,6 +47,22 @@ document.addEventListener('DOMContentLoaded', function () {
                 <button class="deleteButton">Delete</button>
             </td>
         `;
+        // Attach edit functionality
+        row.querySelector('.editButton').addEventListener('click', (e) => {
+            e.stopPropagation();
+            openEditSprintModal(sprint, row);
+        });
+
+        } else {
+            row.innerHTML = `
+            <td>${sprint.sprintName}</td>
+            <td>${sprint.status}</td>
+            <td>
+                <button class="startSprintButton">View</button>
+                <button class="deleteButton">Delete</button>
+            </td>
+        `;
+        }
         
         // Add an event listener to the row for the click event
         row.addEventListener('click', () => {
@@ -54,11 +71,6 @@ document.addEventListener('DOMContentLoaded', function () {
         });
         sprintTableBody.appendChild(row);
 
-        // Attach edit functionality
-        row.querySelector('.editButton').addEventListener('click', (e) => {
-            e.stopPropagation();
-            openEditSprintModal(sprint, row);
-        });
 
         // Attach delete functionality
         row.querySelector('.deleteButton').addEventListener('click', (e) => {
@@ -79,6 +91,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const startDate = document.getElementById('startDate').value;
         const endDate = document.getElementById('endDate').value;
         const status = document.getElementById('status').value;
+        let hasSprintStarted = false;
     
         // Get selected PBIs as full objects
         const selectedCheckboxes = Array.from(document.querySelectorAll('#optionsContainer input[type="checkbox"]:checked'));
@@ -100,8 +113,9 @@ document.addEventListener('DOMContentLoaded', function () {
             existingSprint.selectedPBIS = newSelectedPBIS;
         } else {
             // Create a new sprint and add it to the list
-            const newSprint = { sprintName, startDate, endDate, status, selectedPBIS: newSelectedPBIS };
+            const newSprint = { sprintName, startDate, endDate, status, selectedPBIS: newSelectedPBIS, hasSprintStarted };
             sprints.push(newSprint);
+            console.log(newSprint)
         }
     
         // Remove newly selected tasks from the product backlog
@@ -232,13 +246,18 @@ function getAvailableTasksForSprint(selectedPBIS = []) {
     
         // Add the selectedPBIS for the current sprint to the kanbanBoardItems
         kanbanBoardItems[sprint.sprintName] = sprint.selectedPBIS;
-    
+
+        sprint.hasSprintStarted = true;
+
         // Save the updated kanbanBoardItems to localStorage
         localStorage.setItem('kanbanBoardItems', JSON.stringify(kanbanBoardItems));
+
+        // Save the updated sprint status to localStorage
+        localStorage.setItem('sprints', JSON.stringify(sprints));
     
         // Redirect to the Kanban board page with the sprint name as a query parameter
         window.location.href = `../Kanban Board/kanbanboard.html?sprintName=${encodeURIComponent(sprint.sprintName)}`;
-    
+                
         // Re-render the sprints table to reflect the status change
         renderSprints();
     }
