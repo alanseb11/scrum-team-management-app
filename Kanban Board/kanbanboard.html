@@ -101,6 +101,103 @@
     </div>
 </div>
 
+<!-- Modal for Adding/Editing Tasks -->
+<div id="taskModal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2 id="modalTitle">Edit Task</h2>
+        <form id="taskForm">
+            <!-- task name -->
+            <div class="form-group">
+                <label for="taskName">Task Name:</label>
+                <input type="text" id="taskName" name="taskName" required>
+            </div>
+            <!-- task type -->
+            <div class="form-group">
+                <label for="taskType">Task Type:</label>
+                <select id="taskType" name="taskType">
+                    <option>Story</option>
+                    <option>Bug</option>
+                </select>
+            </div>
+            <!-- priority -->
+            <div class="form-group">
+                <label for="priority">Priority:</label>
+                <select id="priority" name="priority">
+                    <option>Low</option>
+                    <option>Medium</option>
+                    <option>Important</option>
+                    <option>Urgent</option>
+                </select>
+            </div>
+            <!-- Custom Multiselect for Tags -->
+            <div class="form-group">
+                <label for="tags">Tags:</label>
+                <div class="custom-multiselect" id="customMultiselect">
+                    <div class="select-box">
+                        <div class="selected-items" id="selectedItems">Select Tags </div>
+                        <div class="caret-down"></div>
+                    </div>
+                    <div class="options-container" id="optionsContainer">
+                        <label><span>Frontend</span><input type="checkbox" value="Frontend"></label>
+                        <label><span>Backend</span><input type="checkbox" value="Backend"></label>
+                        <label><span>API</span><input type="checkbox" value="API"></label>
+                        <label><span>Database</span><input type="checkbox" value="Database"></label>
+                        <label><span>Framework</span><input type="checkbox" value="Framework"></label>
+                        <label><span>Testing</span><input type="checkbox" value="Testing"></label>
+                        <label><span>UI</span><input type="checkbox" value="UI"></label>
+                        <label><span>UX</span><input type="checkbox" value="UX"></label>
+                    </div>
+                </div>
+                <input type="hidden" id="tags" name="tags">
+            </div>
+            
+            <!-- story points -->
+            <div class="form-group">
+                <label for="storyPoints">Story Points:</label>
+                <input type="number" id="storyPoints" name="storyPoints" min="0" max="10" required>
+            </div>
+            <!-- sprint -->
+            <div class="form-group">
+                <label for="sprint">Sprint:</label>
+                <input type="text" id="sprint" name="sprint" required>
+            </div> 
+
+            <!-- task description -->
+            <div class="form-group">
+                <label for="taskDescription">Task Description:</label>
+                <input type="text" id="taskDescription" name="taskDescription" required>
+            </div>
+
+            <!-- stage -->
+            <div class="form-group">
+                <label for="stage">Stage:</label>
+                <select id="stage" name="stage">
+                    <option>Planning</option>
+                    <option>Development</option>
+                    <option>Testing</option>
+                    <option>Integration</option>
+                </select>
+            </div>
+
+            <!-- assignee -->
+            <div class="form-group">
+                <label for="taskMember">Assigned To:</label>
+                <select id="taskMember" name="taskMember">
+                    <option>Lisa</option>
+                    <option>Amar</option>
+                    <option>Alan</option>
+                    <option>Sanjevan</option>
+                    <option>Han</option>
+                    <option>Michael</option>
+                </select>
+            </div>
+            <button type="submit">Save Task</button>
+        </form>
+    </div>
+</div>
+
+
 <!-- Modal for Burndown Chart -->
 <div id="burndownChartModal" class="modal">
     <div class="modal-content">

@@ -4,9 +4,11 @@ document.addEventListener('DOMContentLoaded', function() {
     // Get the sprint name from the URL
     const urlParams = new URLSearchParams(window.location.search);
     const sprintName = urlParams.get('sprintName');
+    const closeButton = document.querySelector('.close');
 
-    var addSprintButton = document.getElementById('addSprintButton');
-    var modal = document.getElementById('sprintModal');
+
+    const taskForm = document.getElementById('taskForm');
+    var modal = document.getElementById('taskModal');
     
     // Retrieve the kanbanBoardItems from localStorage
     let kanbanBoardItems = JSON.parse(localStorage.getItem('kanbanBoardItems')) || {};
@@ -14,8 +16,6 @@ document.addEventListener('DOMContentLoaded', function() {
     // Get the tasks associated with the specific sprint
     const sprintTasks = kanbanBoardItems[sprintName] || [];
 
-    var closeButton = document.querySelector('.close');
-    var sprintForm = document.getElementById('sprintForm');
 
     // getting sprint columns
     const notStartedList = document.getElementById('Not Started');
@@ -215,6 +215,57 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
+    // Close the modal
+    closeButton.addEventListener('click', () => modal.style.display = 'none');
+    window.addEventListener('click', (e) => {
+        if (e.target === modal) {
+            modal.style.display = 'none';
+        }
+    });
+
+    
+    function openEditTaskModal(task, row) {
+        modal.style.display = 'block';
+        document.getElementById('modalTitle').textContent = 'Edit Task';
+    
+        // Populate the form fields with the existing task data
+        document.getElementById('taskName').value = task.taskName;
+        document.getElementById('taskType').value = task.taskType;
+        document.getElementById('priority').value = task.priority;
+        document.getElementById('tags').value = task.taskTags;
+        document.getElementById('storyPoints').value = task.storyPoints;
+        document.getElementById('sprint').value = task.sprint;
+        document.getElementById('taskDescription').value = task.taskDescription;
+        document.getElementById('stage').value = task.stage;
+        document.getElementById('taskMember').value = task.taskMember;
+    
+        // When submitting the form, update the task object and localStorage
+        taskForm.onsubmit = (event) => {
+            event.preventDefault();
+    
+            // Update task properties based on the edited form fields
+            task.taskName = document.getElementById('taskName').value;
+            task.taskType = document.getElementById('taskType').value;
+            task.priority = document.getElementById('priority').value;
+            task.taskTags = document.getElementById('tags').value;
+            task.storyPoints = document.getElementById('storyPoints').value;
+            task.sprint = document.getElementById('sprint').value;
+            task.taskDescription = document.getElementById('taskDescription').value;
+            task.stage = document.getElementById('stage').value;
+            task.taskMember = document.getElementById('taskMember').value;
+    
+            // Save updated task data to localStorage
+            localStorage.setItem('tasks', JSON.stringify(tasks));
+    
+            // Update the task row in the table with new data
+            renderKanbanBoard(tasks)
+    
+            // Hide the modal after saving the changes
+            modal.style.display = 'none';
+        };
+    }
+
+
     // Select the Complete Sprint button
     const completeSprintButton = document.getElementById('completeSprintButton');
 
@@ -287,6 +338,12 @@ document.addEventListener('DOMContentLoaded', function() {
             const taskElement = document.createElement('li'); // Create an individual task element
             taskElement.textContent = task.taskName; // Display the task name
             
+                // Add click event to open the edit modal
+            taskElement.addEventListener('click', function() {
+                const row = taskElement; // You might need to adjust how you reference the row
+                openEditTaskModal(task, row);
+            });
+            
             // Add draggable functionality
             itemDraggable(taskElement);
 
@@ -303,141 +360,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Call the render function when the page loads
     renderKanbanBoard(sprintTasks);
-
-    // Handle form submission (Add new sprint)
-    function addSprint(event) {
-        event.preventDefault(); // Prevent default form submission
-
-        // Get form values
-        var sprintName = document.getElementById('sprintName').value;
-        var startDate = document.getElementById('startDate').value;
-        var endDate = document.getElementById('endDate').value;
-        var status = document.getElementById('status').value;
-        var selectedPBIS = document.getElementById('customMultiselect').value; 
-        
-        // date validation
-        var startDateError = document.getElementById('startDateError');
-        var endDateError = document.getElementById('endDateError');
-        startDateError.textContent = ''
-        endDateError.textContent = ''
-
-        // get current date
-        const date = new Date(); 
-        let currentDate = date.toJSON();
-
-        if (startDate < currentDate.slice(0,10)) {
-            startDateError.textContent = 'Invalid start date. Start date must not be in the past.'
-            return;
-        } else { 
-            startDateError.textContent = ''
-        }
-
-        if (endDate < startDate) {
-            endDateError.textContent = 'Invalid end date. End date must be after start date.'
-            return;
-        } else { 
-            endDateError.textContent = ''
-        }
-
-
-        // Store sprint in the centralized array
-        var newSprintData = {
-            sprintName: sprintName, 
-            startDate: startDate,
-            endDate: endDate,
-            status: status,
-            selectedPBIS: selectedPBIS
-        }
-        var newSprintDraggable = document.createElement('li')
-        newSprintDraggable.innerHTML = `<button class="editSprintButton">${sprintName}</button></td>`;
-
-        newSprintDraggable.setAttribute('name', sprintName);
-        newSprintDraggable.setAttribute('start-date', startDate);
-        newSprintDraggable.setAttribute('end-date', endDate);
-        newSprintDraggable.setAttribute('status', status);
-
-        sprints.push(newSprintData);
-        originalSprints.push(newSprintData); // Update the original sprint list
-
-        localStorage.setItem('sprints', JSON.stringify(sprints));
-
-        itemDraggable(newSprintDraggable);
-
-        // adding new sprint to column 
-        if (status == 'not-started') { 
-            // append sprint to column
-            notStartedList.append(newSprintDraggable)
-
-        } else if (status == 'in-progress') {
-            activeList.append(newSprintDraggable)
-
-        } else {
-            completedList.append(newSprintDraggable)
-            
-        }
-
-        // attach event listener to new sprint
-        attachSprintEventListeners(newSprintDraggable,sprints.length-1);
-
-        // // Re-render both views after adding the sprint
-        // renderListView();
-        // renderCardView();
-
-        // Reset the form
-        sprintForm.reset();
-
-        // Close the modal
-        modal.style.display = 'none';
-    };
-
-    // edit sprint functionality 
-    // Attach event listeners to new sprints
-    function attachSprintEventListeners(sprint, sprintIndex) {
-        var editSprintButton = sprint.querySelector('.editSprintButton');
-    
-        editSprintButton.addEventListener('click', function() {
-            // Open the modal and populate the form with the task details
-            modal.style.display = 'block';
-            document.getElementById('sprintName').value = sprints[sprintIndex].sprintName;
-            document.getElementById('startDate').value = sprints[sprintIndex].startDate;
-            document.getElementById('endDate').value = sprints[sprintIndex].endDate;
-            document.getElementById('status').value = sprints[sprintIndex].status;
-            document.getElementById('customMultiselect').value = sprints[sprintIndex].selectedPBIS;
-
-            // Update form submission to save changes
-            sprintForm.onsubmit = function(event) {
-                event.preventDefault(); // Prevent default form submission
-
-                // Update sprint details in the sprint array
-                sprints[sprintIndex] = {
-                    sprintName: document.getElementById('sprintName').value,
-                    startDate: document.getElementById('startDate').value,
-                    endDate: document.getElementById('endDate').value,
-                    status: document.getElementById('status').value,
-                    selectedPBIS: document.getElementById('customMultiselect').value    
-                };
-
-                // updates sprint name if modified 
-                sprint.querySelector('.editSprintButton').innerText = sprints[sprintIndex].sprintName; 
-
-                var sprintToEdit = sprints[sprintIndex]
-                var originalIndex = originalSprints.findIndex(sprint => sprint.sprintName === sprintToEdit.sprintName && sprint.startDate === sprintToEdit.sprintDate);
-                if (originalIndex !== -1) {
-                    originalSprints[originalIndex] = { ...sprints[sprintIndex] };
-                }
-
-                // // Re-render both views
-                // renderListView();
-                // renderCardView();
-                sprintForm.reset();
-
-                // Close the modal
-                modal.style.display = 'none';
-            };
-        });
-    }
-
-    var originalSprints = [...sprints]; // Keep a copy of the original task list
 
 
     // Custom multiselect logic
