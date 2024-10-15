@@ -193,16 +193,13 @@
                 </select>
             </div>
 
-            <div class="form-group">
-                <label for="dateWorkedOn">Date Worked on:</label>
-                <input type="date" id="dateWorkedOn" name="startDate">
-                <span class="error-message" id="startDateError"></span>
-            </div>  
-
-            <!-- story points -->
-            <div class="form-group">
-                <label for="hoursWorked">Number of Hours Worked:</label>
-                <input type="number" id="amountOfHours" name="amountOfHours">
+            <!-- Time Tracking Section -->
+            <div id="timeTrackingContainer">
+                <h3>Time Tracking</h3>
+                <div id="timeEntries">
+                    <!-- Time log entries will be added here dynamically -->
+                </div>
+                <button type="button" id="addTimeEntryButton">Add Time Entry</button>
             </div>
 
             <button type="submit">Save Task</button>

@@ -1,12 +1,9 @@
-// script.js
-
 document.addEventListener('DOMContentLoaded', function() {
     // Get the sprint name from the URL
     const urlParams = new URLSearchParams(window.location.search);
     const sprintName = urlParams.get('sprintName');
     const closeButton = document.querySelector('.close');
-
-
+    
     const taskForm = document.getElementById('taskForm');
     const modal = document.getElementById('taskModal');
     
@@ -14,10 +11,9 @@ document.addEventListener('DOMContentLoaded', function() {
     let kanbanBoardItems = JSON.parse(localStorage.getItem('kanbanBoardItems')) || {};
 
     // Get the tasks associated with the specific sprint
-    const sprintTasks = kanbanBoardItems[sprintName] || [];
+    let sprintTasks = kanbanBoardItems[sprintName] || [];
 
-
-    // getting sprint columns
+    // Getting sprint columns
     const notStartedList = document.getElementById('Not Started');
     const activeList = document.getElementById('In Progress');
     const completedList = document.getElementById('Completed');
@@ -25,205 +21,27 @@ document.addEventListener('DOMContentLoaded', function() {
     const lists = document.querySelectorAll('.draggable-list');
     let draggedItem = null;
 
-    // list of tasks
-    const storedTasks = localStorage.getItem('tasks');
-    const tasks = storedTasks ? JSON.parse(storedTasks) : [];
-    console.log(sprintTasks)
-
-    const mainContainer = document.querySelector('.main-container');
-
-    lists.forEach(list => {
-        list.addEventListener('dragstart', function (e) {
-            if (e.target.tagName === 'LI') {
-                draggedItem = e.target;
-                setTimeout(() => {
-                    e.target.classList.add('dragging');
-                }, 0);
-            }
-        });
-
-        list.addEventListener('dragend', function (e) {
-            if (e.target.tagName === 'LI') {
-                setTimeout(() => {
-                    e.target.classList.remove('dragging');
-                    draggedItem = null;
-                }, 0);
-            }
-        });
-
-        list.addEventListener('dragover', function (e) {
-            e.preventDefault(); // Prevent default to allow drop
-            if (e.target.tagName === 'LI') {
-                e.target.classList.add('over');
-            }
-        });
-
-        list.addEventListener('dragleave', function (e) {
-            if (e.target.tagName === 'LI') {
-                e.target.classList.remove('over');
-            }
-        });
-
-        list.addEventListener('drop', function (e) {
-            e.preventDefault(); // Prevent default action (open as link for some elements)
-        
-            if (e.target.tagName === 'LI') {
-                e.target.classList.remove('over');
-        
-                // Move dragged item to the dropped position
-                if (draggedItem !== this) {
-                    let draggedIndex = [...this.parentNode.children].indexOf(draggedItem);
-                    let targetIndex = [...this.parentNode.children].indexOf(e.target);
-        
-                    if (targetIndex > draggedIndex) {
-                        this.insertBefore(draggedItem, e.target.nextSibling);
-                    } else {
-                        this.insertBefore(draggedItem, e.target);
-                    }
-                }
-            }
-
-            // If the drop happens on the list (not on an item), append the item at the end
-            if (e.target === this && draggedItem !== null) {
-                this.appendChild(draggedItem);
-            }
-        
-            // Update the status of the dragged item based on the column it was dropped into
-            const newStatus = this.id; // Assuming the list ID corresponds to the status
-            const taskName = draggedItem.textContent; // Get the name of the task
-        
-            // Find the task in sprintTasks and update its status
-            const task = sprintTasks.find(task => task.taskName === taskName);
-            if (task) {
-                task.status = newStatus.charAt(0).toUpperCase() + newStatus.slice(1); // Capitalize the status
-            }
-
-            // Save updated tasks back to localStorage
-            kanbanBoardItems[sprintName] = sprintTasks; // Update tasks for the current sprint
-            localStorage.setItem('kanbanBoardItems', JSON.stringify(kanbanBoardItems));
-
-            // Sync the sprint data with updated statuses to localStorage
-            let sprints = JSON.parse(localStorage.getItem('sprints')) || [];
-            const sprintToUpdate = sprints.find(sprint => sprint.sprintName === sprintName);
-            if (sprintToUpdate) {
-                sprintToUpdate.selectedPBIS = sprintTasks; // Sync updated tasks
-        
-                // Check if all tasks are completed
-                const allCompleted = sprintTasks.every(task => task.status === 'Completed');
-                if (allCompleted) {
-                    sprintToUpdate.status = 'Completed'; // Update sprint status to Completed
-                    console.log(`Sprint "${sprintName}" marked as completed.`);
-                }
-        
-                // Save changes to sprints in localStorage
-                localStorage.setItem('sprints', JSON.stringify(sprints));
-            }
-
-            // Re-render the board to reflect the new state
-            renderKanbanBoard(sprintTasks);
-        });        
-    });
-
-
-    // Close the modal
-    closeButton.onclick = function() {
-        modal.style.display = 'none';
-    };
-
-    window.onclick = function(event) {
-        if (event.target == modal) {
-            modal.style.display = 'none';
-        }
-    };
-
-    // Add Logout Functionality
-    // Check if the user is logged in as admin or a regular user
-    if (localStorage.getItem('isAdminLoggedIn') !== 'true' && localStorage.getItem('isUserLoggedIn') !== 'true') {
-        // If not logged in, redirect to the login page
-        window.location.href = "../Login Page/loginpage.html";
-    }
-
-    // Logout functionality
-    const logoutButton = document.getElementById('logoutButton');
-    if (logoutButton) {
-        logoutButton.addEventListener('click', function () {
-            // Clear login status from localStorage
-            localStorage.removeItem('isAdminLoggedIn');
-            localStorage.removeItem('isUserLoggedIn');
-            // Redirect to login page
-            window.location.href = "../Login Page/loginpage.html";
-        });
-    }
-    // make each item created draggable e.g. when adding a new sprint
-    function itemDraggable(item) {
-        item.setAttribute('draggable', 'true');
-
-        item.addEventListener('dragstart', function (e) {
-            if (e.target.tagName === 'LI') {
-                draggedItem = e.target;
-                setTimeout(() => {
-                    e.target.classList.add('dragging');
-                }, 0);
-            }
-        });
-
-        item.addEventListener('dragend', function (e) {
-            if (e.target.tagName === 'LI') {
-                setTimeout(() => {
-                    e.target.classList.remove('dragging');
-                    draggedItem = null;
-                }, 0);
-            }
-        });
-
-        item.addEventListener('dragover', function (e) {
-            e.preventDefault(); // Prevent default to allow drop
-            if (e.target.tagName === 'LI') {
-                e.target.classList.add('over');
-            }
-        });
-
-        item.addEventListener('dragleave', function (e) {
-            if (e.target.tagName === 'LI') {
-                e.target.classList.remove('over');
-            }
-        });
-
-        item.addEventListener('drop', function (e) {
-            e.preventDefault(); // Prevent default action (open as link for some elements)
-
-            if (e.target.tagName === 'LI') {
-                e.target.classList.remove('over');
-
-                // Move dragged item to the dropped position
-                if (draggedItem !== this) {
-                    let draggedIndex = [...this.parentNode.children].indexOf(draggedItem);
-                    let targetIndex = [...this.parentNode.children].indexOf(e.target);
-
-                    if (targetIndex > draggedIndex) {
-                        this.insertBefore(draggedItem, e.target.nextSibling);
-                    } else {
-                        this.insertBefore(draggedItem, e.target);
-                    }
-                }
-            }
-
-            // If the drop happens on the list (not on an item), append the item at the end
-            if (e.target === this && draggedItem !== null) {
-                this.appendChild(draggedItem);
-            }
-        });
-    }
-
-    // Close the modal
-    closeButton.addEventListener('click', () => modal.style.display = 'none');
-    window.addEventListener('click', (e) => {
-        if (e.target === modal) {
-            modal.style.display = 'none';
-        }
-    });
-
+    // Helper function to add time entry rows
+    function addTimeEntryRow(dateWorkedOn = '', hoursWorked = '') {
+        const timeEntriesDiv = document.getElementById('timeEntries');
+        const entryRow = document.createElement('div');
+        entryRow.classList.add('time-entry-row');
     
+        entryRow.innerHTML = `
+            <input type="date" class="date-worked-on" value="${dateWorkedOn}" required>
+            <input type="number" class="hours-worked" value="${hoursWorked}" min="0" placeholder="Hours worked" required>
+            <button type="button" class="removeTimeEntryButton">Remove</button>
+        `;
+    
+        // Add remove functionality for each time entry
+        entryRow.querySelector('.removeTimeEntryButton').addEventListener('click', function() {
+            timeEntriesDiv.removeChild(entryRow);
+        });
+    
+        timeEntriesDiv.appendChild(entryRow);
+    }
+
+    // Function to open the task edit modal
     function openEditTaskModal(task, sprintName) {
         modal.style.display = 'block';
         document.getElementById('modalTitle').textContent = 'Edit Task';
@@ -238,14 +56,19 @@ document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('taskDescription').value = task.taskDescription;
         document.getElementById('stage').value = task.stage;
         document.getElementById('taskMember').value = task.taskMember;
-        document.getElementById('dateWorkedOn').value = task.dateWorkedOn;
-        document.getElementById('amountOfHours').value = task.amountOfHours;
-    
+
+        // Clear existing time entries and add them based on task data
+        const timeEntriesDiv = document.getElementById('timeEntries');
+        timeEntriesDiv.innerHTML = '';
+        if (task.timeTracking && task.timeTracking.length > 0) {
+            task.timeTracking.forEach(entry => addTimeEntryRow(entry.dateWorkedOn, entry.hoursWorked));
+        }
+
         // When submitting the form, update the task object and localStorage
         taskForm.onsubmit = (event) => {
             event.preventDefault();
-    
-            // Find the correct task in sprintTasks by matching the taskName or another unique identifier
+
+            // Find the correct task in sprintTasks by matching the taskName
             const taskIndex = sprintTasks.findIndex(t => t.taskName === task.taskName);
     
             if (taskIndex !== -1) {
@@ -259,9 +82,18 @@ document.addEventListener('DOMContentLoaded', function() {
                 sprintTasks[taskIndex].taskDescription = document.getElementById('taskDescription').value;
                 sprintTasks[taskIndex].stage = document.getElementById('stage').value;
                 sprintTasks[taskIndex].taskMember = document.getElementById('taskMember').value;
-                sprintTasks[taskIndex].dateWorkedOn = document.getElementById('dateWorkedOn').value;
-                sprintTasks[taskIndex].amountOfHours = document.getElementById('amountOfHours').value;
     
+                // Collect time entries
+                const timeEntries = [];
+                document.querySelectorAll('.time-entry-row').forEach(row => {
+                    const dateWorkedOn = row.querySelector('.date-worked-on').value;
+                    const hoursWorked = row.querySelector('.hours-worked').value;
+                    if (dateWorkedOn && hoursWorked) {
+                        timeEntries.push({ dateWorkedOn, hoursWorked: parseFloat(hoursWorked) });
+                    }
+                });
+                sprintTasks[taskIndex].timeTracking = timeEntries;
+        
                 // Save updated sprintTasks back to localStorage
                 kanbanBoardItems[sprintName] = sprintTasks; // Update tasks for the current sprint
                 localStorage.setItem('kanbanBoardItems', JSON.stringify(kanbanBoardItems));
@@ -274,70 +106,8 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         };
     }
-    
 
-    // Select the Complete Sprint button
-    const completeSprintButton = document.getElementById('completeSprintButton');
-
-    let sprints = JSON.parse(localStorage.getItem('sprints')) || [];
-    const sprintToUpdate = sprints.find(sprint => sprint.sprintName === sprintName);
-
-    if (sprintToUpdate.status === 'Completed') {
-        completeSprintButton.innerHTML = 'Sprint Completed'
-    }
-
-    // Add event listener for the Complete Sprint button
-    completeSprintButton.addEventListener('click', function () {
-        completeSprintButton.innerHTML = 'Sprint Completed'
-        
-        // Retrieve all tasks in the sprint
-        const incompleteTasks = sprintTasks.filter(task => task.status !== 'Completed');
-        incompleteTasks.forEach(task => {
-            task.status = 'Not Started'
-        })
-        
-        // Retrieve the existing product backlog tasks from localStorage
-        let backlogTasks = JSON.parse(localStorage.getItem('tasks'));
-
-        // Move incomplete tasks to the backlog
-        backlogTasks = backlogTasks.concat(incompleteTasks);
-
-        // Save updated backlog tasks to localStorage
-        localStorage.setItem('tasks', JSON.stringify(backlogTasks));
-
-        // Remove the incomplete tasks from the sprint
-        const updatedSprintTasks = sprintTasks.filter(task => task.status === 'Completed');
-
-        // Update the kanbanBoardItems for this sprint
-        kanbanBoardItems[sprintName] = updatedSprintTasks;
-        localStorage.setItem('kanbanBoardItems', JSON.stringify(kanbanBoardItems));
-
-        // Optional: Update the sprints data to reflect the change
-        let sprints = JSON.parse(localStorage.getItem('sprints')) || [];
-        const sprintToUpdate = sprints.find(sprint => sprint.sprintName === sprintName);
-
-        sprintToUpdate.status = 'Completed'
-
-        if (sprintToUpdate) {
-            sprintToUpdate.selectedPBIS = updatedSprintTasks;
-            localStorage.setItem('sprints', JSON.stringify(sprints));
-        }
-
-        // Re-render the Kanban board with updated tasks
-        renderKanbanBoard(updatedSprintTasks);
-
-         // Make all items in the 'Completed' column undraggable
-        const completedTasks = document.querySelectorAll('#Completed li');
-        completedTasks.forEach(task => {
-            task.setAttribute('draggable', 'false'); // Disable dragging
-            task.classList.add('disabled-task'); // Optional: Add a class to style the disabled tasks
-        });
-
-        console.log('Incomplete tasks have been moved back to the product backlog.');
-    });
-
-
-    // Function to render the Kanban board with task categorization
+    // Function to render the Kanban board with tasks categorized by status
     function renderKanbanBoard(tasks) {
         // Clear previous tasks in each status list
         notStartedList.innerHTML = '';
@@ -345,17 +115,13 @@ document.addEventListener('DOMContentLoaded', function() {
         completedList.innerHTML = '';
 
         tasks.forEach(task => {
-            const taskElement = document.createElement('li'); // Create an individual task element
-            taskElement.textContent = task.taskName; // Display the task name
-            
-                // Add click event to open the edit modal
+            const taskElement = document.createElement('li');
+            taskElement.textContent = task.taskName;
+
+            // Add click event to open the edit modal
             taskElement.addEventListener('click', function() {
-                const row = taskElement; // You might need to adjust how you reference the row
                 openEditTaskModal(task, sprintName);
             });
-            
-            // Add draggable functionality
-            itemDraggable(taskElement);
 
             // Append to the appropriate column based on status
             if (task.status === 'Not Started') {
@@ -368,10 +134,15 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Call the render function when the page loads
+    // Initial rendering of the Kanban board
     renderKanbanBoard(sprintTasks);
 
+    // Event listener to add a new time entry row in the modal
+    document.getElementById('addTimeEntryButton').addEventListener('click', function(){
+        addTimeEntryRow();
+    });
 
+    // Add logic for drag-and-drop functionality and other features as needed...
     // Custom multiselect logic
     var selectedItems = document.getElementById('selectedItems');
     var optionsContainer = document.getElementById('optionsContainer');
@@ -417,3 +188,8 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
 });
+
+
+
+
+    
