@@ -28,7 +28,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // list of tasks
     const storedTasks = localStorage.getItem('tasks');
     const tasks = storedTasks ? JSON.parse(storedTasks) : [];
-    console.log(tasks)
+    console.log(sprintTasks)
 
     const mainContainer = document.querySelector('.main-container');
 
@@ -114,13 +114,6 @@ document.addEventListener('DOMContentLoaded', function() {
             renderKanbanBoard(sprintTasks);
         });        
     });
-
-
-    // Show the sprint modal
-    addSprintButton.onclick = function() {
-        modal.style.display = 'block';
-        sprintForm.onsubmit = addSprint;
-    };
 
 
     // Close the modal
