@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Menu - Motion™</title>
     <link rel="stylesheet" href="../Admin Page/adminmenu.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
 <body>
@@ -67,6 +69,8 @@
                 <p>View detailed progress of your team.</p>
                 <a href="../Admin Page/teamdashboard.html"><button class="admin-button">Go to Team Dashboard</button></a>
             </div>
+
+            <div><button id="burndownChartButton">View Burndown Chart</button></div>
         </div>
     </div>
 
@@ -98,6 +102,15 @@
         </div>
     </div>
 
+    <!-- Modal for Burndown Chart -->
+    <div id="burndownChartModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Burndown Chart</h2>
+            <canvas id="burndownChartCanvas"></canvas> <!-- Chart.js will render the chart here -->
+        </div>
+    </div>
+
     <!-- Footer Section -->
     <footer>
         <div class="footer-content">
@@ -110,6 +123,7 @@
 
     <!-- JavaScript for logout, showing the admin link, and managing team members -->
     <script src="../Admin Page/adminmenu.js"></script>
+    <script src="burndownChart.js"></script>
 </body>
 
 </html>

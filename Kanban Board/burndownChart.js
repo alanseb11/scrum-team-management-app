@@ -73,7 +73,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     y: {
                         title: {
                             display: true,
-                            text: 'Remaining Tasks'
+                            text: 'Hours have been spent'
                         },
                         beginAtZero: true
                     }

@@ -83,6 +83,8 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     ];
 
+    localStorage.setItem('tasks', JSON.stringify(tasks));
+
 
     // Open the modal to add a new task
     addNewTaskButton.addEventListener('click', () => {
