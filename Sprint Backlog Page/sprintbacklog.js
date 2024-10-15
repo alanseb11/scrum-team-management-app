@@ -198,8 +198,6 @@ function getAvailableTasksForSprint(selectedPBIS = []) {
 }
 
 
-
-
     function populatePbiOptions(selectedPBIS = []) {
         const optionsContainer = document.getElementById('optionsContainer');
         optionsContainer.innerHTML = ''; // Clear previous options

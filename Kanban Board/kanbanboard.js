@@ -231,6 +231,9 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Retrieve all tasks in the sprint
         const incompleteTasks = sprintTasks.filter(task => task.status !== 'Completed');
+        incompleteTasks.forEach(task => {
+            task.status = 'Not Started'
+        })
         
         // Retrieve the existing product backlog tasks from localStorage
         let backlogTasks = JSON.parse(localStorage.getItem('tasks'));
