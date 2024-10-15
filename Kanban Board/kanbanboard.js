@@ -412,9 +412,8 @@ document.addEventListener('DOMContentLoaded', function() {
     if (localStorage.getItem('isAdminLoggedIn')) {
         const nav = document.getElementById('nav');
         nav.innerHTML = `
-        <a href="../Home Page/homepage.html">Home</a>
-        <a href="../Product Backlog Page/productbacklogpage.html">Product Backlog</a>
         <a href="../Sprint Backlog Page/sprintbacklog.html">Sprint Backlog</a>
+        <a href="../Product Backlog Page/productbacklogpage.html">Product Backlog</a>
         <span id="adminLink">
         <a href="../Admin Page/adminmenu.html">Admin Menu</a>
         </span>
