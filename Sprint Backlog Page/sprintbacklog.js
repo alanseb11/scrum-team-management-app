@@ -2,7 +2,9 @@ document.addEventListener('DOMContentLoaded', function () {
     const sprintTableBody = document.getElementById('sprintTableBody');
     const addSprintButton = document.getElementById('addSprintButton');
     const modal = document.getElementById('sprintModal');
+    const sprintSummaryModal = document.getElementById('sprintSummaryModal');
     const closeButton = document.querySelector('.close');
+    const closeSummaryButton = document.querySelector('#sprintSummaryModal .close');
     const sprintForm = document.getElementById('sprintForm');
 
     // Get product backlog and sprint data from localStorage
@@ -21,10 +23,16 @@ document.addEventListener('DOMContentLoaded', function () {
     // Close the modal
     closeButton.addEventListener('click', () => modal.style.display = 'none');
 
+    // Close the summary modal
+    closeSummaryButton.addEventListener('click', () => sprintSummaryModal.style.display = 'none');
+
     // Close modal when clicking outside of it
     window.addEventListener('click', (e) => {
         if (e.target === modal) {
             modal.style.display = 'none';
+        }
+        if (e.target === sprintSummaryModal) {
+            sprintSummaryModal.style.display = 'none';
         }
     });
 
@@ -82,8 +90,7 @@ document.addEventListener('DOMContentLoaded', function () {
         
         // Add an event listener to the row for the click event
         row.addEventListener('click', () => {
-            // Redirect to the page you want when the row is clicked
-            window.location.href = `../Kanban Board/kanbanboard.html`;
+            openSprintSummaryModal(sprint);
         });
         sprintTableBody.appendChild(row);
 
@@ -134,9 +141,25 @@ document.addEventListener('DOMContentLoaded', function () {
         renderSprints();
         modal.style.display = 'none';
     }
-    
-    
-    
+
+    function openSprintSummaryModal(sprint) {
+        const sprintSummaryContent = document.getElementById('sprintSummaryContent');
+
+        // Populate the modal with sprint details
+        sprintSummaryContent.innerHTML = `
+            <p><strong>Sprint Name:</strong> ${sprint.sprintName}</p>
+            <p><strong>Status:</strong> ${sprint.status}</p>
+            <p><strong>Start Date:</strong> ${sprint.startDate}</p>
+            <p><strong>End Date:</strong> ${sprint.endDate}</p>
+            <p><strong>Tasks in this Sprint:</strong></p>
+            <ul>
+                ${sprint.selectedPBIS.map(task => `<li>${task.taskName}</li>`).join('')}
+            </ul>
+        `;
+
+        // Show the modal
+        sprintSummaryModal.style.display = 'block';
+    }
 
     function openEditSprintModal(sprint, row) {
         modal.style.display = 'block';

@@ -4,7 +4,6 @@ document.addEventListener('DOMContentLoaded', function() {
     // Get the sprint name from the URL
     const urlParams = new URLSearchParams(window.location.search);
     const sprintName = urlParams.get('sprintName');
-    var closeButton = document.querySelector('.close');
     const taskForm = document.getElementById('taskForm');
     const modal = document.getElementById('taskModal');
     
@@ -29,11 +28,21 @@ document.addEventListener('DOMContentLoaded', function() {
 
     const mainContainer = document.querySelector('.main-container');
 
-        // Helper function to add time entry rows
     function addTimeEntryRow(dateWorkedOn = '', hoursWorked = '') {
         const timeEntriesDiv = document.getElementById('timeEntries');
         const entryRow = document.createElement('div');
         entryRow.classList.add('time-entry-row');
+    
+        // Validate if dateWorkedOn is in DD/MM/YYYY format before splitting
+        if (dateWorkedOn && dateWorkedOn.includes('/')) {
+            const [day, month, year] = dateWorkedOn.split('/');
+            // Ensure all parts are valid before assigning the new format
+            if (day && month && year) {
+                dateWorkedOn = `${year}-${month}-${day}`; // Convert to YYYY-MM-DD format
+            } else {
+                dateWorkedOn = ''; // Reset to empty if the date is invalid
+            }
+        }
     
         entryRow.innerHTML = `
             <input type="date" class="date-worked-on" value="${dateWorkedOn}" required>
@@ -48,26 +57,39 @@ document.addEventListener('DOMContentLoaded', function() {
     
         timeEntriesDiv.appendChild(entryRow);
     }
-
-    // Function to close the modal
-    function closeModal() {
+    
+    function closeModal(modal) {
         modal.style.display = 'none';
     }
+    
+    function openModal(modal) {
+        modal.style.display = 'block';
+    }
 
-    // Add event listener for the close button
-    closeButton.addEventListener('click', closeModal);
-
-    // Add event listener for clicking outside the modal
-    window.addEventListener('click', function (event) {
-        if (event.target === modal) {
-            closeModal();
+    // Event delegation to handle close button functionality for all modals
+    document.addEventListener('click', function(event) {
+        if (event.target.classList.contains('close')) {
+            const modal = event.target.closest('.modal');
+            if (modal) {
+                closeModal(modal);
+            }
         }
+    });
+
+    // Add event listener to close modals when clicking outside them
+    window.addEventListener('click', function(event) {
+        const modals = document.querySelectorAll('.modal');
+        modals.forEach(modal => {
+            if (event.target === modal) {
+                closeModal(modal);
+            }
+        });
     });
     
     
     // Function to open the task edit modal
     function openEditTaskModal(task, sprintName) {
-        modal.style.display = 'block';
+        openModal(modal);
         document.getElementById('modalTitle').textContent = 'Edit Task';
     
         // Populate the form fields with the existing task data
@@ -126,7 +148,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 renderKanbanBoard(sprintTasks);
     
                 // Hide the modal after saving the changes
-                modal.style.display = 'none';
+                closeModal(modal);
             }
         };
     }
@@ -222,18 +244,6 @@ document.addEventListener('DOMContentLoaded', function() {
             renderKanbanBoard(sprintTasks);
         });        
     });
-
-
-    // Close the modal
-    closeButton.onclick = function() {
-        modal.style.display = 'none';
-    };
-
-    window.onclick = function(event) {
-        if (event.target == modal) {
-            modal.style.display = 'none';
-        }
-    };
 
     // Add Logout Functionality
     // Check if the user is logged in as admin or a regular user
@@ -386,11 +396,19 @@ document.addEventListener('DOMContentLoaded', function() {
             const taskElement = document.createElement('li'); // Create an individual task element
             taskElement.textContent = task.taskName; // Display the task name
             
-            taskElement.addEventListener('click', function() {
-                openEditTaskModal(task, sprintName);
-            });
-            // Add draggable functionality
-            itemDraggable(taskElement);
+            // Add event listener to open the edit modal, except when sprint is marked as completed
+            if (sprintToUpdate.status !== 'Completed') {
+                taskElement.addEventListener('click', function() {
+                    openEditTaskModal(task, sprintName);
+                });
+
+                // Make task draggable if sprint is not completed
+                itemDraggable(taskElement);
+            } else {
+                // Disable dragging for tasks if the sprint is completed
+                taskElement.setAttribute('draggable', 'false');
+                taskElement.classList.add('disabled-task'); // Optional: Add a class for visual styling
+            }
 
             // Append to the appropriate column based on status
             if (task.status === 'Not Started') {
