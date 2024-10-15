@@ -245,32 +245,36 @@ document.addEventListener('DOMContentLoaded', function() {
         taskForm.onsubmit = (event) => {
             event.preventDefault();
     
-            // Update task properties based on the edited form fields
-            task.taskName = document.getElementById('taskName').value;
-            task.taskType = document.getElementById('taskType').value;
-            task.priority = document.getElementById('priority').value;
-            task.taskTags = document.getElementById('tags').value;
-            task.storyPoints = document.getElementById('storyPoints').value;
-            task.sprint = document.getElementById('sprint').value;
-            task.taskDescription = document.getElementById('taskDescription').value;
-            task.stage = document.getElementById('stage').value;
-            task.taskMember = document.getElementById('taskMember').value;
-            task.dateWorkedOn = document.getElementById('dateWorkedOn').value;
-            task.amountOfHours = document.getElementById('amountOfHours').value;
-            
-
-
-            // Save updated task data to localStorage
-            localStorage.setItem('kanbanBoardItems', JSON.stringify(tasks));
+            // Find the correct task in sprintTasks by matching the taskName or another unique identifier
+            const taskIndex = sprintTasks.findIndex(t => t.taskName === task.taskName);
     
-            // Update the task row in the table with new data
-            renderKanbanBoard(tasks)
+            if (taskIndex !== -1) {
+                // Update the specific task's properties based on the edited form fields
+                sprintTasks[taskIndex].taskName = document.getElementById('taskName').value;
+                sprintTasks[taskIndex].taskType = document.getElementById('taskType').value;
+                sprintTasks[taskIndex].priority = document.getElementById('priority').value;
+                sprintTasks[taskIndex].taskTags = document.getElementById('tags').value;
+                sprintTasks[taskIndex].storyPoints = document.getElementById('storyPoints').value;
+                sprintTasks[taskIndex].sprint = document.getElementById('sprint').value;
+                sprintTasks[taskIndex].taskDescription = document.getElementById('taskDescription').value;
+                sprintTasks[taskIndex].stage = document.getElementById('stage').value;
+                sprintTasks[taskIndex].taskMember = document.getElementById('taskMember').value;
+                sprintTasks[taskIndex].dateWorkedOn = document.getElementById('dateWorkedOn').value;
+                sprintTasks[taskIndex].amountOfHours = document.getElementById('amountOfHours').value;
     
-            // Hide the modal after saving the changes
-            modal.style.display = 'none';
+                // Save updated sprintTasks back to localStorage
+                kanbanBoardItems[sprintName] = sprintTasks; // Update tasks for the current sprint
+                localStorage.setItem('kanbanBoardItems', JSON.stringify(kanbanBoardItems));
+    
+                // Re-render the Kanban board with the updated task
+                renderKanbanBoard(sprintTasks);
+    
+                // Hide the modal after saving the changes
+                modal.style.display = 'none';
+            }
         };
     }
-
+    
 
     // Select the Complete Sprint button
     const completeSprintButton = document.getElementById('completeSprintButton');
