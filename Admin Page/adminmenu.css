@@ -391,3 +391,23 @@ footer {
     font-size: 14px;
     line-height: 1.5;
 }
+
+/* View Burndown Chart Button Styling */
+#burndownChartButton {
+    background-color: #ff4db8; /* Same pink color as other buttons */
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    margin-top: 15px; /* Adds space on top */
+    display: inline-block;
+}
+
+/* Hover Effect for View Burndown Chart Button */
+#burndownChartButton:hover {
+    background-color: #ff3fa2; /* Slightly lighter pink on hover */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Soft shadow on hover */
+}
