@@ -47,6 +47,12 @@ document.addEventListener('DOMContentLoaded', function () {
                 <button class="deleteButton">Delete</button>
             </td>
         `;
+        // Attach delete functionality
+        row.querySelector('.deleteButton').addEventListener('click', (e) => {
+            e.stopPropagation();
+            deleteSprint(row, sprint);
+        });
+
         // Attach edit functionality
         row.querySelector('.editButton').addEventListener('click', (e) => {
             e.stopPropagation();
@@ -65,7 +71,6 @@ document.addEventListener('DOMContentLoaded', function () {
             <td>${sprint.status}</td>
             <td>
                 <button class="viewButton">View</button>
-                <button class="deleteButton">Delete</button>
             </td>
         `;
         // Add event listener for the Start button
@@ -83,11 +88,7 @@ document.addEventListener('DOMContentLoaded', function () {
         sprintTableBody.appendChild(row);
 
 
-        // Attach delete functionality
-        row.querySelector('.deleteButton').addEventListener('click', (e) => {
-            e.stopPropagation();
-            deleteSprint(row, sprint);
-        });
+
     
     }
 

@@ -1,4 +1,3 @@
-// Wait for the DOM to be fully loaded
 document.addEventListener('DOMContentLoaded', function() {
     // Handle the Burndown Chart button click
     document.getElementById('burndownChartButton').addEventListener('click', function() {
@@ -17,33 +16,72 @@ document.addEventListener('DOMContentLoaded', function() {
         modal.style.display = 'none';
     });
 
+    // Function to calculate burndown data
+    function calculateBurndownData(tasks, totalEffort, sprintDays) {
+        const timeLogByDay = {};
+
+        // Aggregate time worked by day from task timeTracking data
+        tasks.forEach(task => {
+            if (task.timeTracking) {
+                task.timeTracking.forEach(entry => {
+                    const date = entry.dateWorkedOn;
+                    if (!timeLogByDay[date]) {
+                        timeLogByDay[date] = 0;
+                    }
+                    timeLogByDay[date] += entry.hoursWorked;
+                });
+            }
+        });
+
+        // Sort the dates and initialize remaining effort
+        const sortedDates = Object.keys(timeLogByDay).sort();
+        let remainingEffort = totalEffort;
+        const actualProgress = [totalEffort]; // Start with full effort
+
+        sortedDates.forEach(date => {
+            remainingEffort -= timeLogByDay[date];
+            actualProgress.push(remainingEffort);
+        });
+
+        // Fill in any missing days in the sprint (days with no work logged)
+        for (let i = actualProgress.length; i < sprintDays; i++) {
+            actualProgress.push(remainingEffort);
+        }
+
+        return { labels: sortedDates, actualProgress };
+    }
+
     // Chart.js function to render the burndown chart with ideal and actual progress
     function renderBurndownChart() {
         const ctx = document.getElementById('burndownChartCanvas').getContext('2d');
 
-        // Sample data for the burndown chart (replace with your actual data)
-        const labels = ['Day 1', 'Day 2', 'Day 3', 'Day 4', 'Day 5', 'Day 6']; // Sprint days
-        const idealProgress = [10, 8, 6, 4, 2, 0];  // Ideal line for work completion
-        const actualProgress = [10, 9, 7, 6, 5, 3]; // Actual work completion (replace with dynamic data)
+        // Example: Total estimated effort and sprint duration (replace with dynamic data)
+        const totalEstimatedEffort = 50; // Sum of all task story points or hours
+        const sprintDays = 7; // Total sprint days
+        const idealProgress = Array.from({ length: sprintDays + 1 }, (_, i) => totalEstimatedEffort * (1 - i / sprintDays));
+
+        // Fetch actual progress based on the task time log data
+        const tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+        const { labels, actualProgress } = calculateBurndownData(tasks, totalEstimatedEffort, sprintDays);
 
         const data = {
-            labels: labels,
+            labels: labels.length ? labels : Array.from({ length: sprintDays }, (_, i) => `Day ${i + 1}`), // Use actual dates or fallback to 'Day 1', 'Day 2' etc.
             datasets: [
                 {
                     label: 'Ideal Progress',
                     data: idealProgress,
-                    borderColor: 'rgba(75, 192, 192, 1)',  // Color for ideal progress line
+                    borderColor: 'rgba(75, 192, 192, 1)',
                     borderWidth: 2,
                     fill: false,
-                    tension: 0.1 // Straight lines
+                    tension: 0.1
                 },
                 {
                     label: 'Actual Progress',
                     data: actualProgress,
-                    borderColor: 'rgba(255, 99, 132, 1)',  // Color for actual progress line
+                    borderColor: 'rgba(255, 99, 132, 1)',
                     borderWidth: 2,
                     fill: false,
-                    tension: 0.1 // Straight lines
+                    tension: 0.1
                 }
             ]
         };
@@ -73,7 +111,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     y: {
                         title: {
                             display: true,
-                            text: 'Hours have been spent'
+                            text: 'Remaining Effort (hours or story points)'
                         },
                         beginAtZero: true
                     }
