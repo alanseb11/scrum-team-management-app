@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
     const taskForm = document.getElementById('taskForm');
-    var modal = document.getElementById('taskModal');
+    const modal = document.getElementById('taskModal');
     
     // Retrieve the kanbanBoardItems from localStorage
     let kanbanBoardItems = JSON.parse(localStorage.getItem('kanbanBoardItems')) || {};
@@ -255,7 +255,7 @@ document.addEventListener('DOMContentLoaded', function() {
             task.taskMember = document.getElementById('taskMember').value;
     
             // Save updated task data to localStorage
-            localStorage.setItem('tasks', JSON.stringify(tasks));
+            localStorage.setItem('kanbanBoardItems', JSON.stringify(tasks));
     
             // Update the task row in the table with new data
             renderKanbanBoard(tasks)
