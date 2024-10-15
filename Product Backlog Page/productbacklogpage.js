@@ -147,7 +147,15 @@ document.addEventListener('DOMContentLoaded', function() {
                 <p><strong>Priority:</strong> ${task.priority}</p>
                 <p><strong>Tags:</strong> ${task.taskTags}</p>
                 <p><strong>Story Points:</strong> ${task.storyPoints}</p>
+                <button class="deleteButton">Delete</button>
             `;
+
+            // Attach delete functionality
+            card.querySelector('.deleteButton').addEventListener('click', (e) => {
+                e.stopPropagation();
+                deleteTask(card, task);
+            });
+
             cardViewContainer.appendChild(card);
         });
     }
@@ -280,7 +288,8 @@ document.addEventListener('DOMContentLoaded', function() {
         const index = tasks.indexOf(task);
         tasks.splice(index, 1);
         localStorage.setItem('tasks', JSON.stringify(tasks));
-        row.remove();
+        // changes here: 
+        row.remove(); 
     }
 
 
