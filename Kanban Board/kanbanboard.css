@@ -339,3 +339,7 @@ button:hover {
     font-family: "Roboto", "Poppins", 'Gill Sans', 'Gill Sans MT', 'Trebuchet MS', sans-serif;
     margin-left: 10px;
 }
+
+#addTimeEntryButton {
+    margin: 15px;
+}
