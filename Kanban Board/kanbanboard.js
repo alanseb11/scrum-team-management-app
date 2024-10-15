@@ -227,6 +227,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Add event listener for the Complete Sprint button
     completeSprintButton.addEventListener('click', function () {
+        completeSprintButton.innerHTML = 'Sprint Completed'
+        
         // Retrieve all tasks in the sprint
         const incompleteTasks = sprintTasks.filter(task => task.status !== 'Completed');
         
