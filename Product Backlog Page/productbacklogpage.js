@@ -19,7 +19,10 @@ document.addEventListener('DOMContentLoaded', function() {
             status: 'Not Started',
             stage: 'Planning',
             storyPoints: '5',
-            taskMember: 'Lisa'
+            taskMember: 'Lisa',
+            dateWorkedOn: '15/10/2024',
+            amountOfHours: '7'
+
         },
         {
             taskName: 'Example Task 2',
@@ -31,7 +34,9 @@ document.addEventListener('DOMContentLoaded', function() {
             status: 'Not Started',
             stage: 'Integration',
             storyPoints: '8',
-            taskMember: 'Amar'
+            taskMember: 'Amar',
+            dateWorkedOn: '15/10/2024',
+            amountOfHours: '5'
         },
         {
             taskName: 'Example Task 3',
@@ -43,7 +48,9 @@ document.addEventListener('DOMContentLoaded', function() {
             status: 'Not Started',
             stage: 'Planning',
             storyPoints: '5',
-            taskMember: 'Lisa'
+            taskMember: 'Lisa',
+            dateWorkedOn: '15/10/2024',
+            amountOfHours: '10'
         },
         {
             taskName: 'Example Task 4',
@@ -55,7 +62,9 @@ document.addEventListener('DOMContentLoaded', function() {
             status: 'Not Started',
             stage: 'Integration',
             storyPoints: '1',
-            taskMember: 'Amar'
+            taskMember: 'Amar',
+            dateWorkedOn: '15/10/2024',
+            amountOfHours: '2'
         },
         {
             taskName: 'Example Task 5',
@@ -67,7 +76,9 @@ document.addEventListener('DOMContentLoaded', function() {
             status: 'Not Started',
             stage: 'Planning',
             storyPoints: '5',
-            taskMember: 'Lisa'
+            taskMember: 'Lisa',
+            dateWorkedOn: '15/10/2024',
+            amountOfHours: '9'
         },
         {
             taskName: 'Example Task 6',
@@ -79,7 +90,9 @@ document.addEventListener('DOMContentLoaded', function() {
             status: 'Not Started',
             stage: 'Integration',
             storyPoints: '4',
-            taskMember: 'Amar'
+            taskMember: 'Amar',
+            dateWorkedOn: '15/10/2024',
+            amountOfHours: '6'
         }
     ];
 
@@ -237,8 +250,10 @@ document.addEventListener('DOMContentLoaded', function() {
         const status = 'Not Started';
         const stage = document.getElementById('stage').value;
         const taskMember = document.getElementById('taskMember').value;
+        const dateWorkedOn = null;
+        const amountOfHours = 0;
 
-        const newTask = { taskName, taskType, priority, taskTags, storyPoints, sprint, taskDescription, status, stage, taskMember };
+        const newTask = { taskName, taskType, priority, taskTags, storyPoints, sprint, taskDescription, status, stage, taskMember, dateWorkedOn, amountOfHours };
         
         let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
         tasks.push(newTask);

@@ -224,7 +224,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     
-    function openEditTaskModal(task, row) {
+    function openEditTaskModal(task, sprintName) {
         modal.style.display = 'block';
         document.getElementById('modalTitle').textContent = 'Edit Task';
     
@@ -238,6 +238,8 @@ document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('taskDescription').value = task.taskDescription;
         document.getElementById('stage').value = task.stage;
         document.getElementById('taskMember').value = task.taskMember;
+        document.getElementById('dateWorkedOn').value = task.dateWorkedOn;
+        document.getElementById('amountOfHours').value = task.amountOfHours;
     
         // When submitting the form, update the task object and localStorage
         taskForm.onsubmit = (event) => {
@@ -253,7 +255,11 @@ document.addEventListener('DOMContentLoaded', function() {
             task.taskDescription = document.getElementById('taskDescription').value;
             task.stage = document.getElementById('stage').value;
             task.taskMember = document.getElementById('taskMember').value;
-    
+            task.dateWorkedOn = document.getElementById('dateWorkedOn').value;
+            task.amountOfHours = document.getElementById('amountOfHours').value;
+            
+
+
             // Save updated task data to localStorage
             localStorage.setItem('kanbanBoardItems', JSON.stringify(tasks));
     
@@ -341,7 +347,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 // Add click event to open the edit modal
             taskElement.addEventListener('click', function() {
                 const row = taskElement; // You might need to adjust how you reference the row
-                openEditTaskModal(task, row);
+                openEditTaskModal(task, sprintName);
             });
             
             // Add draggable functionality

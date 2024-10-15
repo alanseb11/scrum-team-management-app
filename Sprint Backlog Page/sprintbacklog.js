@@ -265,7 +265,6 @@ function getAvailableTasksForSprint(selectedPBIS = []) {
         renderSprints();
     }
 
-    const viewButton = document.querySelector('.viewButton')
     function handleViewSprint(sprint) {
         // Redirect to the Kanban board page with the sprint name as a query parameter
         window.location.href = `../Kanban Board/kanbanboard.html?sprintName=${encodeURIComponent(sprint.sprintName)}`;
