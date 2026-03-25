@@ -2,13 +2,6 @@
 
 A web-based Scrum management tool designed to help teams manage product backlogs, sprint planning, and task tracking through an interactive Kanban board.
 
----
-
-## Live Demo
-(Add your deployed link here — e.g. Netlify/Vercel)
-
----
-
 ## Screenshots
 
 ### Login Page
